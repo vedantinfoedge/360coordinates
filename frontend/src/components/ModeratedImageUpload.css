@@ -1,0 +1,219 @@
+.moderated-image-upload {
+  width: 100%;
+}
+
+.upload-controls {
+  margin-bottom: 20px;
+}
+
+.file-input {
+  display: none;
+}
+
+.upload-button {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.upload-button:hover:not(.disabled) {
+  background-color: var(--color-primary-dark);
+}
+
+.upload-button.disabled {
+  background-color: var(--color-text-secondary);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.error-messages {
+  margin-bottom: 15px;
+  padding: 12px;
+  background-color: var(--color-error-light, #f8d7da);
+  border: 1px solid var(--color-error-border, #f5c6cb);
+  border-radius: 6px;
+  color: var(--color-error-dark, #721c24);
+}
+
+.error-message {
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.error-message:last-child {
+  margin-bottom: 0;
+}
+
+.image-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.image-preview-item {
+  position: relative;
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--color-surface);
+  transition: all 0.3s ease;
+}
+
+.image-preview-item:hover {
+  box-shadow: var(--shadow-card-hover);
+}
+
+.image-preview-item.status-approved {
+  border-color: var(--color-success);
+}
+
+.image-preview-item.status-reviewing {
+  border-color: var(--color-warning, #ffc107);
+}
+
+.image-preview-item.status-error {
+  border-color: var(--color-error);
+}
+
+.image-preview-item.status-uploading {
+  border-color: var(--color-info, #17a2b8);
+}
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 75%; /* 4:3 aspect ratio */
+  background-color: var(--color-bg);
+  overflow: hidden;
+}
+
+.preview-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.status-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-white);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-preview-item:hover .status-overlay {
+  opacity: 1;
+}
+
+.status-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.status-text {
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top-color: var(--color-text-white);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.image-info {
+  padding: 12px;
+}
+
+.image-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.image-error {
+  font-size: 12px;
+  color: var(--color-error);
+  margin-bottom: 8px;
+  word-wrap: break-word;
+}
+
+.remove-button {
+  width: 100%;
+  padding: 6px 12px;
+  background-color: var(--color-error);
+  color: var(--color-text-white);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background-color 0.3s ease;
+}
+
+.remove-button:hover:not(:disabled) {
+  background-color: var(--color-error-dark, #c82333);
+}
+
+.remove-button:disabled {
+  background-color: var(--color-text-secondary);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  background-color: var(--color-bg);
+  border: 2px dashed var(--color-border);
+  border-radius: 8px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .image-preview-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+  }
+}

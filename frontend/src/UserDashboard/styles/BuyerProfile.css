@@ -1,0 +1,1569 @@
+.buyer-seller-profile {
+  background-color: var(--color-surface);
+  animation: buyer-fadeIn 0.5s ease-in;
+  padding: 2rem;
+  padding-bottom: 50px;
+}
+
+@keyframes buyer-fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.buyer-profile-header {
+  margin-bottom: 2rem;
+  text-align: left;
+  padding-top: 50px;
+  padding-left: 30px;
+}
+
+.buyer-profile-header h1 {
+  font-size: 2rem;
+  color: #1d242b;
+}
+
+.buyer-profile-content {
+  display: grid;
+  grid-template-columns: minmax(300px, 400px) 1fr;
+  gap: 1.5rem;
+}
+
+/* Profile Card */
+.buyer-profile-card {
+  background-color: var(--color-surface);
+  border-radius: 12px;
+  box-shadow: var(--shadow-card);
+  padding: 2rem;
+  height: fit-content;
+  border: 1px solid var(--color-border);
+}
+
+.buyer-profile-avatar-section {
+  text-align: center;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.buyer-avatar-container {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 1.5rem;
+}
+
+.buyer-profile-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--color-bg);
+}
+
+.buyer-avatar-upload-wrapper {
+  position: relative;
+}
+
+.buyer-avatar-upload-btn {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  border: 3px solid var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s;
+  z-index: 10;
+}
+
+.buyer-avatar-upload-btn:hover {
+  transform: scale(1.1);
+}
+
+.buyer-avatar-upload-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Upload Spinner */
+.buyer-upload-spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: var(--color-surface);
+  border-radius: 50%;
+  animation: buyer-spin 0.8s linear infinite;
+}
+
+@keyframes buyer-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Image Upload Menu */
+.buyer-image-upload-menu {
+  position: absolute;
+  bottom: 50px;
+  right: 0;
+  background: var(--color-surface);
+  border-radius: 12px;
+  box-shadow: var(--shadow-card-hover);
+  min-width: 200px;
+  padding: 0.5rem;
+  z-index: 100;
+  animation: buyer-slideUp 0.3s ease;
+  overflow: hidden;
+}
+
+@keyframes buyer-slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.buyer-upload-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  color: var(--color-text-primary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.buyer-upload-menu-item:hover {
+  background: var(--color-bg);
+  color: var(--color-primary);
+}
+
+.buyer-upload-menu-item svg {
+  width: 18px;
+  height: 18px;
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+}
+
+.buyer-upload-menu-item:hover svg {
+  color: var(--color-primary);
+}
+
+.buyer-upload-menu-item span {
+  flex: 1;
+}
+
+/* Camera Modal Styles */
+.buyer-camera-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: buyer-fadeIn 0.3s ease;
+}
+
+.buyer-camera-modal {
+  background: var(--color-surface);
+  border-radius: 16px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.buyer-camera-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.buyer-camera-modal-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.buyer-camera-close-btn {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.buyer-camera-close-btn:hover {
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+}
+
+.buyer-camera-content {
+  position: relative;
+  width: 100%;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+.buyer-camera-video {
+  width: 100%;
+  max-height: 60vh;
+  object-fit: contain;
+  background: #000;
+}
+
+.buyer-camera-preview {
+  width: 100%;
+  max-height: 60vh;
+  object-fit: contain;
+  background: #000;
+}
+
+.buyer-camera-controls {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.buyer-camera-capture-btn {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  border: 5px solid var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.buyer-camera-capture-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.buyer-camera-capture-btn:active {
+  transform: scale(0.95);
+}
+
+.buyer-camera-preview-controls {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  width: 90%;
+  max-width: 400px;
+  justify-content: space-between;
+}
+
+.buyer-camera-retake-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 2px solid var(--color-surface);
+  border-radius: 12px;
+  color: var(--color-surface);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.buyer-camera-retake-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.buyer-camera-use-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-primary);
+  border: none;
+  border-radius: 12px;
+  color: var(--color-surface);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-button);
+}
+
+.buyer-camera-use-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-button-hover);
+}
+
+.buyer-camera-use-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .buyer-camera-modal {
+    width: 100%;
+    max-width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+  
+  .buyer-camera-content {
+    min-height: calc(100vh - 80px);
+  }
+  
+  .buyer-camera-video,
+  .buyer-camera-preview {
+    max-height: calc(100vh - 200px);
+  }
+}
+
+.buyer-profile-name-section h2 {
+  font-size: 1.5rem;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.buyer-profile-role {
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.buyer-profile-badges {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.buyer-badge {
+  padding: 0.4rem 0.9rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.buyer-badge.buyer-verified {
+  background: var(--color-success-soft);
+  color: var(--color-success);
+}
+
+.buyer-badge.buyer-pro-agent {
+  background: var(--color-accent-soft);
+  color: var(--color-primary);
+}
+
+.buyer-profile-member-since {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+/* Profile Form Card */
+.buyer-profile-form-card {
+  background-color: var(--color-surface);
+  border-radius: 12px;
+  box-shadow: var(--shadow-card);
+  padding: 2rem;
+  border: 1px solid var(--color-border);
+}
+
+.buyer-profile-form-card h3 {
+  font-size: 1.3rem;
+  color: var(--color-text-primary);
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+.buyer-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.buyer-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.buyer-form-group.buyer-full-width {
+  margin-bottom: 1.5rem;
+}
+
+.buyer-form-group label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.buyer-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 0.875rem 3rem;
+  border-radius: 8px;
+  transition: all 0.3s;
+  box-shadow: var(--shadow-subtle);
+}
+
+.buyer-input-wrapper:focus-within {
+  background: var(--color-surface);
+  border-color: var(--color-primary);
+}
+
+.buyer-input-wrapper svg {
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+}
+
+.buyer-input-wrapper input {
+  border: none;
+  background: none;
+  outline: none;
+  flex: 1;
+  font-size: 0.95rem;
+  color: var(--color-text-primary);
+}
+
+.buyer-input-wrapper input.buyer-disabled-input,
+.buyer-input-wrapper input:disabled {
+  background: transparent !important;
+  cursor: not-allowed;
+  opacity: 0.7;
+  -webkit-text-fill-color: var(--color-text-primary);
+}
+
+/* Keep disabled wrapper styling consistent with other fields */
+.buyer-input-wrapper.buyer-disabled-wrapper {
+  background: var(--color-surface) !important;
+  border-color: var(--color-border) !important;
+  box-shadow: var(--shadow-subtle);
+}
+
+.buyer-input-wrapper.buyer-disabled-wrapper:focus-within {
+  background: var(--color-bg) !important;
+  border-color: var(--color-border) !important;
+}
+
+.buyer-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.buyer-cancel-btn {
+  background: var(--color-bg);
+  border: none;
+  padding: 0.875rem 1.75rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  transition: background 0.3s;
+}
+
+.buyer-cancel-btn:hover {
+  background: var(--color-border);
+}
+
+.buyer-save-btn {
+  background: var(--color-primary);
+  border: none;
+  padding: 0.875rem 1.75rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--color-surface);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: var(--shadow-button);
+}
+
+.buyer-save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-button-hover);
+}
+
+/* Section Toggle Buttons */
+.buyer-profile-section-toggle {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.buyer-section-btn {
+  background: var(--color-bg);
+  border: 2px solid transparent;
+  padding: 0.875rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s;
+}
+
+.buyer-section-btn:hover {
+  background: var(--color-border);
+}
+
+.buyer-section-btn.active {
+  background: var(--color-primary);
+  color: var(--color-surface);
+  box-shadow: var(--shadow-button);
+}
+
+.buyer-section-btn svg {
+  flex-shrink: 0;
+}
+
+/* Favorites Section */
+.buyer-favorites-section {
+  animation: buyer-fadeIn 0.5s ease-in;
+}
+
+.buyer-favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.buyer-empty-favorites {
+  background: var(--color-bg);
+  border-radius: 12px;
+  padding: 4rem 2rem;
+  text-align: center;
+  border: 2px dashed var(--color-border);
+  margin-top: 2rem;
+}
+
+.buyer-empty-favorites svg {
+  margin: 0 auto 1.5rem;
+}
+
+.buyer-empty-favorites h3 {
+  font-size: 1.5rem;
+  color: var(--color-text-primary);
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.buyer-empty-favorites p {
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* History Section */
+.buyer-history-section {
+  animation: buyer-fadeIn 0.5s ease-in;
+}
+
+.buyer-history-heading {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+}
+
+.buyer-history-list {
+  list-style: none;
+  counter-reset: history-counter;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.buyer-history-item {
+  counter-increment: history-counter;
+  background-color: var(--color-surface);
+  border-radius: 12px;
+  box-shadow: var(--shadow-card);
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--color-border);
+  transition: all 0.3s ease;
+  position: relative;
+  padding-left: 3.5rem;
+}
+
+.buyer-history-item::before {
+  margin-top: 10px;
+  content: counter(history-counter) ".";
+  position: absolute;
+  left: 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1;
+}
+
+.buyer-history-item:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.buyer-history-grid {
+  display: grid;
+  grid-template-columns: 
+    2fr        /* Property title (INCREASED WIDTH) */
+    0.08fr     /* Separator */
+    1.8fr      /* Owner name */
+    0.08fr     /* Separator */
+    1.2fr      /* Owner phone */
+    0.08fr     /* Separator */
+    2fr        /* Owner email */
+    0.08fr     /* Separator */
+    1fr        /* Date */
+    auto;      /* View Details button */
+  align-items: center;
+  column-gap: 0.75rem;
+  row-gap: 0;
+  width: 100%;
+}
+
+.buyer-history-property-title {
+  text-transform: uppercase;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  white-space: normal;
+  overflow: visible;
+  word-wrap: break-word;
+  word-break: break-word;
+  line-height: 1.4;
+  min-width: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.buyer-history-separator {
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.buyer-history-owner-name {
+  text-align: left;
+  font-size: 0.95rem;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.buyer-history-owner-phone,
+.buyer-history-owner-email {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.buyer-history-link {
+  text-align: left;
+  font-size: 0.99rem;
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color 0.3s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  min-width: 0;
+}
+
+.buyer-history-link:hover {
+  color: var(--color-primary-dark);
+  text-decoration: underline;
+}
+
+.buyer-history-empty {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.buyer-history-timestamp {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.buyer-history-view-btn {
+  background: var(--color-primary);
+  border: none;
+  padding: 0.625rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--color-surface);
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: var(--shadow-button);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.buyer-history-view-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-button-hover);
+}
+
+.buyer-empty-history {
+  background: var(--color-bg);
+  border-radius: 12px;
+  padding: 4rem 2rem;
+  text-align: center;
+  border: 2px dashed var(--color-border);
+  margin-top: 2rem;
+}
+
+.buyer-empty-history svg {
+  margin: 0 auto 1.5rem;
+}
+
+.buyer-empty-history h3 {
+  font-size: 1.5rem;
+  color: var(--color-text-primary);
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.buyer-empty-history p {
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+/* Large Desktop (≥1440px) */
+@media (min-width: 1440px) {
+  .buyer-seller-profile {
+    padding: 2.5rem;
+  }
+
+  .buyer-profile-header h1 {
+    font-size: 2.25rem;
+  }
+
+  .buyer-profile-content {
+    gap: 2rem;
+  }
+
+  .buyer-profile-card {
+    padding: 2.5rem;
+  }
+}
+
+/* Laptop (1024px - 1439px) */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .buyer-profile-content {
+    grid-template-columns: minmax(320px, 380px) 1fr;
+    gap: 1.75rem;
+  }
+}
+
+/* Tablet (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .buyer-seller-profile {
+    padding: 1.75rem;
+  }
+
+  .buyer-profile-header {
+    padding-top: 40px;
+    padding-left: 20px;
+  }
+
+  .buyer-profile-header h1 {
+    font-size: clamp(1.6rem, 3vw, 1.8rem);
+  }
+
+  .buyer-profile-content {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .buyer-profile-card {
+    max-width: 100%;
+    margin: 0;
+    padding: 1.75rem;
+  }
+
+  .buyer-form-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .buyer-avatar-container {
+    width: 130px;
+    height: 130px;
+  }
+
+  .buyer-avatar-upload-btn {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    min-height: 38px; /* Tap-friendly */
+  }
+
+  .buyer-cancel-btn,
+  .buyer-save-btn,
+  .buyer-section-btn {
+    min-height: 44px; /* Tap-friendly */
+  }
+}
+
+/* Mobile (≤767px) */
+@media (max-width: 767px) {
+  .buyer-seller-profile {
+    padding: 1rem;
+    margin: 0;
+  }
+
+  .buyer-profile-header {
+    margin-bottom: 1.5rem;
+    padding-top: 30px;
+    padding-left: 0;
+  }
+
+  .buyer-profile-header h1 {
+    font-size: clamp(1.4rem, 5vw, 1.6rem);
+  }
+
+  .buyer-profile-content {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  /* Fix card widths on mobile */
+  .buyer-profile-card,
+  .buyer-profile-form-card {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 1.5rem;
+    box-sizing: border-box;
+  }
+
+  .buyer-profile-card {
+    margin-bottom: 0;
+  }
+
+  .buyer-form-row {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .buyer-avatar-container {
+    width: 120px;
+    height: 120px;
+  }
+
+  .buyer-avatar-upload-btn {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px; /* Tap-friendly */
+  }
+
+  .buyer-avatar-upload-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .buyer-profile-name-section h2 {
+    font-size: 1.25rem;
+  }
+
+  .buyer-profile-role {
+    font-size: 0.9rem;
+  }
+
+  .buyer-badge {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .buyer-profile-form-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .buyer-input-wrapper {
+    padding: 0.75rem 0.875rem;
+    min-height: 44px; /* Tap-friendly */
+  }
+
+  .buyer-input-wrapper input {
+    font-size: 0.9rem;
+  }
+
+  .buyer-form-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .buyer-cancel-btn,
+  .buyer-save-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.875rem 1.5rem;
+    min-height: 44px; /* Tap-friendly */
+  }
+
+  /* Section Toggle */
+  .buyer-profile-section-toggle {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .buyer-section-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.875rem 1.25rem;
+    min-height: 44px; /* Tap-friendly */
+  }
+
+  /* Favorites Grid */
+  .buyer-favorites-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .buyer-empty-favorites {
+    padding: 3rem 1.5rem;
+  }
+
+  .buyer-empty-favorites h3 {
+    font-size: clamp(1.2rem, 4vw, 1.3rem);
+  }
+
+  .buyer-empty-favorites p {
+    font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+  }
+
+  /* History Section */
+  .buyer-history-heading {
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .buyer-history-list {
+    gap: 0.875rem;
+  }
+
+  .buyer-history-item {
+    padding: 1rem 1.25rem;
+    padding-left: 3rem;
+  }
+
+  .buyer-history-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .buyer-history-separator {
+    display: none;
+  }
+
+  .buyer-history-property-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    white-space: normal;
+    overflow: visible;
+    word-wrap: break-word;
+    word-break: break-word;
+    line-height: 1.4;
+    -webkit-line-clamp: 4;
+  }
+
+  .buyer-history-owner-name {
+    font-size: 0.9rem;
+  }
+
+  .buyer-history-owner-phone,
+  .buyer-history-owner-email {
+    font-size: 0.9rem;
+  }
+
+  .buyer-history-link {
+    font-size: 0.9rem;
+  }
+
+  .buyer-history-timestamp {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    margin-top: 0.25rem;
+  }
+
+  .buyer-history-view-btn {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    min-height: 44px; /* Tap-friendly */
+    margin-top: 0.5rem;
+    grid-column: 1 / -1;
+  }
+
+  .buyer-empty-history {
+    padding: 3rem 1.5rem;
+  }
+
+  .buyer-empty-history h3 {
+    font-size: clamp(1.2rem, 4vw, 1.3rem);
+  }
+
+  .buyer-empty-history p {
+    font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+  }
+}
+
+/* Small Mobile (≤480px) */
+@media (max-width: 480px) {
+  .buyer-seller-profile {
+    padding: 0.75rem;
+  }
+
+  .buyer-profile-header {
+    margin-bottom: 1.25rem;
+    padding-top: 20px;
+  }
+
+  .buyer-profile-header h1 {
+    font-size: clamp(1.2rem, 5vw, 1.35rem);
+  }
+
+  .buyer-profile-content {
+    gap: 1.25rem;
+  }
+
+  /* Ensure cards are same width on small mobile */
+  .buyer-profile-card,
+  .buyer-profile-form-card {
+    width: 100%;
+    padding: 1.25rem;
+  }
+
+  .buyer-profile-avatar-section {
+    padding-bottom: 1.25rem;
+  }
+
+  .buyer-avatar-container {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 1.25rem;
+  }
+
+  .buyer-avatar-upload-btn {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px; /* Tap-friendly */
+    bottom: 2px;
+    right: 2px;
+  }
+
+  .buyer-avatar-upload-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .buyer-profile-name-section h2 {
+    font-size: 1.15rem;
+  }
+
+  .buyer-profile-role {
+    font-size: 0.85rem;
+  }
+
+  .buyer-profile-badges {
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .buyer-badge {
+    padding: 0.3rem 0.7rem;
+    font-size: 0.7rem;
+  }
+
+  .buyer-profile-member-since {
+    padding: 0.875rem 1.25rem;
+    font-size: 0.8rem;
+  }
+
+  .buyer-profile-form-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .buyer-form-row {
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .buyer-form-group label {
+    font-size: 0.85rem;
+  }
+
+  .buyer-input-wrapper {
+    padding: 0.7rem 0.8rem;
+    gap: 0.625rem;
+  }
+
+  .buyer-input-wrapper svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .buyer-input-wrapper input {
+    font-size: 0.85rem;
+  }
+
+  .buyer-form-actions {
+    gap: 0.625rem;
+    padding-top: 1.25rem;
+    margin-top: 1.25rem;
+  }
+
+  .buyer-cancel-btn,
+  .buyer-save-btn {
+    padding: 0.8rem 1.25rem;
+    font-size: 0.9rem;
+  }
+
+  .buyer-save-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .buyer-section-btn {
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .buyer-section-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .buyer-favorites-grid {
+    gap: 1rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+
+  .buyer-empty-favorites {
+    padding: 2.5rem 1.25rem;
+  }
+
+  .buyer-empty-favorites svg {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 1.25rem;
+  }
+
+  .buyer-empty-favorites h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.625rem;
+  }
+
+  .buyer-empty-favorites p {
+    font-size: 0.9rem;
+  }
+
+  /* History Section */
+  .buyer-history-heading {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .buyer-history-item {
+    padding: 0.875rem 1rem;
+    padding-left: 2.75rem;
+  }
+
+  .buyer-history-item::before {
+    left: 1rem;
+    font-size: 1rem;
+  }
+
+  .buyer-history-grid {
+    gap: 0.625rem;
+  }
+
+  .buyer-history-property-title {
+    font-size: 0.9rem;
+    white-space: normal;
+    overflow: visible;
+    word-wrap: break-word;
+    word-break: break-word;
+    line-height: 1.4;
+    -webkit-line-clamp: 4;
+  }
+
+  .buyer-history-owner-name {
+    font-size: 0.85rem;
+  }
+
+  .buyer-history-owner-phone,
+  .buyer-history-owner-email {
+    font-size: 0.85rem;
+  }
+
+  .buyer-history-link {
+    font-size: 0.85rem;
+  }
+
+  .buyer-history-timestamp {
+    font-size: 0.8rem;
+  }
+
+  .buyer-history-view-btn {
+    padding: 0.7rem 0.875rem;
+    font-size: 0.85rem;
+  }
+
+  .buyer-empty-history {
+    padding: 2.5rem 1.25rem;
+  }
+
+  .buyer-empty-history svg {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 1.25rem;
+  }
+
+  .buyer-empty-history h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.625rem;
+  }
+
+  .buyer-empty-history p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Extra Small Mobile (≤360px) */
+@media (max-width: 360px) {
+  .buyer-seller-profile {
+    padding: 0.625rem;
+    margin: 0;
+  }
+
+  .buyer-profile-header {
+    padding-top: 15px;
+  }
+
+  .buyer-profile-header h1 {
+    font-size: clamp(1.1rem, 5vw, 1.25rem);
+  }
+
+  .buyer-profile-card,
+  .buyer-profile-form-card {
+    padding: 1rem;
+  }
+
+  .buyer-avatar-container {
+    width: 90px;
+    height: 90px;
+  }
+
+  .buyer-avatar-upload-btn {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    min-height: 30px; /* Tap-friendly */
+  }
+
+  .buyer-profile-name-section h2 {
+    font-size: 1.1rem;
+  }
+
+  .buyer-profile-role {
+    font-size: 0.8rem;
+  }
+
+  .buyer-cancel-btn,
+  .buyer-save-btn,
+  .buyer-section-btn {
+    min-height: 44px; /* Tap-friendly */
+  }
+
+  .buyer-badge {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.65rem;
+  }
+
+  .buyer-profile-member-since {
+    padding: 0.75rem 1rem;
+    font-size: 0.75rem;
+  }
+
+  .buyer-profile-form-card h3 {
+    font-size: 1rem;
+  }
+
+  .buyer-input-wrapper {
+    padding: 0.65rem 0.75rem;
+  }
+
+  .buyer-input-wrapper input {
+    font-size: 0.8rem;
+  }
+
+  .buyer-cancel-btn,
+  .buyer-save-btn {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .buyer-section-btn {
+    padding: 0.75rem 0.875rem;
+    font-size: 0.85rem;
+  }
+
+  .buyer-empty-favorites {
+    padding: 2rem 1rem;
+  }
+
+  .buyer-empty-favorites svg {
+    width: 50px;
+    height: 50px;
+  }
+
+  .buyer-empty-favorites h3 {
+    font-size: 1.1rem;
+  }
+
+  .buyer-empty-favorites p {
+    font-size: 0.85rem;
+  }
+
+  /* History Section */
+  .buyer-history-heading {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .buyer-history-item {
+    padding: 0.875rem 1rem;
+    padding-left: 2.75rem;
+  }
+
+  .buyer-history-item::before {
+    left: 1rem;
+    font-size: 1rem;
+  }
+
+  .buyer-history-grid {
+    gap: 0.625rem;
+  }
+
+  .buyer-history-property-title {
+    font-size: 0.9rem;
+    white-space: normal;
+    overflow: visible;
+    word-wrap: break-word;
+    word-break: break-word;
+    line-height: 1.4;
+    -webkit-line-clamp: 4;
+  }
+
+  .buyer-history-owner-name {
+    font-size: 0.85rem;
+  }
+
+  .buyer-history-owner-phone,
+  .buyer-history-owner-email {
+    font-size: 0.85rem;
+  }
+
+  .buyer-history-link {
+    font-size: 0.85rem;
+  }
+
+  .buyer-history-timestamp {
+    font-size: 0.8rem;
+  }
+
+  .buyer-history-view-btn {
+    padding: 0.7rem 0.875rem;
+    font-size: 0.85rem;
+  }
+
+  .buyer-empty-history {
+    padding: 2rem 1rem;
+  }
+
+  .buyer-empty-history svg {
+    width: 50px;
+    height: 50px;
+  }
+
+  .buyer-empty-history h3 {
+    font-size: 1.1rem;
+  }
+
+  .buyer-empty-history p {
+    font-size: 0.85rem;
+  }
+}
+
+/* Touch device optimization */
+@media (hover: none) and (pointer: coarse) {
+  .buyer-avatar-upload-btn:hover {
+    transform: none;
+  }
+
+  .buyer-avatar-upload-btn:active {
+    transform: scale(0.95);
+  }
+
+  .buyer-cancel-btn:hover {
+    background: var(--color-bg);
+  }
+
+  .buyer-cancel-btn:active {
+    background: var(--color-border);
+  }
+
+  .buyer-save-btn:hover {
+    transform: none;
+  }
+
+  .buyer-save-btn:active {
+    transform: scale(0.98);
+  }
+
+  .buyer-section-btn:hover {
+    background: var(--color-bg);
+  }
+
+  .buyer-section-btn:active {
+    transform: scale(0.98);
+  }
+
+  .buyer-section-btn.active:hover {
+    background: var(--color-primary);
+  }
+}
+
+/* ==================== */
+/* PROFILE BLUR OVERLAY */
+/* ==================== */
+.buyer-profile-wrapper {
+  position: relative;
+  min-height: 100vh;
+}
+
+.buyer-profile-wrapper.buyer-profile-blurred {
+  filter: blur(4px);
+  pointer-events: none;
+  user-select: none;
+  overflow: hidden;
+}
+
+.buyer-profile-blur-overlay {
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.6);
+  z-index: 9999;
+  pointer-events: none; /* Allow clicks to pass through to popup */
+}

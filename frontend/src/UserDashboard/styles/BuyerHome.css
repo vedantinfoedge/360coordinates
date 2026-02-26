@@ -1,0 +1,876 @@
+/* Home Page Styles */
+.buyer-page-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.buyer-home-properties-section {
+  width: 100%;
+  padding: 10px 0;
+}
+
+.buyer-section-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 0 24px;
+}
+
+.buyer-section-header-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.buyer-section-header-content > div:first-child {
+  text-align: center;
+}
+
+.buyer-section-header-content > .buyer-view-all-btn {
+  position: absolute;
+  right: 0;
+}
+
+.buyer-view-all-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.625rem 1.25rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.buyer-view-all-btn:hover {
+  background: var(--color-primary);
+  color: var(--color-text-white);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--color-shadow-primary);
+}
+
+.buyer-view-all-btn:active {
+  transform: translateY(0);
+}
+
+.buyer-view-all-btn svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+
+.buyer-view-all-btn:hover svg {
+  transform: translateX(4px);
+}
+
+.buyer-section-header h1 {
+  font-size: 2.5rem;
+  color: var(--color-text-primary);
+  margin-bottom: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.buyer-section-header h2 {
+  font-size: 2.2rem;
+  color: var(--color-text-primary);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.buyer-section-header p {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Horizontal Scroll Container */
+.buyer-horizontal-scroll-container {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0 0 20px 0;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.buyer-property-cards-wrapper {
+  display: flex;
+  gap: 24px;
+  padding: 0 24px;
+  min-width: min-content;
+  align-items: stretch; /* Ensure all cards stretch to same height */
+}
+
+/* Ensure property cards have proper width and height in horizontal scroll */
+.buyer-property-cards-wrapper .buyer-property-card {
+  flex-shrink: 0;
+  width: 350px;
+  max-width: 350px;
+  min-height: 500px; /* Ensure all cards have minimum same height */
+  height: auto; /* Allow cards to grow if needed */
+}
+
+/* Custom Scrollbar */
+.buyer-horizontal-scroll-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.buyer-horizontal-scroll-container::-webkit-scrollbar-track {
+  background: var(--color-border);
+  border-radius: 10px;
+}
+
+.buyer-horizontal-scroll-container::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 10px;
+}
+
+.buyer-horizontal-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-hover);
+}
+
+/* ============================================================================
+   AUTO-SCROLL ANIMATION STYLES
+   ============================================================================ */
+
+/* Auto-scroll container - overrides for animation */
+.buyer-auto-scroll-container {
+  overflow: hidden; /* Hide scrollbar during auto-scroll for cleaner look */
+  position: relative;
+}
+
+/* Allow manual scroll when hovered/paused */
+.buyer-auto-scroll-container.paused {
+  overflow-x: auto;
+}
+
+/* Auto-scroll wrapper with CSS animation */
+.buyer-auto-scroll-wrapper {
+  display: flex;
+  gap: 24px;
+  padding: 0 24px;
+  min-width: min-content;
+  align-items: stretch;
+  /* Animation - scrolls from right to left continuously (slower speed: 120s) */
+  animation: buyer-auto-scroll 400s linear infinite;
+  /* Ensure smooth animation */
+  will-change: transform;
+}
+
+/* Pause animation when container has .paused class */
+.buyer-auto-scroll-container.paused .buyer-auto-scroll-wrapper {
+  animation-play-state: paused;
+}
+
+/* Keyframes for horizontal auto-scroll (right to left) */
+@keyframes buyer-auto-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* Move by exactly 50% since we duplicated the content */
+    transform: translateX(-50%);
+  }
+}
+
+/* Ensure cards inside auto-scroll have correct sizing */
+.buyer-auto-scroll-wrapper .buyer-property-card {
+  flex-shrink: 0;
+  width: 350px;
+  max-width: 350px;
+  min-height: 500px;
+  height: auto;
+}
+
+/* Smooth transition for animation-play-state */
+.buyer-auto-scroll-wrapper {
+  transition: animation-play-state 0.3s ease;
+}
+
+/* Accessibility - respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .buyer-auto-scroll-wrapper {
+    animation: none;
+  }
+  
+  .buyer-auto-scroll-container {
+    overflow-x: auto;
+  }
+}
+
+/* ============================================================================
+   SECTION: BROWSE RESIDENTIAL PROJECTS IN TOP CITIES WITH BACKGROUND IMAGES
+   ============================================================================ */
+
+.buyer-city-projects-section {
+  width: 100%;
+  padding: 60px 24px;
+}
+
+.buyer-city-projects-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.buyer-city-project-card {
+  position: relative;
+  border-radius: 16px;
+  padding: 0;
+  min-height: 280px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: flex-end;
+}
+
+.buyer-city-project-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+}
+
+/* Dark overlay for better text readability */
+.buyer-city-project-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.4) 50%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+  transition: background 0.3s ease;
+  z-index: 1;
+}
+
+.buyer-city-project-card:hover .buyer-city-project-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(0, 119, 192, 0.9) 0%,
+    rgba(0, 119, 192, 0.6) 50%,
+    rgba(0, 119, 192, 0.3) 100%
+  );
+}
+
+/* Content container */
+.buyer-city-project-content {
+  position: relative;
+  z-index: 2;
+  padding: 24px;
+  width: 100%;
+  text-align: center;
+}
+
+.buyer-city-project-name {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 8px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.buyer-city-project-card:hover .buyer-city-project-name {
+  transform: scale(1.05);
+}
+
+.buyer-city-project-subtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0 0 16px 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  font-weight: 500;
+}
+
+.buyer-city-project-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.buyer-city-project-arrow svg {
+  color: #ffffff;
+  transition: transform 0.3s ease;
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+.buyer-city-project-card:hover .buyer-city-project-arrow svg {
+  transform: translateX(8px);
+}
+
+/* Responsive Design */
+/* Large Desktop (≥1440px) */
+@media (min-width: 1440px) {
+  .buyer-home-properties-section {
+    padding: 10px 0;
+  }
+
+  .buyer-section-header h1 {
+    font-size: 2.75rem;
+  }
+
+  .buyer-section-header h2 {
+    font-size: 2.5rem;
+  }
+
+  .buyer-city-projects-section {
+    padding: 70px 2.5rem;
+  }
+
+  .buyer-city-projects-grid {
+    max-width: 1400px;
+    gap: 28px;
+  }
+
+  .buyer-city-project-card {
+    min-height: 300px;
+  }
+}
+
+/* Laptop (1024px - 1439px) */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .buyer-home-properties-section {
+    padding: 10px 0;
+  }
+
+  .buyer-section-header h1 {
+    font-size: 2.5rem;
+  }
+
+  .buyer-section-header h2 {
+    font-size: 2.2rem;
+  }
+
+  .buyer-city-projects-section {
+    padding: 60px 2rem;
+  }
+
+  .buyer-city-projects-grid {
+    max-width: 1200px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .buyer-city-project-card {
+    min-height: 280px;
+  }
+}
+
+/* Tablet (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .buyer-section-header h1 {
+    font-size: clamp(1.9rem, 4vw, 2.2rem);
+  }
+
+  .buyer-section-header h2 {
+    font-size: clamp(1.7rem, 4vw, 2rem);
+  }
+
+  .buyer-section-header p {
+    font-size: 0.95rem;
+  }
+
+  .buyer-section-header {
+    margin-bottom: 30px;
+    padding: 0 1.5rem;
+  }
+
+  .buyer-section-header-content {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .buyer-section-header-content > .buyer-view-all-btn {
+    position: static;
+    right: auto;
+  }
+
+  .buyer-view-all-btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .buyer-property-cards-wrapper {
+    gap: 20px;
+    padding: 0 1.5rem;
+  }
+
+  .buyer-property-cards-wrapper .buyer-property-card {
+    width: 320px;
+    max-width: 320px;
+    min-height: 480px;
+  }
+
+  /* Auto-scroll responsive - tablet (slower speed: 100s) */
+  .buyer-auto-scroll-wrapper {
+    gap: 20px;
+    padding: 0 1.5rem;
+    animation-duration: 400s;
+  }
+
+  .buyer-auto-scroll-wrapper .buyer-property-card {
+    width: 320px;
+    max-width: 320px;
+    min-height: 480px;
+  }
+
+  .buyer-home-properties-section {
+    padding: 45px 0;
+  }
+
+  .buyer-city-projects-section {
+    padding: 45px 1.5rem;
+  }
+
+  .buyer-city-projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  .buyer-city-project-card {
+    min-height: 260px;
+  }
+
+  .buyer-city-project-content {
+    padding: 22px;
+  }
+
+  .buyer-city-project-name {
+    font-size: 1.6rem;
+  }
+
+  .buyer-city-project-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+  }
+}
+
+/* Mobile (≤767px) */
+@media (max-width: 767px) {
+  .buyer-section-header h1 {
+    font-size: clamp(1.5rem, 5vw, 1.9rem);
+    line-height: 1.3;
+  }
+
+  .buyer-section-header h2 {
+    font-size: clamp(1.35rem, 5vw, 1.7rem);
+    line-height: 1.3;
+  }
+
+  .buyer-section-header p {
+    font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+  }
+
+  .buyer-section-header {
+    margin-bottom: 28px;
+    padding: 0 1rem;
+  }
+
+  .buyer-section-header-content {
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .buyer-section-header-content > .buyer-view-all-btn {
+    position: static;
+    right: auto;
+  }
+
+  .buyer-view-all-btn {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    justify-content: center;
+    max-width: 200px;
+    margin: 0 auto;
+  }
+
+  .buyer-horizontal-scroll-container {
+    padding: 0 0 16px 0;
+  }
+
+  .buyer-property-cards-wrapper {
+    gap: 18px;
+    padding: 0 1rem;
+  }
+
+  .buyer-property-cards-wrapper .buyer-property-card {
+    width: 300px;
+    max-width: 300px;
+    min-height: 460px;
+  }
+
+  /* Auto-scroll responsive - mobile (slower speed: 80s) */
+  .buyer-auto-scroll-wrapper {
+    gap: 18px;
+    padding: 0 1rem;
+    animation-duration: 400s;
+  }
+
+  .buyer-auto-scroll-wrapper .buyer-property-card {
+    width: 300px;
+    max-width: 300px;
+    min-height: 460px;
+  }
+
+  .buyer-home-properties-section {
+    padding: 10px 0;
+  }
+
+  .buyer-city-projects-section {
+    padding: 40px 1rem;
+  }
+
+  .buyer-city-projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .buyer-city-project-card {
+    min-height: 240px;
+    border-radius: 14px;
+  }
+
+  .buyer-city-project-content {
+    padding: 20px;
+  }
+
+  .buyer-city-project-name {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .buyer-city-project-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+  }
+
+  .buyer-city-project-card {
+    min-height: 44px; /* Tap-friendly */
+  }
+}
+
+/* Small Mobile (≤480px) */
+@media (max-width: 480px) {
+  .buyer-section-header h1 {
+    font-size: clamp(1.3rem, 5vw, 1.5rem);
+  }
+
+  .buyer-section-header h2 {
+    font-size: clamp(1.2rem, 5vw, 1.35rem);
+  }
+
+  .buyer-section-header p {
+    font-size: clamp(0.85rem, 2.5vw, 0.9rem);
+  }
+
+  .buyer-section-header {
+    margin-bottom: 24px;
+    padding: 0 0.75rem;
+  }
+
+  .buyer-view-all-btn {
+    font-size: 0.8rem;
+    padding: 0.45rem 0.9rem;
+    max-width: 180px;
+  }
+
+  .buyer-horizontal-scroll-container {
+    padding: 0 0 14px 0;
+  }
+
+  .buyer-property-cards-wrapper {
+    gap: 16px;
+    padding: 0 0.75rem;
+  }
+
+  .buyer-property-cards-wrapper .buyer-property-card {
+    width: 280px;
+    max-width: 280px;
+    min-height: 440px;
+  }
+
+  /* Auto-scroll responsive - small mobile (slower speed: 70s) */
+  .buyer-auto-scroll-wrapper {
+    gap: 16px;
+    padding: 0 0.75rem;
+    animation-duration: 300s;
+  }
+
+  .buyer-auto-scroll-wrapper .buyer-property-card {
+    width: 280px;
+    max-width: 280px;
+    min-height: 440px;
+  }
+
+  .buyer-home-properties-section {
+    padding: 10px 0;
+  }
+
+  .buyer-city-projects-section {
+    padding: 32px 0.75rem;
+  }
+
+  .buyer-city-projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .buyer-city-project-card {
+    min-height: 220px;
+    border-radius: 12px;
+  }
+
+  .buyer-city-project-content {
+    padding: 18px 14px;
+  }
+
+  .buyer-city-project-name {
+    font-size: 1.3rem;
+    margin-bottom: 6px;
+  }
+
+  .buyer-city-project-subtitle {
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+  }
+
+  .buyer-city-project-arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Extra Small Mobile (≤360px) */
+@media (max-width: 360px) {
+  .buyer-section-header h1 {
+    font-size: clamp(1.2rem, 5vw, 1.35rem);
+  }
+
+  .buyer-section-header h2 {
+    font-size: clamp(1.1rem, 5vw, 1.2rem);
+  }
+
+  .buyer-section-header p {
+    font-size: clamp(0.8rem, 2.5vw, 0.85rem);
+  }
+
+  .buyer-section-header {
+    margin-bottom: 20px;
+    padding: 0 0.625rem;
+  }
+
+  .buyer-view-all-btn {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.8rem;
+    max-width: 160px;
+  }
+
+  .buyer-horizontal-scroll-container {
+    padding: 0 0 12px 0;
+  }
+
+  .buyer-property-cards-wrapper {
+    gap: 14px;
+    padding: 0 0.625rem;
+  }
+
+  .buyer-property-cards-wrapper .buyer-property-card {
+    width: 260px;
+    max-width: 260px;
+    min-height: 420px;
+  }
+
+  /* Auto-scroll responsive - extra small mobile (slower speed: 60s) */
+  .buyer-auto-scroll-wrapper {
+    gap: 14px;
+    padding: 0 0.625rem;
+    animation-duration: 400s;
+  }
+
+  .buyer-auto-scroll-wrapper .buyer-property-card {
+    width: 260px;
+    max-width: 260px;
+    min-height: 420px;
+  }
+
+  .buyer-home-properties-section {
+    padding: 10px 0;
+  }
+
+  .buyer-city-projects-section {
+    padding: 10px 0.625rem;
+  }
+
+  .buyer-city-projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .buyer-city-project-card {
+    min-height: 200px;
+    border-radius: 10px;
+  }
+
+  .buyer-city-project-content {
+    padding: 16px 12px;
+  }
+
+  .buyer-city-project-name {
+    font-size: 1.15rem;
+    margin-bottom: 5px;
+  }
+
+  .buyer-city-project-subtitle {
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+  }
+
+  .buyer-city-project-arrow {
+    margin-top: 8px;
+  }
+
+  .buyer-city-project-arrow svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Landscape mode optimization */
+@media (max-height: 500px) and (orientation: landscape) {
+  .buyer-section-header h1 {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .buyer-section-header h2 {
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+  }
+
+  .buyer-section-header p {
+    font-size: 0.85rem;
+  }
+
+  .buyer-section-header {
+    margin-bottom: 16px;
+  }
+
+  .buyer-view-all-btn {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.9rem;
+  }
+
+  .buyer-home-properties-section,
+  .buyer-city-projects-section {
+    padding: 20px 12px;
+  }
+
+  .buyer-city-project-card {
+    min-height: 160px;
+  }
+
+  .buyer-city-project-content {
+    padding: 12px;
+  }
+}
+
+/* Touch optimization */
+@media (hover: none) and (pointer: coarse) {
+  /* Auto-scroll touch optimization */
+  .buyer-auto-scroll-container {
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+  }
+
+  .buyer-auto-scroll-wrapper .buyer-property-card {
+    scroll-snap-align: start;
+  }
+
+  .buyer-city-project-card {
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+
+  .buyer-city-project-card:active {
+    transform: scale(0.98);
+  }
+
+  .buyer-city-project-card:hover {
+    transform: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .buyer-city-project-card:hover .buyer-city-project-overlay {
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.85) 0%,
+      rgba(0, 0, 0, 0.4) 50%,
+      rgba(0, 0, 0, 0.2) 100%
+    );
+  }
+
+  .buyer-city-project-card:hover .buyer-city-project-name {
+    transform: none;
+  }
+
+  .buyer-city-project-card:hover .buyer-city-project-arrow svg {
+    transform: none;
+  }
+
+  .buyer-city-project-card:active .buyer-city-project-overlay {
+    background: linear-gradient(
+      to top,
+      rgba(0, 119, 192, 0.9) 0%,
+      rgba(0, 119, 192, 0.6) 50%,
+      rgba(0, 119, 192, 0.3) 100%
+    );
+  }
+
+  .buyer-view-all-btn {
+    -webkit-tap-highlight-color: rgba(0, 119, 192, 0.2);
+    min-height: 44px; /* Tap-friendly */
+  }
+
+  .buyer-view-all-btn:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .buyer-view-all-btn:active {
+    transform: scale(0.98);
+    background: var(--color-primary);
+    color: var(--color-text-white);
+  }
+
+  .buyer-view-all-btn:hover svg {
+    transform: none;
+  }
+
+  .buyer-view-all-btn:active svg {
+    transform: translateX(4px);
+  }
+}

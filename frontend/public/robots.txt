@@ -1,0 +1,59 @@
+# https://www.robotstxt.org/robotstxt.html
+# Robots.txt for 360coordinates.com
+
+# ============================================
+# DEFAULT RULES FOR ALL CRAWLERS
+# ============================================
+User-agent: *
+Allow: /
+
+
+
+# Block backend API endpoints
+Disallow: /backend/
+
+# Block query parameters that create duplicate content
+Disallow: /*?*utm_source=
+Disallow: /*?*utm_medium=
+Disallow: /*?*utm_campaign=
+Disallow: /*?*ref=
+Disallow: /*?*source=
+
+# Allow important public pages explicitly
+Allow: /searchresults
+Allow: /details/
+Allow: /upcoming-project/
+
+# Crawl delay (be respectful to server resources)
+Crawl-delay: 1
+
+# ============================================
+# GOOGLEBOT SPECIFIC RULES
+# ============================================
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /buyer-dashboard/
+Disallow: /seller-dashboard/
+Disallow: /agent-dashboard/
+Disallow: /Agent-dashboard/
+Disallow: /backend/
+Crawl-delay: 0
+
+# ============================================
+# BINGBOT SPECIFIC RULES
+# ============================================
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+Disallow: /buyer-dashboard/
+Disallow: /seller-dashboard/
+Disallow: /agent-dashboard/
+Disallow: /Agent-dashboard/
+Disallow: /backend/
+Crawl-delay: 1
+
+# ============================================
+# SITEMAP LOCATION
+# ============================================
+Sitemap: https://360coordinates.com/sitemap.xml

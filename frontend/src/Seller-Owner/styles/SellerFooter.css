@@ -1,0 +1,5 @@
+/* Seller Footer - White Wave Override */
+.seller-dashboard .buyer-footer-wave svg {
+  fill: var(--color-surface) !important;
+}
+

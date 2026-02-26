@@ -1,0 +1,469 @@
+/* Explore.css */
+
+.explore-section {
+  width: 100%;
+  padding: 5rem 0;
+  background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-bg) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.explore-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(0, 119, 192, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(30, 58, 138, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.explore-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Header Section */
+.explore-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.explore-main-title {
+  font-size: 2.75rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0 0 1rem 0;
+  line-height: 1.2;
+}
+
+.explore-main-subtitle {
+  font-size: 1.15rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Grid Layout - 4 columns in one row */
+.explore-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+/* Card Styles */
+.explore-card {
+  background: var(--color-surface);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition: all 0.4s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid transparent;
+  animation: fadeInUp 0.6s ease forwards;
+  opacity: 0;
+}
+
+.explore-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  border-color: var(--color-primary);
+}
+
+/* Image Container - Reduced height for 4-column layout */
+.explore-card-image {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.explore-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.explore-card:hover .explore-card-image img {
+  transform: scale(1.1);
+}
+
+.explore-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.3;
+  transition: opacity 0.4s ease;
+}
+
+.explore-card:hover .explore-card-overlay {
+  opacity: 0.5;
+}
+
+/* Content Section - Adjusted padding for compact layout */
+.explore-card-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.explore-card-subtitle {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.explore-card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0 0 0.75rem 0;
+  line-height: 1.3;
+}
+
+.explore-card-details {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin: 0 0 1.25rem 0;
+  flex-grow: 1;
+}
+
+/* Button - Adjusted for compact layout */
+.explore-card-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 119, 192, 0.3);
+  position: relative;
+  overflow: hidden;
+  align-self: flex-start;
+}
+
+.explore-card-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.explore-card-button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.explore-card-button span {
+  position: relative;
+  z-index: 1;
+}
+
+.button-arrow {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.explore-card-button:hover {
+  transform: translateX(5px);
+  box-shadow: 0 6px 25px rgba(0, 119, 192, 0.5);
+}
+
+.explore-card-button:hover .button-arrow {
+  transform: translateX(5px);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fully Responsive Design */
+/* Large Desktop (≥1440px) */
+@media (min-width: 1440px) {
+  .explore-section {
+    padding: 6rem 0;
+  }
+  
+  .explore-container {
+    max-width: 1400px;
+    padding: 0 2rem;
+  }
+  
+  .explore-main-title {
+    font-size: 2.75rem;
+  }
+  
+  .explore-main-subtitle {
+    font-size: 1.15rem;
+  }
+  
+  .explore-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+  
+  .explore-card-image {
+    height: 260px;
+  }
+}
+
+/* Laptop (1024px - 1439px) */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .explore-section {
+    padding: 5rem 0;
+  }
+  
+  .explore-container {
+    max-width: 1200px;
+    padding: 0 1.5rem;
+  }
+  
+  .explore-main-title {
+    font-size: 2.5rem;
+  }
+  
+  .explore-main-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .explore-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.75rem;
+  }
+  
+  .explore-card-image {
+    height: 250px;
+  }
+}
+
+/* Tablet (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .explore-section {
+    padding: 4rem 0;
+  }
+
+  .explore-container {
+    padding: 0 1.5rem;
+  }
+
+  .explore-main-title {
+    font-size: 2rem;
+  }
+
+  .explore-main-subtitle {
+    font-size: 1rem;
+  }
+  
+  .explore-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .explore-card-image {
+    height: 240px;
+  }
+
+  .explore-card-content {
+    padding: 1.75rem;
+  }
+
+  .explore-card-title {
+    font-size: 1.2rem;
+  }
+
+  .explore-card-details {
+    font-size: 0.9rem;
+  }
+
+  .explore-card-button {
+    font-size: 0.95rem;
+    padding: 0.875rem 1.5rem;
+    min-height: 44px; /* Tap-friendly */
+  }
+}
+
+/* Mobile (≤767px) */
+@media (max-width: 767px) {
+  .explore-section {
+    padding: clamp(2.5rem, 5vw, 3rem) 0;
+  }
+
+  .explore-container {
+    padding: 0 1rem;
+  }
+
+  .explore-header {
+    margin-bottom: clamp(2rem, 4vw, 2.5rem);
+  }
+
+  .explore-main-title {
+    font-size: clamp(1.5rem, 5vw, 1.875rem);
+    padding: 0 1rem;
+  }
+
+  .explore-main-subtitle {
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+    padding: 0 1rem;
+  }
+
+  .explore-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .explore-card-image {
+    height: clamp(200px, 30vw, 220px);
+  }
+
+  .explore-card-content {
+    padding: 1.5rem;
+  }
+
+  .explore-card-title {
+    font-size: clamp(1.1rem, 3vw, 1.25rem);
+  }
+
+  .explore-card-button {
+    width: 100%;
+    min-height: 44px; /* Tap-friendly */
+  }
+}
+
+/* Small Mobile (≤480px) */
+@media (max-width: 480px) {
+  .explore-section {
+    padding: clamp(1.5rem, 4vw, 2rem) 0;
+  }
+
+  .explore-container {
+    padding: 0 0.75rem;
+  }
+
+  .explore-main-title {
+    font-size: clamp(1.3rem, 5vw, 1.5rem);
+    padding: 0 0.75rem;
+  }
+
+  .explore-main-subtitle {
+    font-size: clamp(0.85rem, 2.5vw, 0.9rem);
+    padding: 0 0.75rem;
+  }
+
+  .explore-card-image {
+    height: clamp(180px, 28vw, 200px);
+  }
+
+  .explore-card-content {
+    padding: 1.25rem;
+  }
+
+  .explore-card-button {
+    font-size: clamp(0.85rem, 2vw, 0.95rem);
+    padding: 0.75rem 1.5rem;
+    min-height: 44px;
+  }
+}
+
+/* Extra Small Mobile (≤360px) */
+@media (max-width: 360px) {
+  .explore-section {
+    padding: 1.5rem 0;
+  }
+
+  .explore-container {
+    padding: 0 0.625rem;
+  }
+  
+  .explore-main-title {
+    font-size: clamp(1.2rem, 5vw, 1.4rem);
+    padding: 0 0.625rem;
+  }
+  
+  .explore-card-image {
+    height: 180px;
+  }
+  
+  .explore-card-content {
+    padding: 1rem;
+  }
+
+  .explore-card-button {
+    padding: 0.75rem 1.25rem;
+    min-height: 44px;
+  }
+}
+
+/* Loading State Animation */
+.explore-card.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Focus Styles for Accessibility */
+.explore-card-button:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Hover Effect Enhancement */
+@media (hover: hover) {
+  .explore-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 119, 192, 0.1) 0%, rgba(30, 58, 138, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+
+  .explore-card:hover::after {
+    opacity: 1;
+  }
+}

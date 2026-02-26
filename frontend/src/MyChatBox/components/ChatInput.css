@@ -1,0 +1,137 @@
+/* ChatInput Styles */
+.mychatbox-quick-replies {
+  padding: 1rem 1.5rem;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+}
+
+.mychatbox-quick-replies-label {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin: 0 0 0.75rem 0;
+  font-weight: 500;
+}
+
+.mychatbox-quick-replies-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.mychatbox-quick-reply-btn {
+  padding: 0.625rem 1rem;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-primary);
+  border-radius: 20px;
+  color: var(--color-primary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mychatbox-quick-reply-btn:hover {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-light-accent) 100%);
+  color: var(--color-text-white);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.mychatbox-chat-input-wrapper {
+  padding: 1.5rem;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+}
+
+.mychatbox-chat-input-form {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.mychatbox-chat-input {
+  flex: 1;
+  padding: 1rem 1.25rem;
+  border: 2px solid var(--color-border);
+  border-radius: 24px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s ease;
+  background: var(--color-bg);
+}
+
+.mychatbox-chat-input:focus {
+  border-color: var(--color-primary);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.mychatbox-chat-input::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.mychatbox-chat-send-btn {
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary) 0%, #1e293b 100%);
+  color: var(--color-text-white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.mychatbox-chat-send-btn:hover:not(:disabled) {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.mychatbox-chat-send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.mychatbox-chat-send-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Accessibility */
+.mychatbox-chat-input:focus,
+.mychatbox-chat-send-btn:focus,
+.mychatbox-quick-reply-btn:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .mychatbox-quick-replies {
+    padding: 0.875rem 1rem;
+  }
+
+  .mychatbox-chat-input-wrapper {
+    padding: 1rem;
+  }
+
+  .mychatbox-chat-input {
+    padding: 0.875rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .mychatbox-chat-send-btn {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mychatbox-quick-reply-btn {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.875rem;
+  }
+}

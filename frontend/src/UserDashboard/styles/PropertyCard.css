@@ -1,0 +1,1225 @@
+/* Property Card Styles */
+.buyer-property-card {
+  background: var(--color-surface-card);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(29, 36, 43, 0.12), 0 2px 8px rgba(29, 36, 43, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensure all cards have same height */
+  max-width: 100%;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  padding-bottom: 20px;
+}
+
+.buyer-filtered-properties-grid-property-card{
+  background: var(--color-surface-card);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(29, 36, 43, 0.12), 0 2px 8px rgba(29, 36, 43, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensure all cards have same height in grid */
+  max-width: 100%;
+  flex-shrink: 0;
+  border: 1px solid var(--color-border);
+  box-sizing: border-box;
+}
+
+.buyer-property-card:hover {
+  transform: translateY(0);
+  box-shadow: 0 8px 28px rgba(29, 36, 43, 0.16), 0 4px 12px rgba(29, 36, 43, 0.1);
+}
+
+.buyer-filtered-properties-grid-property-card:hover {
+  box-shadow: 0 8px 28px rgba(29, 36, 43, 0.16), 0 4px 12px rgba(29, 36, 43, 0.1);
+}
+
+.buyer-property-image-container {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--color-border-light) 0%, var(--color-border) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Image Carousel Container */
+.buyer-property-image-carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.buyer-property-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: opacity 0.4s ease;
+  opacity: 0;
+  z-index: 1;
+}
+
+.buyer-property-image.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+.buyer-property-card:hover .buyer-property-image.active {
+  transform: scale(1.1);
+  transition: transform 0.3s ease, opacity 0.4s ease;
+}
+
+.buyer-property-status {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 5;
+}
+
+.buyer-property-status.buyer-for-sale {
+  background: var(--color-primary);
+  color: var(--color-surface);
+}
+
+.buyer-property-status.buyer-for-rent {
+  background: #10B981;
+  color: var(--color-surface);
+}
+
+.buyer-property-status.buyer-for-pg,
+.buyer-property-status.buyer-for-hostel,
+.buyer-property-status.buyer-for-pg-hostel {
+  background: #F59E0B;
+  color: var(--color-surface);
+}
+
+.buyer-property-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.buyer-property-card .buyer-property-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-secondary);
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  text-transform: uppercase;
+
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.buyer-property-location {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.buyer-property-location svg {
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.buyer-property-details {
+  display: flex;
+  gap: 16px;
+  padding: 16px 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 16px;
+}
+
+.buyer-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.buyer-detail-item svg {
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.buyer-property-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  gap: 12px;
+}
+
+/* Scoped to avoid conflicts with ChatUs.css */
+.buyer-property-card .buyer-property-price {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.buyer-price-label {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.buyer-price-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: var( --color-secondary);
+}
+
+.buyer-view-details-btn {
+  background: var(--color-secondary);
+  color: var(--color-surface);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  white-space: nowrap;
+}
+
+.buyer-view-details-btn:hover {
+  background: var(--color-primary-dark);
+}
+
+/* --------------------------------------------------
+ * ★ Favourite Button Styles
+ * -------------------------------------------------- */
+
+.buyer-favourite-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.buyer-favourite-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Default Heart Color (Not Favourited - Outline) */
+.buyer-favourite-btn svg {
+  color: var(--color-text-secondary);
+  fill: none;
+  transition: color 0.2s ease, fill 0.2s ease;
+}
+
+/* Active (Favourited) State - Solid White Heart on Red Background */
+.buyer-favourite-btn.active {
+  background: var(--color-error);
+}
+
+.buyer-favourite-btn.active svg {
+  color: white;
+  fill: white;
+}
+
+
+/* Scoped to avoid conflicts with ChatUs.css */
+.buyer-property-card .buyer-property-type-badge {
+  display: inline-block;
+  background: var(--color-accent-soft);
+  color: var(--color-primary);
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+
+/* Responsive Design */
+/* Large Desktop (≥1440px) */
+@media (min-width: 1440px) {
+  .buyer-property-image-container {
+    height: 240px;
+  }
+
+  .buyer-property-card .buyer-property-title {
+    font-size: 19px;
+  }
+
+  .buyer-price-value {
+    font-size: 24px;
+  }
+}
+
+/* Laptop (1024px - 1439px) */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .buyer-property-image-container {
+    height: 220px;
+  }
+
+  .buyer-property-card .buyer-property-title {
+    font-size: 18px;
+  }
+}
+
+/* Tablet (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .buyer-property-card {
+    min-width: unset;
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .buyer-property-image-container {
+    height: 200px;
+    position: relative;
+  }
+
+  .buyer-property-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .buyer-property-card .buyer-property-title {
+    font-size: 17px;
+    margin-bottom: 0;
+    line-height: 1.3;
+    font-weight: 700;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .buyer-property-location {
+    font-size: 13px;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--color-text-secondary);
+    font-weight: 400;
+  }
+
+  .buyer-property-location svg {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+  }
+
+  .buyer-property-details {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 12px;
+    padding: 12px 0;
+    margin-bottom: 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    justify-content: space-around;
+  }
+
+  .buyer-detail-item {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .buyer-detail-item svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
+  .buyer-property-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    margin-top: auto;
+  }
+
+  .buyer-property-card .buyer-property-price {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .buyer-price-label {
+    font-size: 11px;
+  }
+
+  .buyer-price-value {
+    font-size: 18px;
+  }
+
+  .buyer-view-details-btn {
+    width: 100%;
+    padding: 10px 18px;
+    font-size: 13px;
+    border-radius: 8px;
+    min-height: 44px; /* Tap-friendly */
+  }
+
+  .buyer-favourite-btn,
+  .buyer-share-btn {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    min-height: 34px; /* Tap-friendly */
+  }
+
+  .buyer-carousel-arrow {
+    width: 32px;
+    height: 32px;
+    opacity: 1; /* Always visible on tablet for better UX */
+  }
+
+  .buyer-carousel-arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .buyer-carousel-arrow-prev {
+    left: 8px;
+  }
+
+  .buyer-carousel-arrow-next {
+    right: 8px;
+  }
+
+  .buyer-carousel-pagination {
+    bottom: 10px;
+    gap: 5px;
+  }
+
+  .buyer-carousel-dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .buyer-carousel-dot.active {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+/* Mobile (≤767px) */
+@media (max-width: 767px) {
+  .buyer-property-card {
+    min-width: unset;
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .buyer-property-image-container {
+    height: 180px;
+    position: relative;
+  }
+
+  .buyer-property-content {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .buyer-property-card .buyer-property-title {
+    font-size: clamp(15px, 3vw, 16px);
+    margin-bottom: 0;
+    line-height: 1.3;
+    font-weight: 700;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .buyer-property-location {
+    font-size: clamp(11px, 2.5vw, 12px);
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--color-text-secondary);
+    font-weight: 400;
+  }
+
+  .buyer-property-location svg {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+  }
+
+  .buyer-property-details {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px;
+    padding: 10px 0;
+    margin-bottom: 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    justify-content: space-around;
+  }
+
+  .buyer-detail-item {
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .buyer-detail-item svg {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+  }
+
+  .buyer-property-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    margin-top: auto;
+  }
+
+  .buyer-property-card .buyer-property-price {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .buyer-price-label {
+    font-size: 10px;
+  }
+
+  .buyer-price-value {
+    font-size: 16px;
+  }
+
+  .buyer-view-details-btn {
+    width: 100%;
+    padding: 10px 16px;
+    font-size: 12px;
+    border-radius: 8px;
+    min-height: 44px; /* Tap-friendly */
+  }
+
+  .buyer-favourite-btn,
+  .buyer-share-btn {
+    min-width: 32px;
+    min-height: 32px; /* Tap-friendly */
+  }
+
+  .buyer-carousel-arrow {
+    width: 30px;
+    height: 30px;
+    opacity: 1; /* Always visible on mobile for better UX */
+  }
+
+  .buyer-carousel-arrow svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .buyer-carousel-arrow-prev {
+    left: 8px;
+  }
+
+  .buyer-carousel-arrow-next {
+    right: 8px;
+  }
+
+  .buyer-carousel-pagination {
+    bottom: 8px;
+    gap: 4px;
+  }
+
+  .buyer-carousel-dot {
+    width: 5px;
+    height: 5px;
+  }
+
+  .buyer-carousel-dot.active {
+    width: 7px;
+    height: 7px;
+  }
+}
+
+/* Small Mobile (≤480px) */
+@media (max-width: 480px) {
+  .buyer-property-card {
+    min-width: unset;
+    max-width: 100%;
+    width: 100%;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .buyer-property-image-container {
+    height: 160px;
+    position: relative;
+  }
+
+  .buyer-property-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .buyer-property-content {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .buyer-property-card .buyer-property-title {
+    font-size: 15px;
+    margin-bottom: 0;
+    line-height: 1.3;
+    font-weight: 700;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 34px;
+  }
+
+  .buyer-property-location {
+    font-size: 10px;
+    margin-bottom: 0;
+    gap: 4px;
+    display: flex;
+    align-items: center;
+    color: var(--color-text-secondary);
+    font-weight: 400;
+  }
+
+  .buyer-property-location svg {
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+  }
+
+  .buyer-property-details {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    padding: 8px 0;
+    margin-bottom: 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    justify-content: space-between;
+  }
+
+  .buyer-detail-item {
+    font-size: 9px;
+    gap: 3px;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .buyer-detail-item svg {
+    width: 11px;
+    height: 11px;
+    flex-shrink: 0;
+  }
+
+  .buyer-detail-item span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .buyer-property-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    margin-top: auto;
+  }
+
+  .buyer-property-card .buyer-property-price {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .buyer-price-label {
+    font-size: 8px;
+    order: 2;
+  }
+
+  .buyer-price-value {
+    font-size: 14px;
+    order: 1;
+  }
+
+  .buyer-view-details-btn {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 12px;
+    border-radius: 6px;
+    min-height: 44px; /* Tap-friendly */
+  }
+
+  .buyer-property-status {
+    top: 8px;
+    right: 8px;
+    padding: 4px 10px;
+    font-size: 10px;
+    border-radius: 12px;
+  }
+
+  .buyer-favourite-btn {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px; /* Tap-friendly */
+    top: 8px;
+    left: 8px;
+  }
+
+  .buyer-favourite-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .buyer-share-btn {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px; /* Tap-friendly */
+    left: 46px;
+    top: 8px;
+  }
+
+  .buyer-share-btn svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .buyer-carousel-arrow {
+    width: 28px;
+    height: 28px;
+    opacity: 1; /* Always visible on small mobile for better UX */
+  }
+
+  .buyer-carousel-arrow svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .buyer-carousel-arrow-prev {
+    left: 6px;
+  }
+
+  .buyer-carousel-arrow-next {
+    right: 6px;
+  }
+
+  .buyer-carousel-pagination {
+    bottom: 6px;
+    gap: 3px;
+  }
+
+  .buyer-carousel-dot {
+    width: 4px;
+    height: 4px;
+  }
+
+  .buyer-carousel-dot.active {
+    width: 6px;
+    height: 6px;
+  }
+
+  .buyer-property-card .buyer-property-type-badge {
+    padding: 3px 8px;
+    font-size: 9px;
+    margin-bottom: 4px;
+  }
+}
+
+/* Extra Small Mobile (≤360px) */
+@media (max-width: 360px) {
+  .buyer-property-card {
+    min-width: unset;
+    max-width: 100%;
+    width: 100%;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .buyer-property-image-container {
+    height: 150px;
+    position: relative;
+  }
+
+  .buyer-property-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .buyer-property-content {
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .buyer-property-card .buyer-property-title {
+    font-size: 14px;
+    margin-bottom: 0;
+    line-height: 1.3;
+    font-weight: 700;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 31px;
+  }
+
+  .buyer-property-location {
+    font-size: 9px;
+    margin-bottom: 0;
+    gap: 3px;
+    display: flex;
+    align-items: center;
+    color: var(--color-text-secondary);
+    font-weight: 400;
+  }
+
+  .buyer-property-location svg {
+    width: 9px;
+    height: 9px;
+    flex-shrink: 0;
+  }
+
+  .buyer-property-details {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 6px;
+    padding: 6px 0;
+    margin-bottom: 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    justify-content: space-between;
+  }
+
+  .buyer-detail-item {
+    font-size: 8px;
+    gap: 2px;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .buyer-detail-item svg {
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+  }
+
+  .buyer-detail-item span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .buyer-property-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    margin-top: auto;
+  }
+
+  .buyer-property-card .buyer-property-price {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 5px;
+  }
+
+  .buyer-price-label {
+    font-size: 7px;
+    order: 2;
+  }
+
+  .buyer-price-value {
+    font-size: 13px;
+    order: 1;
+  }
+
+  .buyer-view-details-btn {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 11px;
+    border-radius: 5px;
+    min-height: 44px; /* Tap-friendly */
+  }
+
+  .buyer-property-status {
+    top: 6px;
+    right: 6px;
+    padding: 3px 8px;
+    font-size: 9px;
+    border-radius: 10px;
+  }
+
+  .buyer-favourite-btn {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    min-height: 30px; /* Tap-friendly */
+    top: 6px;
+    left: 6px;
+  }
+
+  .buyer-favourite-btn svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .buyer-share-btn {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    min-height: 30px; /* Tap-friendly */
+    left: 42px;
+    top: 6px;
+  }
+
+  .buyer-share-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .buyer-property-card .buyer-property-type-badge {
+    padding: 2px 6px;
+    font-size: 8px;
+    margin-bottom: 3px;
+  }
+
+  .buyer-carousel-pagination {
+    bottom: 5px;
+    gap: 2px;
+  }
+
+  .buyer-carousel-dot {
+    width: 3px;
+    height: 3px;
+  }
+
+  .buyer-carousel-dot.active {
+    width: 5px;
+    height: 5px;
+  }
+}
+
+/* --------------------------------------------------
+ * ★ Share Button Styles
+ * -------------------------------------------------- */
+
+.buyer-share-btn {
+  position: absolute;
+  top: 10px;
+  left: 56px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  pointer-events: auto;
+}
+
+.buyer-share-btn:hover {
+  transform: scale(1.1);
+  background: var(--color-primary);
+}
+
+.buyer-share-btn svg {
+  color: var(--color-text-secondary);
+  transition: color 0.2s ease;
+  pointer-events: none;
+}
+
+.buyer-share-btn:hover svg {
+  color: var(--color-surface);
+}
+
+/* Mobile optimizations for share button */
+@media (max-width: 480px) {
+  .buyer-share-btn {
+    width: 28px;
+    height: 28px;
+    left: 44px;
+    top: 8px;
+  }
+
+  .buyer-share-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media (max-width: 360px) {
+  .buyer-share-btn {
+    width: 26px;
+    height: 26px;
+    left: 40px;
+    top: 6px;
+  }
+
+  .buyer-share-btn svg {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+/* --------------------------------------------------
+ * ★ Image Carousel Navigation Arrows
+ * -------------------------------------------------- */
+
+.buyer-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 15;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.buyer-property-image-container:hover .buyer-carousel-arrow {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.buyer-carousel-arrow:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.buyer-carousel-arrow:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.buyer-carousel-arrow svg {
+  color: var(--color-primary);
+  width: 20px;
+  height: 20px;
+  transition: color 0.2s ease;
+}
+
+.buyer-carousel-arrow:hover svg {
+  color: var(--color-primary);
+}
+
+.buyer-carousel-arrow-prev {
+  left: 12px;
+}
+
+.buyer-carousel-arrow-next {
+  right: 12px;
+}
+
+/* --------------------------------------------------
+ * ★ Image Carousel Pagination Dots
+ * -------------------------------------------------- */
+
+.buyer-carousel-pagination {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 15;
+  pointer-events: none;
+}
+
+.buyer-carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  pointer-events: auto;
+  padding: 0;
+  margin: 0;
+}
+
+.buyer-carousel-dot:hover {
+  background: rgba(255, 255, 255, 0.8);
+  transform: scale(1.2);
+}
+
+.buyer-carousel-dot.active {
+  background: white;
+  width: 10px;
+  height: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* --------------------------------------------------
+ * ★ Toast Notification for Copy Link
+ * -------------------------------------------------- */
+
+.buyer-share-toast {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(30, 58, 138, 0.95);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 20;
+  animation: buyer-slideUp 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes buyer-slideUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Mobile toast optimization */
+@media (max-width: 480px) {
+  .buyer-share-toast {
+    bottom: 15px;
+    padding: 8px 16px;
+    font-size: 12px;
+    border-radius: 6px;
+  }
+}
+
+@media (max-width: 360px) {
+  .buyer-share-toast {
+    bottom: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
+
+/* Touch optimization for share button and carousel */
+@media (hover: none) and (pointer: coarse) {
+  .buyer-share-btn {
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .buyer-favourite-btn {
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .buyer-share-btn:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: none;
+  }
+
+  .buyer-share-btn:hover svg {
+    color: var(--color-text-secondary);
+  }
+
+  .buyer-share-btn:active {
+    background: var(--color-primary);
+    transform: scale(0.96);
+  }
+
+  .buyer-share-btn:active svg {
+    color: white;
+  }
+
+  /* Carousel arrows always visible on touch devices */
+  .buyer-carousel-arrow {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .buyer-carousel-arrow:hover {
+    transform: translateY(-50%) scale(1);
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  .buyer-carousel-arrow:active {
+    transform: translateY(-50%) scale(0.9);
+    background: rgba(255, 255, 255, 1);
+  }
+}

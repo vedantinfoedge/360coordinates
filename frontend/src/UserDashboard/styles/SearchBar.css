@@ -1,0 +1,329 @@
+/* SearchBar.buyer-css */
+
+.buyer-search-bar-container {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  padding: 3rem 1rem;
+  background: url('https://img.buyer-freepik.buyer-com/premium-vector/property-development-hj6541_660340-796.buyer-jpg?semt=ais_hybrid&w=740&q=80');
+}
+
+.buyer-search-bar-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(0, 119, 192, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(0, 119, 192, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.buyer-search-bar-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  padding: 0rem 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ============================================================================
+   BACK BUTTON INSIDE SEARCH BAR
+   ============================================================================ */
+
+.buyer-search-back-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  margin-bottom: 20px;
+  border: 2px solid var(--color-primary);
+  border-radius: 10px;
+  background-color: var(--color-surface);
+  color: var(--color-primary);
+  font-weight: 100;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-subtle);
+  font-family: inherit;
+}
+
+.buyer-search-back-button:hover {
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+  transform: translateX(-4px);
+  box-shadow: var(--shadow-button);
+}
+
+.buyer-search-back-button:active {
+  transform: translateX(-2px) scale(0.98);
+}
+
+.buyer-search-back-button svg {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.buyer-search-back-button:hover svg {
+  transform: translateX(-2px);
+}
+
+/* ============================================================================
+   SEARCH BAR TITLE AND SUBTITLE
+   ============================================================================ */
+
+.buyer-search-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0 0 0.5rem 0;
+}
+
+.buyer-search-subtitle {
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  margin: 0 0 2.5rem 0;
+}
+
+.buyer-search-form {
+   background: var(--color-bg);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(10px);
+}
+
+.buyer-search-inputs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.buyer-search-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.buyer-search-field:first-child {
+  flex: 1;
+}
+
+.buyer-search-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.buyer-search-label svg {
+  width: 18px;
+  height: 18px;
+  color: var(--color-primary);
+}
+
+.buyer-search-input,
+.buyer-search-select {
+  width: 100%;
+  min-width: 0;
+  padding: 0.875rem 1rem;
+  border: 2px solid var(--color-border);
+  border-radius: 10px;
+  font-size: 0.95rem;
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+  transition: all 0.3s ease;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.buyer-search-input:focus,
+.buyer-search-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(0, 119, 192, 0.1);
+}
+
+.buyer-search-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.buyer-search-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.buyer-w3.buyer-org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%231e293b' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+.buyer-search-button {
+  width: 100%;
+  padding: 1rem 2rem;
+  background: var(--color-primary);
+  color: var(--color-surface);
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-button);
+}
+
+.buyer-search-button svg {
+  width: 22px;
+  height: 22px;
+}
+
+.buyer-search-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 119, 192, 0.5);
+}
+
+.buyer-search-button:active {
+  transform: translateY(0);
+}
+
+/* Quick Search */
+.buyer-quick-search {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.buyer-quick-search-label {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+
+.buyer-quick-search-buttons {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.buyer-quick-search-btn {
+  padding: 0.5rem 1.25rem;
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.buyer-quick-search-btn:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-surface);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-button);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .buyer-search-inputs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .buyer-search-title {
+    font-size: 2rem;
+  }
+
+  .buyer-search-subtitle {
+    font-size: 1rem;
+  }
+
+  .buyer-search-form {
+    padding: 1.5rem;
+  }
+
+  .buyer-search-inputs {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .buyer-quick-search {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .buyer-search-bar-container {
+    padding: 2rem 0rem;
+  }
+
+  .buyer-search-title {
+    font-size: 1.75rem;
+  }
+
+  .buyer-search-form {
+    padding: 1.25rem;
+  }
+
+  .buyer-search-button {
+    font-size: 1rem;
+    padding: 0.875rem 1.5rem;
+  }
+}
+
+/* Animation */
+@keyframes buyer-slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.buyer-search-form {
+  animation: buyer-slideInUp 0.6s ease forwards;
+}
+
+.buyer-search-field {
+  animation: buyer-slideInUp 0.6s ease forwards;
+}
+
+.buyer-search-field:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.buyer-search-field:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.buyer-search-field:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.buyer-search-field:nth-child(4) {
+  animation-delay: 0.4s;
+}

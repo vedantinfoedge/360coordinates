@@ -1,0 +1,405 @@
+.admin-agents {
+  max-width: 1400px;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+.admin-page-header {
+  margin-bottom: 2rem;
+}
+
+.admin-page-header h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.admin-page-header p {
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+}
+
+.admin-filters-bar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.admin-search-box {
+  flex: 1;
+  min-width: 280px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--color-surface);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 2px solid var(--color-primary);
+  box-shadow: var(--shadow-subtle);
+}
+
+.admin-search-icon {
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.admin-search-box input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 0.875rem;
+  color: var(--color-text-primary);
+  min-width: 0;
+}
+
+.admin-search-box input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.admin-search-btn {
+  padding: 0.5rem 1.25rem;
+  background: var(--color-primary);
+  color: var(--color-surface);
+  border: none;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.admin-search-btn:hover {
+  background: var(--color-primary-dark);
+}
+
+.admin-filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.admin-filter-btn:hover {
+  background: var(--color-bg);
+  border-color: var(--color-border);
+}
+
+.admin-agents-table-container {
+  background: var(--color-surface);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.admin-agents-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-agents-table thead {
+  background: var(--color-bg);
+}
+
+.admin-agents-table th {
+  text-align: center;
+  padding: 1rem 1.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.admin-agents-table td {
+  padding: 1.25rem;
+  border-top: 1px solid var(--color-border-light);
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  vertical-align: middle;
+}
+
+/* Ensure admin-agent-cell can shrink on small screens */
+.admin-agent-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;         /* allow shrinking */
+  flex: 1 1 auto;       /* flexible so actions get space */
+}
+
+.admin-agent-avatar {
+  width: 40px;
+  height: 40px;
+  background: var(--color-primary);
+  color: var(--color-surface);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.admin-agent-name {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.admin-agent-email {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  margin-top: 0.125rem;
+}
+
+.admin-status-badge {
+  display: inline-flex;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+.admin-status-badge.admin-verified {
+  background: var(--color-success-light);
+  color: var(--color-success);
+}
+
+.admin-leads-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-info-light);
+  color: var(--color-primary-dark);
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  min-width: 40px;
+}
+
+.admin-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin-left: 37%;
+}
+
+.admin-rating span {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.admin-actions-wrapper {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-agent-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.admin-agent-verify-btn {
+  background: var(--color-success-light);
+  color: var(--color-success);
+}
+
+.admin-agent-verify-btn:hover {
+  background: var(--color-success-light);
+  color: var(--color-success);
+}
+
+.admin-agent-unverify-btn {
+  background: var(--color-error-light);
+  color: var(--color-error);
+}
+
+.admin-agent-unverify-btn:hover {
+  background: var(--color-error-light);
+  color: var(--color-error);
+}
+
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .admin-agents {
+    padding: 0 0.75rem;
+  }
+
+  .admin-agents-table th,
+  .admin-agents-table td {
+    padding: 0.875rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-page-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .admin-filters-bar {
+    flex-direction: column;
+  }
+
+  .admin-search-box {
+    min-width: 100%;
+  }
+
+  .admin-filter-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .admin-agents-table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .admin-agents-table {
+    min-width: 650px;
+  }
+
+  .admin-agents-table th,
+  .admin-agents-table td {
+    padding: 0.75rem;
+  }
+
+  .admin-agent-avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 0.8125rem;
+  }
+}
+
+
+/* MOBILE FIXED ACTIONS (max-width: 640px) */
+@media (max-width: 640px) {
+  .admin-agents {
+    padding: 0 0.5rem;
+  }
+
+  .admin-page-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .admin-page-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .admin-search-box {
+    padding: 0.625rem 0.875rem;
+    flex-wrap: wrap;
+  }
+
+  .admin-search-btn {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .admin-agents-table thead {
+    display: none;
+  }
+
+  /* keep rows as cards */
+  .admin-agents-table,
+  .admin-agents-table tbody,
+  .admin-agents-table tr {
+    display: block;
+  }
+
+  /* default td layout: label on left (via ::before) and value on right */
+  .admin-agents-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border: none;
+  }
+
+  /* label content added before each td */
+  .admin-agents-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  /* Card Style Rows */
+  .admin-agents-table tr {
+    margin-bottom: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background: var(--color-surface);
+  }
+
+  /* ACTIONS CELL: ensure it doesn't show a label and aligns right */
+  .admin-agents-table td.admin-actions-cell {
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+    gap: 0.5rem;
+    padding-left: 0.5rem;
+  }
+
+  /* hide the automatically generated label for actions cell */
+  .admin-agents-table td.admin-actions-cell::before {
+    content: "" !important;
+    margin: 0;
+    width: 0;
+    height: 0;
+  }
+
+  /* make the agent info take available width so actions stays visible */
+  .admin-agents-table td[data-label="Agent"] .admin-agent-cell {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .admin-actions-wrapper {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .admin-agent-action-btn {
+    flex-shrink: 0;
+    padding: 0.5rem;
+    min-width: 36px;
+  }
+
+  .admin-agent-action-btn span {
+    display: none;
+  }
+}

@@ -1,0 +1,397 @@
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../../UserDashboard/styles/UpcomingProjectCard.css';
+import { propertiesAPI } from '../../services/api.service';
+
+// Helper function to extract city from location string
+const extractCity = (location) => {
+  if (!location) return 'Unknown';
+  const cities = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Pune', 'Kolkata', 'Ahmedabad', 'Jaipur', 'Surat'];
+  const locationUpper = location.toUpperCase();
+  for (const city of cities) {
+    if (locationUpper.includes(city.toUpperCase())) {
+      return city;
+    }
+  }
+  const parts = location.split(',');
+  return parts.length > 1 ? parts[parts.length - 1].trim() : location.split(' ')[0];
+};
+
+// Helper function to format price in Crores
+const formatPriceRange = (price) => {
+  if (!price) return '0';
+  const priceInCr = price / 10000000;
+  return priceInCr.toFixed(1);
+};
+
+// Helper function to format BHK types from configurations
+const formatBhkType = (configurations) => {
+  if (!configurations || !Array.isArray(configurations) || configurations.length === 0) {
+    return 'N/A';
+  }
+  const bhkConfigs = configurations
+    .filter(config => config && (config.includes('BHK') || config.includes('bhk')))
+    .map(config => {
+      const match = config.match(/(\d+)\s*BHK/i);
+      return match ? `${match[1]} BHK` : config;
+    })
+    .filter((value, index, self) => self.indexOf(value) === index)
+    .sort((a, b) => {
+      const numA = parseInt(a.match(/\d+/)?.[0] || '0');
+      const numB = parseInt(b.match(/\d+/)?.[0] || '0');
+      return numA - numB;
+    });
+  
+  if (bhkConfigs.length === 0) {
+    if (configurations.some(c => c.toLowerCase().includes('villa'))) return 'Villa';
+    if (configurations.some(c => c.toLowerCase().includes('plot'))) return 'Plot';
+    return configurations.join(', ');
+  }
+  
+  return bhkConfigs.join(', ');
+};
+
+// Individual Upcoming Project Card Component
+const UpcomingProjectCard = ({ project }) => {
+    const navigate = useNavigate();
+    const [showToast, setShowToast] = useState(false);
+
+    const { id, image, title, location, priceRange, bhkType, projectStatus } = project;
+    const statusDisplay = projectStatus || 'Projects';
+    
+    // Default placeholder image
+    const placeholderImage = 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=500';
+    
+    // Ensure we have a valid image URL
+    const imageUrl = image && image.trim() !== '' ? image : placeholderImage;
+
+    // Handle image load errors
+    const handleImageError = (e) => {
+        console.warn('Image failed to load:', imageUrl, 'for project:', title);
+        e.target.src = placeholderImage;
+        e.target.onerror = null;
+    };
+
+    // Helper function to copy to clipboard
+    const copyToClipboard = async (text) => {
+        try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                await navigator.clipboard.writeText(text);
+                setShowToast(true);
+                setTimeout(() => setShowToast(false), 2000);
+                return;
+            }
+            
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    setShowToast(true);
+                    setTimeout(() => setShowToast(false), 2000);
+                }
+            } finally {
+                document.body.removeChild(textArea);
+            }
+        } catch (error) {
+            console.error('Failed to copy to clipboard:', error);
+        }
+    };
+
+    // Handle share button click
+    const handleShareClick = async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (!project || !project.id) {
+            console.error('Cannot share: project ID is missing');
+            return;
+        }
+
+        const shareUrl = `${window.location.origin}/upcoming-project/${project.id}`;
+        const shareData = {
+            title: project.title || 'Upcoming Project',
+            text: `Check out this upcoming project: ${project.title || 'Amazing Project'}`,
+            url: shareUrl
+        };
+
+        if (navigator.share) {
+            try {
+                await navigator.share(shareData);
+                console.log('Share successful');
+            } catch (error) {
+                if (error.name !== 'AbortError') {
+                    console.error('Error sharing:', error);
+                    await copyToClipboard(shareUrl);
+                }
+            }
+        } else {
+            await copyToClipboard(shareUrl);
+        }
+    };
+
+    // Handle card click to navigate to details page - open in new tab
+    const handleCardClick = (e) => {
+        if (e.target.closest('button') || e.target.closest('a')) {
+            return;
+        }
+        window.open(`/upcoming-project/${id}`, '_blank', 'noopener,noreferrer');
+    };
+
+    const priceDisplay = `₹${priceRange} Cr`;
+
+    return (
+        <div className="upcoming-project-card" onClick={handleCardClick}>
+            <div className="upcoming-project-image-container">
+                <img 
+                    src={imageUrl} 
+                    alt={title || 'Project image'} 
+                    className="upcoming-project-image"
+                    onError={handleImageError}
+                    loading="lazy"
+                />
+                <span className="upcoming-project-status">{statusDisplay}</span>
+                
+                {/* SHARE BUTTON */}
+                <button 
+                    className="upcoming-share-btn"
+                    onClick={handleShareClick}
+                    aria-label="Share project"
+                    title="Share project"
+                >
+                    <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        width="20" 
+                        height="20" 
+                        viewBox="0 0 24 24" 
+                        fill="none"
+                        stroke="currentColor" 
+                        strokeWidth="2" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round"
+                    >
+                        <circle cx="18" cy="5" r="3"></circle>
+                        <circle cx="6" cy="12" r="3"></circle>
+                        <circle cx="18" cy="19" r="3"></circle>
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                    </svg>
+                </button>
+
+                {/* Toast notification */}
+                {showToast && (
+                    <div className="upcoming-share-toast">
+                        Link copied!
+                    </div>
+                )}
+            </div>
+
+            <div className="upcoming-project-content">
+                <h3 className="upcoming-project-title">{title}</h3>
+                
+                <div className="upcoming-project-location">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    <span>{location}</span>
+                </div>
+
+                <div className="upcoming-project-details">
+                    {bhkType && bhkType !== 'N/A' && (
+                        <div className="upcoming-detail-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M2 17l6-6 4 4 8-8"></path>
+                                <path d="M17 2h5v5"></path>
+                            </svg>
+                            <span>{bhkType}</span>
+                        </div>
+                    )}
+                    
+                    <div className="upcoming-detail-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="9" y1="3" x2="9" y2="21"></line>
+                        </svg>
+                        <span>Upcoming</span>
+                    </div>
+                </div>
+
+                <div className="upcoming-project-footer">
+                    <div className="upcoming-project-price">
+                        <span className="upcoming-price-label">Price Range</span>
+                        <span className="upcoming-price-value">{priceDisplay}</span>
+                    </div>
+                    
+                    <button 
+                        className="upcoming-view-details-btn"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            window.open(`/upcoming-project/${id}`, '_blank', 'noopener,noreferrer');
+                        }}
+                    >
+                        View Details
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+// Main Upcoming Projects Section Component
+const UpcomingProjectsSection = () => {
+    const navigate = useNavigate();
+    const [projects, setProjects] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchUpcomingProjects = async () => {
+            try {
+                setLoading(true);
+                setError(null);
+                const response = await propertiesAPI.list({ limit: 50, project_type: 'upcoming' });
+                
+                if (response.success && response.data && response.data.properties) {
+                    const upcomingProperties = response.data.properties;
+                    
+                    const mappedProjects = upcomingProperties.map(prop => {
+                        let imageUrl = null;
+                        if (prop.cover_image && prop.cover_image.trim() !== '') {
+                            imageUrl = prop.cover_image;
+                        } else if (Array.isArray(prop.images) && prop.images.length > 0) {
+                            const validImage = prop.images.find(img => img && img.trim() !== '');
+                            imageUrl = validImage || null;
+                        }
+                        if (!imageUrl || imageUrl.trim() === '') {
+                            imageUrl = 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=500';
+                        }
+                        
+                        let upcomingData = {};
+                        try {
+                            if (typeof prop.upcoming_project_data === 'string') {
+                                upcomingData = JSON.parse(prop.upcoming_project_data);
+                            } else if (typeof prop.upcoming_project_data === 'object') {
+                                upcomingData = prop.upcoming_project_data;
+                            }
+                        } catch (e) {
+                            console.warn('Failed to parse upcoming_project_data:', e);
+                        }
+                        
+                        const city = extractCity(prop.location);
+                        const bhkType = formatBhkType(upcomingData.configurations);
+                        const priceRange = formatPriceRange(prop.price);
+                        
+                        return {
+                            id: prop.id,
+                            image: imageUrl,
+                            title: prop.title,
+                            location: prop.location,
+                            city: city,
+                            bhkType: bhkType,
+                            priceRange: priceRange,
+                            projectStatus: upcomingData.projectStatus,
+                            builder: upcomingData.builderName || prop.seller_name || 'Builder',
+                            builderLink: `#builder-${prop.id}`,
+                            upcomingData: upcomingData,
+                            propertyData: prop
+                        };
+                    });
+                    
+                    setProjects(mappedProjects);
+                    console.log('✅ Loaded', mappedProjects.length, 'upcoming projects from API');
+                } else {
+                    setProjects([]);
+                }
+            } catch (err) {
+                console.error('Error fetching upcoming projects:', err);
+                setError('Failed to load upcoming projects');
+                setProjects([]);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchUpcomingProjects();
+    }, []);
+
+    const handleViewAllProjects = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        navigate('/buyer-dashboard/search?searchMode=upcoming-projects&project_type=upcoming');
+    };
+
+    const sectionHeader = (
+        <div className="upcoming-section-header">
+            <div className="buyer-section-header-content">
+                <div>
+                    <h2 className="upcoming-section-title">Explore Projects</h2>
+                    <p className="upcoming-section-subtitle">Visit these projects and get benefits before the official launch!</p>
+                </div>
+                <button
+                    className="buyer-view-all-btn"
+                    onClick={handleViewAllProjects}
+                    aria-label="View all upcoming projects"
+                >
+                    View All
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    );
+
+    if (loading) {
+        return (
+            <div className="upcoming-projects-section">
+                {sectionHeader}
+                <div style={{ textAlign: 'center', padding: '2rem' }}>
+                    <p>Loading  projects...</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="upcoming-projects-section">
+                {sectionHeader}
+                <div style={{ textAlign: 'center', padding: '2rem', color: '#c33' }}>
+                    <p>{error}</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (projects.length === 0) {
+        return null;
+    }
+
+    return (
+        <div className="upcoming-projects-section">
+            {sectionHeader}
+
+            <div className="upcoming-horizontal-scroll-container">
+                <div className="upcoming-projects-wrapper">
+                    {projects.map((project) => (
+                        <UpcomingProjectCard 
+                            key={project.id} 
+                            project={project}
+                        />
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default UpcomingProjectsSection;

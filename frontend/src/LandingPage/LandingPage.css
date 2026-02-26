@@ -1,0 +1,50 @@
+/* LandingPage.css */
+
+.landing-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Separate Navbar Wrapper Div */
+.navbar-wrapper {
+  position: relative;
+  width: 100%;
+  z-index: 1000;
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensure main-content is positioned relative */
+.main-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow-y: hidden !important; /* Allow vertical scrolling */
+  margin: 0;
+  padding: 0;
+  /* margin-top:5.6rem; */
+}
+
+/* Responsive main-content sizing */
+/* Tablet (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .main-content {
+    width: 100%;
+    overflow-x: hidden;
+  }
+}
+
+/* Mobile (≤767px) */
+@media (max-width: 767px) {
+  .main-content {
+    width: 100%;
+    overflow-x: hidden;
+  }
+}
+
+.auth-page .main-content {
+  margin-top: 0 !important;
+}

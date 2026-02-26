@@ -1,0 +1,958 @@
+/* Upcoming Project Card Styles */
+.upcoming-project-card {
+  background: var(--color-surface);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(29, 36, 43, 0.12), 0 2px 8px rgba(29, 36, 43, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 100%;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  padding-bottom: 20px;
+}
+
+.upcoming-project-card:hover {
+  transform: translateY(0);
+  box-shadow: 0 8px 28px rgba(29, 36, 43, 0.16), 0 4px 12px rgba(29, 36, 43, 0.1);
+}
+
+.upcoming-project-image-container {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--color-border-light) 0%, var(--color-border) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upcoming-project-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease;
+}
+
+.upcoming-project-card:hover .upcoming-project-image {
+  transform: scale(1.1);
+}
+
+.upcoming-project-status {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 5;
+  background: var(--color-primary);
+  color: var(--color-surface);
+}
+
+.upcoming-project-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.upcoming-project-card .upcoming-project-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var( --color-secondary);
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  text-transform: uppercase;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.upcoming-project-location {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.upcoming-project-location svg {
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.upcoming-project-details {
+  display: flex;
+  gap: 16px;
+  padding: 16px 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 16px;
+}
+
+.upcoming-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.upcoming-detail-item svg {
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.upcoming-project-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  gap: 12px;
+}
+
+.upcoming-project-card .upcoming-project-price {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.upcoming-price-label {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.upcoming-price-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: var( --color-secondary);
+}
+
+.upcoming-view-details-btn {
+  background: var( --color-secondary);
+  color: var(--color-surface);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  white-space: nowrap;
+}
+
+.upcoming-view-details-btn:hover {
+  background: var(--color-primary-dark);
+}
+
+/* Share Button Styles */
+.upcoming-share-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  pointer-events: auto;
+}
+
+.upcoming-share-btn:hover {
+  transform: scale(1.1);
+  background: var(--color-primary);
+}
+
+.upcoming-share-btn svg {
+  color: var(--color-text-secondary);
+  transition: color 0.2s ease;
+  pointer-events: none;
+}
+
+.upcoming-share-btn:hover svg {
+  color: white;
+}
+
+/* Toast Notification for Copy Link */
+.upcoming-share-toast {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(30, 58, 138, 0.95);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 20;
+  animation: upcoming-slideUp 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes upcoming-slideUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Section Styles */
+.upcoming-projects-section {
+  width: 100%;
+  padding: 20px 0;
+}
+
+.upcoming-section-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 0 24px;
+}
+
+.upcoming-section-title {
+  font-size: 2.5rem;
+  color: var(--color-text-primary);
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.upcoming-section-subtitle {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* Horizontal Scroll Container */
+.upcoming-horizontal-scroll-container {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0 0 20px 0;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.upcoming-projects-wrapper {
+  display: flex;
+  gap: 24px;
+  padding: 0 24px;
+  min-width: min-content;
+}
+
+.upcoming-projects-wrapper .upcoming-project-card {
+  flex-shrink: 0;
+  width: 380px;
+  max-width: 380px;
+}
+
+/* Custom Scrollbar */
+.upcoming-horizontal-scroll-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.upcoming-horizontal-scroll-container::-webkit-scrollbar-track {
+  background: var(--color-bg);
+  border-radius: 10px;
+}
+
+.upcoming-horizontal-scroll-container::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 10px;
+}
+
+.upcoming-horizontal-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-dark);
+}
+
+/* Responsive Design */
+/* Large Desktop (≥1440px) */
+@media (min-width: 1440px) {
+  .upcoming-project-image-container {
+    height: 240px;
+  }
+
+  .upcoming-project-card .upcoming-project-title {
+    font-size: 19px;
+  }
+
+  .upcoming-price-value {
+    font-size: 24px;
+  }
+
+  .upcoming-projects-wrapper .upcoming-project-card {
+    width: 400px;
+    max-width: 400px;
+  }
+}
+
+/* Laptop (1024px - 1439px) */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .upcoming-project-image-container {
+    height: 220px;
+  }
+
+  .upcoming-project-card .upcoming-project-title {
+    font-size: 18px;
+  }
+
+  .upcoming-projects-wrapper .upcoming-project-card {
+    width: 380px;
+    max-width: 380px;
+  }
+}
+
+/* Tablet (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .upcoming-project-card {
+    min-width: unset;
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .upcoming-project-image-container {
+    height: 200px;
+    position: relative;
+  }
+
+  .upcoming-project-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .upcoming-project-card .upcoming-project-title {
+    font-size: 17px;
+    margin-bottom: 0;
+    line-height: 1.3;
+    font-weight: 700;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .upcoming-project-location {
+    font-size: 13px;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--color-text-secondary);
+    font-weight: 400;
+  }
+
+  .upcoming-project-location svg {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+  }
+
+  .upcoming-project-details {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 12px;
+    padding: 12px 0;
+    margin-bottom: 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    justify-content: space-around;
+  }
+
+  .upcoming-detail-item {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .upcoming-detail-item svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
+  .upcoming-project-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    margin-top: auto;
+  }
+
+  .upcoming-project-card .upcoming-project-price {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .upcoming-price-label {
+    font-size: 11px;
+  }
+
+  .upcoming-price-value {
+    font-size: 18px;
+  }
+
+  .upcoming-view-details-btn {
+    width: 100%;
+    padding: 10px 18px;
+    font-size: 13px;
+    border-radius: 8px;
+    min-height: 44px;
+  }
+
+  .upcoming-share-btn {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    min-height: 34px;
+  }
+
+  .upcoming-projects-section {
+    padding: 45px 0;
+  }
+
+  .upcoming-projects-wrapper .upcoming-project-card {
+    width: 340px;
+    max-width: 340px;
+  }
+}
+
+/* Mobile (≤767px) */
+@media (max-width: 767px) {
+  .upcoming-project-card {
+    min-width: unset;
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .upcoming-project-image-container {
+    height: 180px;
+    position: relative;
+  }
+
+  .upcoming-project-content {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .upcoming-project-card .upcoming-project-title {
+    font-size: clamp(15px, 3vw, 16px);
+    margin-bottom: 0;
+    line-height: 1.3;
+    font-weight: 700;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .upcoming-project-location {
+    font-size: clamp(11px, 2.5vw, 12px);
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--color-text-secondary);
+    font-weight: 400;
+  }
+
+  .upcoming-project-location svg {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+  }
+
+  .upcoming-project-details {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px;
+    padding: 10px 0;
+    margin-bottom: 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    justify-content: space-around;
+  }
+
+  .upcoming-detail-item {
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .upcoming-detail-item svg {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+  }
+
+  .upcoming-project-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    margin-top: auto;
+  }
+
+  .upcoming-project-card .upcoming-project-price {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .upcoming-price-label {
+    font-size: 10px;
+  }
+
+  .upcoming-price-value {
+    font-size: 16px;
+  }
+
+  .upcoming-view-details-btn {
+    width: 100%;
+    padding: 10px 16px;
+    font-size: 12px;
+    border-radius: 8px;
+    min-height: 44px;
+  }
+
+  .upcoming-share-btn {
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .upcoming-projects-section {
+    padding: 40px 0;
+  }
+
+  .upcoming-section-header {
+    margin-bottom: 28px;
+    padding: 0 1rem;
+  }
+
+  .upcoming-section-title {
+    font-size: clamp(1.5rem, 5vw, 1.9rem);
+    line-height: 1.3;
+  }
+
+  .upcoming-section-subtitle {
+    font-size: clamp(0.95rem, 2.5vw, 1rem);
+  }
+
+  .upcoming-projects-wrapper {
+    gap: 18px;
+    padding: 0 1rem;
+  }
+
+  .upcoming-projects-wrapper .upcoming-project-card {
+    width: 320px;
+    max-width: 320px;
+  }
+}
+
+/* Small Mobile (≤480px) */
+@media (max-width: 480px) {
+  .upcoming-project-card {
+    min-width: unset;
+    max-width: 100%;
+    width: 100%;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .upcoming-project-image-container {
+    height: 160px;
+    position: relative;
+  }
+
+  .upcoming-project-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .upcoming-project-content {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .upcoming-project-card .upcoming-project-title {
+    font-size: 15px;
+    margin-bottom: 0;
+    line-height: 1.3;
+    font-weight: 700;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 34px;
+  }
+
+  .upcoming-project-location {
+    font-size: 10px;
+    margin-bottom: 0;
+    gap: 4px;
+    display: flex;
+    align-items: center;
+    color: var(--color-text-secondary);
+    font-weight: 400;
+  }
+
+  .upcoming-project-location svg {
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+  }
+
+  .upcoming-project-details {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    padding: 8px 0;
+    margin-bottom: 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    justify-content: space-between;
+  }
+
+  .upcoming-detail-item {
+    font-size: 9px;
+    gap: 3px;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .upcoming-detail-item svg {
+    width: 11px;
+    height: 11px;
+    flex-shrink: 0;
+  }
+
+  .upcoming-detail-item span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .upcoming-project-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    margin-top: auto;
+  }
+
+  .upcoming-project-card .upcoming-project-price {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .upcoming-price-label {
+    font-size: 8px;
+    order: 2;
+  }
+
+  .upcoming-price-value {
+    font-size: 14px;
+    order: 1;
+  }
+
+  .upcoming-view-details-btn {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 12px;
+    border-radius: 6px;
+    min-height: 44px;
+  }
+
+  .upcoming-project-status {
+    top: 8px;
+    right: 8px;
+    padding: 4px 10px;
+    font-size: 10px;
+    border-radius: 12px;
+  }
+
+  .upcoming-share-btn {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    top: 8px;
+    left: 8px;
+  }
+
+  .upcoming-share-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .upcoming-share-toast {
+    bottom: 15px;
+    padding: 8px 16px;
+    font-size: 12px;
+    border-radius: 6px;
+  }
+
+  .upcoming-projects-section {
+    padding: 32px 0;
+  }
+
+  .upcoming-section-header {
+    margin-bottom: 24px;
+    padding: 0 0.75rem;
+  }
+
+  .upcoming-section-title {
+    font-size: clamp(1.3rem, 5vw, 1.5rem);
+    line-height: 1.3;
+  }
+
+  .upcoming-section-subtitle {
+    font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+  }
+
+  .upcoming-projects-wrapper {
+    gap: 16px;
+    padding: 0 0.75rem;
+  }
+
+  .upcoming-projects-wrapper .upcoming-project-card {
+    width: 280px;
+    max-width: 280px;
+  }
+}
+
+/* Extra Small Mobile (≤360px) */
+@media (max-width: 360px) {
+  .upcoming-project-card {
+    min-width: unset;
+    max-width: 100%;
+    width: 100%;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .upcoming-project-image-container {
+    height: 150px;
+    position: relative;
+  }
+
+  .upcoming-project-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .upcoming-project-content {
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .upcoming-project-card .upcoming-project-title {
+    font-size: 14px;
+    margin-bottom: 0;
+    line-height: 1.3;
+    font-weight: 700;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 31px;
+  }
+
+  .upcoming-project-location {
+    font-size: 9px;
+    margin-bottom: 0;
+    gap: 3px;
+    display: flex;
+    align-items: center;
+    color: var(--color-text-secondary);
+    font-weight: 400;
+  }
+
+  .upcoming-project-location svg {
+    width: 9px;
+    height: 9px;
+    flex-shrink: 0;
+  }
+
+  .upcoming-project-details {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 6px;
+    padding: 6px 0;
+    margin-bottom: 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    justify-content: space-between;
+  }
+
+  .upcoming-detail-item {
+    font-size: 8px;
+    gap: 2px;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .upcoming-detail-item svg {
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+  }
+
+  .upcoming-detail-item span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .upcoming-project-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    margin-top: auto;
+  }
+
+  .upcoming-project-card .upcoming-project-price {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 5px;
+  }
+
+  .upcoming-price-label {
+    font-size: 7px;
+    order: 2;
+  }
+
+  .upcoming-price-value {
+    font-size: 13px;
+    order: 1;
+  }
+
+  .upcoming-view-details-btn {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 11px;
+    border-radius: 5px;
+    min-height: 44px;
+  }
+
+  .upcoming-project-status {
+    top: 6px;
+    right: 6px;
+    padding: 3px 8px;
+    font-size: 9px;
+    border-radius: 10px;
+  }
+
+  .upcoming-share-btn {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    min-height: 30px;
+    top: 6px;
+    left: 6px;
+  }
+
+  .upcoming-share-btn svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .upcoming-share-toast {
+    bottom: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+
+  .upcoming-section-header {
+    padding: 0 0.625rem;
+  }
+
+  .upcoming-section-title {
+    font-size: clamp(1.2rem, 5vw, 1.35rem);
+  }
+
+  .upcoming-section-subtitle {
+    font-size: clamp(0.85rem, 2.5vw, 0.9rem);
+  }
+
+  .upcoming-projects-wrapper {
+    gap: 14px;
+    padding: 0 0.625rem;
+  }
+
+  .upcoming-projects-wrapper .upcoming-project-card {
+    width: 260px;
+    max-width: 260px;
+  }
+}
+
+/* Touch optimization for share button */
+@media (hover: none) and (pointer: coarse) {
+  .upcoming-share-btn {
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .upcoming-share-btn:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: none;
+  }
+
+  .upcoming-share-btn:hover svg {
+    color: var(--color-text-secondary);
+  }
+
+  .upcoming-share-btn:active {
+    background: var(--color-primary);
+    transform: scale(0.96);
+  }
+
+  .upcoming-share-btn:active svg {
+    color: white;
+  }
+}

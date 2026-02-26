@@ -1,0 +1,196 @@
+/* ========================= */
+/* BASE AUTOSUGGEST WRAPPER */
+/* ========================= */
+
+.location-autosuggest {
+  position: relative;
+  width: 100%;
+}
+
+/* ========================= */
+/* INPUT WRAPPER */
+/* ========================= */
+
+.location-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* ========================= */
+/* INPUT FIELD */
+/* ========================= */
+
+.location-input {
+  width: 100%;
+  padding: 0.65rem 2.25rem 0.65rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-border);
+  font-size: 0.95rem;
+  color: var(--color-text-primary);
+  outline: none;
+  background-color: var(--color-bg);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.location-input:focus {
+  border-color: var(--color-primary);
+  background-color: var(--color-surface);
+  box-shadow: 0 0 0 2px var(--color-shadow-primary, rgba(139, 92, 246, 0.25));
+}
+
+.location-input-error {
+  border-color: var(--color-error);
+}
+
+.location-input:disabled {
+  background-color: var(--color-bg-secondary, #f3f4f6);
+  color: var(--color-text-secondary);
+  cursor: not-allowed;
+}
+
+/* ========================= */
+/* CLEAR BUTTON */
+/* ========================= */
+
+.location-clear-btn {
+  position: absolute;
+  right: 0.5rem;
+  background: transparent;
+  border: none;
+  color: var(--color-text-tertiary, #9ca3af);
+  cursor: pointer;
+}
+
+.location-clear-btn:hover {
+  color: var(--color-text-secondary);
+}
+
+/* ========================= */
+/* LOADING SPINNER */
+/* ========================= */
+
+.location-spinner {
+  position: absolute;
+  right: 0.75rem;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  animation: location-spin 0.6s linear infinite;
+}
+
+@keyframes location-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ========================= */
+/* ERROR TEXT */
+/* ========================= */
+
+.location-error-text {
+  margin-top: 4px;
+  font-size: 0.75rem;
+  color: var(--color-error);
+}
+
+/* ========================= */
+/* 🔑 DROPDOWN – ONLY ELEMENT WITH Z-INDEX */
+/* ========================= */
+
+.location-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+
+  background-color: var(--color-surface);
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card-hover);
+
+  max-height: 260px;
+  overflow-y: auto;
+
+  /* CRITICAL FIX: High z-index to overlay navbar (1000) and all other content */
+  z-index: 10001;
+  /* Ensure dropdown creates its own stacking context */
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* ========================= */
+/* LOCATION OPTIONS */
+/* ========================= */
+
+.location-option {
+  padding: 0.55rem 0.9rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.location-option-primary {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.location-option-secondary {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+.location-option:hover,
+.location-option.active {
+  background: var(--color-primary-light, linear-gradient(135deg, #f3e8ff 0%, #e0e7ff 100%));
+}
+
+/* ========================= */
+/* AGENT DASHBOARD FIX */
+/* ========================= */
+
+.form-group-location-input {
+  position: relative;
+  overflow: visible; /* ✅ critical */
+}
+
+/* Ensure label never blocks dropdown */
+.form-group-location-input > label {
+  position: relative;
+  z-index: 1;
+}
+
+/* ========================= */
+/* POPUP / MODAL SAFETY */
+/* ========================= */
+
+.popup-container,
+.popup-body,
+.step-content,
+.form-group {
+  overflow: visible;
+}
+
+/* ========================= */
+/* MOBILE TWEAKS */
+/* ========================= */
+
+@media (max-width: 640px) {
+  .location-input {
+    font-size: 0.9rem;
+    padding: 0.55rem 2rem 0.55rem 0.7rem;
+  }
+
+  .location-option-primary {
+    font-size: 0.85rem;
+  }
+
+  .location-option-secondary {
+    font-size: 0.75rem;
+  }
+}

@@ -1,0 +1,2369 @@
+/* AddPropertyPopup.css - Step by Step Form Styles */
+
+/* ======================= */
+/* OVERLAY & CONTAINER     */
+/* ======================= */
+
+.seller-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2rem;
+  z-index: 2000;
+  overflow-y: auto;
+  overflow-x: visible !important; /* Allow horizontal overflow for dropdowns */
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.seller-popup-container {
+  width: 100%;
+  max-width: 800px;
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 4rem);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ======================= */
+/* HEADER                  */
+/* ======================= */
+
+.seller-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.seller-popup-header h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.seller-popup-close-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.seller-popup-close-btn:hover {
+  background: var(--border-color);
+  color: var(--text-primary);
+}
+
+/* ======================= */
+/* STEP INDICATOR          */
+/* ======================= */
+
+.seller-popup-step-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-surface) 100%);
+  border-bottom: 1px solid var(--border-color);
+  gap: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  flex-wrap: nowrap;
+  min-height: 100px; /* Ensure consistent height */
+}
+
+.seller-popup-step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex-shrink: 0; /* Prevent shrinking */
+  min-width: 80px; /* Ensure minimum width for alignment */
+}
+
+.seller-popup-step-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--bg-primary);
+  border: 2px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: all var(--transition-normal);
+  flex-shrink: 0;
+}
+
+.seller-popup-step-item.active .seller-popup-step-circle {
+  background: var(--accent-gradient);
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.35);
+}
+
+.seller-popup-step-item.completed .seller-popup-step-circle {
+  background: var(--success-color);
+  border-color: transparent;
+  color: var(--color-text-white);
+}
+
+.seller-popup-step-title {
+  position: relative;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: color var(--transition-fast);
+  text-align: center;
+  width: max-content;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.seller-popup-step-item.active .seller-popup-step-title {
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+.seller-popup-step-item.completed .seller-popup-step-title {
+  color: var(--success-color);
+}
+
+.step-line {
+  position: absolute;
+  top: 0;
+  left: calc(50% + 22px); /* Start from right edge of circle (22px = half of 44px circle) */
+  width: 60px;
+  height: 2px;
+  background: var(--border-color);
+  transition: background var(--transition-normal);
+  z-index: 0;
+  transform: translateY(21px); /* Center vertically on circle (22px - 1px for line height) */
+}
+
+.seller-popup-step-item.completed + .seller-popup-step-item .step-line,
+.seller-popup-step-item.completed .step-line {
+  background: var(--success-color);
+}
+
+/* ======================= */
+/* POPUP BODY              */
+/* ======================= */
+
+.seller-popup-body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: visible !important; /* Allow horizontal overflow for dropdowns */
+  padding: 2rem;
+  position: relative; /* Establish positioning context */
+}
+
+.seller-popup-step-content {
+  animation: fadeInUp 0.3s ease;
+  overflow: visible !important; /* CRITICAL: Allow dropdowns to overflow - matches Agent Dashboard */
+  position: relative !important; /* Establish positioning context for dropdowns */
+  z-index: 0 !important; /* Lower than dropdowns */
+  isolation: auto !important; /* Don't create stacking context */
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.step-heading {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.step-subheading {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}
+
+/* ======================= */
+/* LOCATION & STATE DROPDOWNS */
+/* ======================= */
+/* Note: Location and State dropdown styles are handled by LocationAutoSuggest.css and StateAutoSuggest.css */
+/* These styles ensure proper z-index handling for popup containers */
+
+/* Ensure dropdowns appear above all form elements */
+.location-autosuggest,
+.state-autosuggest {
+  position: relative;
+  z-index: 9999 !important; /* Very high z-index to appear above everything */
+  isolation: isolate; /* Create new stacking context */
+}
+
+.location-dropdown,
+.state-dropdown {
+  z-index: 10000 !important; /* Maximum z-index to ensure dropdowns appear above everything */
+  position: absolute !important; /* Ensure absolute positioning */
+  background-color: var(--color-surface) !important; /* Ensure white background */
+  background: var(--color-surface) !important; /* Fallback for background-color */
+}
+
+/* ======================= */
+/* FORM ELEMENTS           */
+/* ======================= */
+
+.seller-popup-form-group {
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: visible;
+}
+
+.seller-popup-form-group label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary) !important;
+  margin-bottom: 0.5rem;
+}
+
+.required {
+  color: #ff0000;
+}
+
+.seller-popup-form-group input,
+.seller-popup-form-group select,
+.seller-popup-form-group textarea {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  background: var(--color-surface);
+  transition: all var(--transition-fast);
+  outline: none;
+}
+
+.seller-popup-form-group input:focus,
+.seller-popup-form-group select:focus,
+.seller-popup-form-group textarea:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.seller-popup-form-group input.error,
+.seller-popup-form-group select.error,
+.seller-popup-form-group textarea.error {
+  border-color: var(--danger-color);
+}
+
+.toggle-buttons.error,
+.seller-popup-property-type-grid.error,
+.number-selector.error,
+.seller-popup-amenities-grid.error {
+  border: 1px solid #e53935;
+  border-radius: var(--radius-md);
+  padding: 6px;
+}
+
+.error-message {
+  color: #e53935;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.seller-popup-form-group input::placeholder,
+.seller-popup-form-group textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* ======================= */
+/* NUMBER INPUT SPIN BUTTONS REMOVAL */
+/* ======================= */
+/* Remove browser default number input spin buttons ONLY within Add Property popup */
+.seller-popup-container input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+  appearance: textfield; /* Standard property for compatibility */
+}
+
+.seller-popup-container input[type="number"]::-webkit-inner-spin-button,
+.seller-popup-container input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none; /* Chrome, Safari, Edge */
+  margin: 0; /* Remove any margin */
+}
+
+.seller-popup-error-text {
+  display: block;
+  font-size: 0.8rem;
+  color:#ff0000;
+  margin-top: 0.35rem;
+}
+
+.seller-popup-error-text.center {
+  text-align: center;
+}
+
+.seller-popup-step-error {
+  display: block;
+  padding: 12px 16px;
+  background-color: var(--color-error-bg, #fee2e2);
+  border: 1px solid var(--color-error-border, #fecaca);
+  border-radius: 8px;
+  color: var(--color-error);
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.seller-popup-hint {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+.seller-location-error {
+  border-color: var(--danger-color) !important;
+}
+
+/* Legacy form-group support (for other form elements) */
+.form-group { 
+  margin-bottom:1.25rem; 
+  position: relative;
+  overflow: visible !important;
+  z-index: 0;
+  isolation: auto;
+}
+
+.form-group .location-autosuggest,
+.form-group .state-autosuggest {
+  z-index: 9999 !important;
+}
+
+.form-group label { 
+  display:block; 
+  font-size:0.9rem; 
+  font-weight:600; 
+  color:var(--text-primary); 
+  margin-bottom:0.5rem;
+}
+
+/* Form Rows */
+/* CRITICAL FIX: Match Agent Dashboard to prevent stacking context issues */
+.form-row {
+  display: grid;
+  gap: 1rem;
+  position: relative !important; /* Establish positioning context */
+  z-index: 0 !important; /* Very low z-index to stay below dropdowns */
+  overflow: visible !important; /* Allow dropdowns to overflow */
+  isolation: auto !important; /* Don't create stacking context */
+}
+
+.form-row.two-cols {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.form-row.three-cols {
+  grid-template-columns: repeat(3, 1fr);
+  z-index: 0 !important; /* Ensure three-cols also stays below dropdowns */
+}
+
+/* Input with Icon */
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-icon svg {
+  position: absolute;
+  left: 1rem;
+  color: var(--text-muted);
+}
+
+.input-with-icon input {
+  padding-left: 2.75rem;
+}
+
+/* Input with Suffix */
+.input-with-suffix {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-suffix input {
+  padding-right: 4rem;
+}
+
+.input-with-suffix .suffix {
+  position: absolute;
+  right: 1rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Price Input */
+.price-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.price-input-wrapper .currency {
+  position: absolute;
+  left: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.price-input-wrapper input {
+  padding-left: 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.price-words {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--accent-color);
+  margin-top: 0.35rem;
+  font-weight: 500;
+}
+
+/* Character Count */
+.char-count {
+  display: block;
+  text-align: right;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+}
+
+/* ======================= */
+/* TOGGLE BUTTONS          */
+/* ======================= */
+
+.toggle-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.toggle-btn {
+  flex: 1;
+  padding: 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all var(--transition-normal);
+}
+
+.toggle-btn:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+.toggle-btn.active {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, rgba(124, 58, 237, 0.15) 100%);
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+.toggle-icon {
+  font-size: 1.25rem;
+}
+
+/* ======================= */
+/* PROPERTY TYPE GRID      */
+/* ======================= */
+
+.seller-popup-property-type-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+.property-type-btn {
+  padding: 1rem 0.5rem;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all var(--transition-normal);
+}
+
+.property-type-btn:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-2px);
+}
+
+.property-type-btn.active {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, rgba(124, 58, 237, 0.15) 100%);
+  border-color: var(--accent-color);
+}
+
+.seller-popup-type-icon {
+  font-size: 1.5rem;
+}
+
+.seller-popup-type-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.property-type-btn.active .seller-popup-type-label {
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+/* ======================= */
+/* NUMBER SELECTOR         */
+/* ======================= */
+
+.number-selector {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.num-btn {
+  min-width: 44px;
+  height: 44px;
+  padding: 0 0.75rem;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.num-btn:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+.num-btn.active {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--color-text-white);
+}
+
+/* ======================= */
+/* AMENITIES GRID          */
+/* ======================= */
+
+.seller-popup-amenities-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+.amenity-btn {
+  position: relative;
+  padding: 0.875rem 0.5rem;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all var(--transition-fast);
+}
+
+.amenity-btn:hover {
+  border-color: var(--accent-color);
+}
+
+.amenity-btn.active {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.15) 100%);
+  border-color: var(--success-color);
+}
+
+.seller-popup-amenity-icon {
+  font-size: 1.25rem;
+}
+
+.seller-popup-amenity-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.amenity-btn.active .seller-popup-amenity-label {
+  color: var(--success-color);
+}
+
+.check-icon {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 18px;
+  height: 18px;
+  background: var(--success-color);
+  color: var(--color-text-white);
+  border-radius: 50%;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ======================= */
+/* UPLOAD ZONE             */
+/* ======================= */
+
+.upload-zone {
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 0.5rem 0.75rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-surface) 100%);
+}
+
+.upload-zone:hover {
+  border-color: var(--accent-color);
+  background: linear-gradient(180deg, rgba(124, 58, 237, 0.02) 0%, rgba(124, 58, 237, 0.05) 100%);
+}
+
+.upload-zone.error {
+  border-color: var(--danger-color);
+}
+
+.upload-content {
+  pointer-events: none;
+}
+
+.seller-popup-upload-icon {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 0.25rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(124, 58, 237, 0.05) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-color);
+}
+
+.upload-content h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.1rem;
+}
+
+.upload-content p {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.2rem;
+}
+
+.seller-popup-upload-hint {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+/* Image Preview */
+.image-preview-section {
+  margin-top: 1.5rem;
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.preview-header span {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.add-more-btn {
+  background: none;
+  border: none;
+  color: var(--accent-color);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast);
+}
+
+.add-more-btn:hover {
+  background: rgba(124, 58, 237, 0.08);
+}
+
+.image-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.75rem;
+}
+
+.preview-item {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cover-badge {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  padding: 0.2rem 0.5rem;
+  background: var(--accent-color);
+  color: var(--color-text-white);
+  font-size: 0.65rem;
+  font-weight: 600;
+  border-radius: 4px;
+}
+
+.remove-btn,
+.remove-image-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-error);
+  color: var(--color-text-white);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  z-index: 20;
+  box-shadow: var(--shadow-card);
+}
+
+.remove-btn:hover,
+.remove-image-btn:hover {
+  background: rgba(255, 0, 0, 1);
+  transform: scale(1.1);
+}
+
+.remove-btn:disabled,
+.remove-image-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: rgba(128, 128, 128, 0.6);
+}
+
+/* Image Validation Status Styles */
+.image-validation-item.approved {
+  border-color: var(--color-success);
+  background-color: var(--color-success-bg, #f0fff0);
+}
+
+.image-validation-item.rejected {
+  border-color: var(--color-error);
+  background-color: var(--color-error-bg, #fff0f0);
+}
+
+.image-validation-item.checking {
+  border-color: var(--color-info, #2196F3);
+  background-color: var(--color-info-bg, #f0f8ff);
+}
+
+.image-status {
+  margin-top: 8px;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.image-status.checking {
+  color: var(--color-info, #2196F3);
+  background-color: var(--color-info-bg, #e3f2fd);
+}
+
+.image-status.approved {
+  color: var(--color-success);
+  font-weight: 600;
+  background-color: var(--color-success-bg, #e8f5e9);
+}
+
+.image-status.rejected {
+  color: var(--color-error);
+  background-color: var(--color-error-bg, #ffebee);
+}
+
+.image-status .status-icon {
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+
+.image-status .status-title {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 4px;
+  font-size: 11px;
+}
+
+.image-status .status-message {
+  font-size: 10px;
+  margin: 0;
+  color: #d32f2f;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.status-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #2196F3;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 4px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.image-validation-warning {
+  background: var(--color-warning-bg, #fff3cd);
+  color: var(--color-warning-text, #856404);
+  padding: 12px;
+  border-radius: 4px;
+  margin-top: 16px;
+  font-size: 14px;
+  border: 1px solid var(--color-warning, #ffc107);
+}
+
+/* Enhanced Validation Overlay Styles */
+.validation-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  z-index: 10;
+}
+
+.overlay-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.checking-overlay {
+  background: rgba(33, 150, 243, 0.9);
+  color: white;
+}
+
+.approved-overlay {
+  background: rgba(76, 175, 80, 0.9);
+  color: white;
+  padding: 12px;
+  text-align: center;
+}
+
+.rejected-overlay {
+  background: rgba(244, 67, 54, 0.9);
+  color: white;
+  padding: 12px;
+  text-align: center;
+}
+
+.status-message-text {
+  font-size: 14px;
+  color: white;
+  margin: 0;
+  text-align: center;
+  font-weight: 500;
+}
+
+.checkmark {
+  color: white;
+  margin-bottom: 8px;
+}
+
+.approved-text {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  color: white;
+}
+
+.x-icon {
+  color: white;
+  margin-bottom: 8px;
+}
+
+.rejected-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.rejected-message {
+  font-size: 12px;
+  margin: 0 0 12px 0;
+  font-weight: 500;
+  line-height: 1.4;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.remove-rejected-btn {
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid white;
+  border-radius: 6px;
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.remove-rejected-btn:hover {
+  background: white;
+  color: #f44336;
+  transform: scale(1.05);
+}
+
+.remove-rejected-btn:active {
+  transform: scale(0.95);
+}
+
+/* Status Badges */
+.status-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 15;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.approved-badge {
+  background: var(--color-success);
+  color: var(--color-text-white);
+}
+
+.rejected-badge {
+  background: var(--color-error);
+  color: var(--color-text-white);
+}
+
+.status-badge svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Enhanced border colors for validation states */
+.image-validation-item.checking {
+  border: 2px solid var(--color-info, #2196F3);
+}
+
+.image-validation-item.approved {
+  border: 2px solid var(--color-success);
+}
+
+.image-validation-item.rejected {
+  border: 2px solid var(--color-error);
+}
+
+.image-validation-warning strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.image-validation-success {
+  /* Simple success message, no animation */
+}
+
+/* Disabled Next Button */
+.seller-popup-next-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ======================= */
+/* CHECKBOX                */
+/* ======================= */
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-weight: 500 !important;
+  color: #000000 !important;
+}
+
+.checkbox-label input {
+  display: none;
+}
+
+.checkmark {
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.checkbox-label input:checked + .checkmark {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.checkbox-label input:checked + .checkmark::after {
+  content: '✓';
+  color: var(--color-text-white);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* ======================= */
+/* LISTING SUMMARY         */
+/* ======================= */
+
+.seller-popup-listing-summary {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.04) 0%, rgba(124, 58, 237, 0.08) 100%);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(124, 58, 237, 0.1);
+}
+
+.seller-popup-listing-summary h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.seller-popup-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.seller-popup-summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.seller-popup-summary-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.seller-popup-summary-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ======================= */
+/* FOOTER                  */
+/* ======================= */
+
+.seller-popup-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 2rem;
+  border-top: 1px solid var(--border-color);
+  background: var(--color-bg);
+  border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+}
+
+.seller-popup-footer-right {
+  display: flex;
+  gap: 0.75rem;
+  margin-left: auto;
+}
+
+.seller-popup-back-btn,
+.seller-popup-cancel-btn,
+.seller-popup-next-btn,
+.seller-popup-submit-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.seller-popup-back-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+}
+
+.seller-popup-back-btn:hover {
+  color: var(--text-primary);
+}
+
+.seller-popup-cancel-btn {
+  background: var(--color-surface);
+  border: 2px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+.seller-popup-cancel-btn:hover {
+  border-color: var(--text-muted);
+  color: var(--text-primary);
+}
+
+.seller-popup-next-btn {
+  background: var(--accent-gradient);
+  border: none;
+  color: var(--color-text-white);
+  box-shadow: var(--shadow-card);
+}
+
+.seller-popup-next-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.45);
+}
+
+.seller-popup-submit-btn {
+  background: linear-gradient(135deg, var(--color-success) 0%, var(--color-success-dark, #059669) 100%);
+  border: none;
+  color: var(--color-text-white);
+  box-shadow: var(--shadow-card);
+}
+
+.seller-popup-submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.45);
+}
+
+.seller-popup-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.seller-popup-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ======================= */
+/* RESPONSIVE              */
+/* ======================= */
+
+/* Tablet (768px – 1023px) */
+@media (max-width: 1023px) {
+  .seller-popup-overlay {
+    padding: 1.5rem;
+  }
+
+  .seller-popup-container {
+    max-width: 90%;
+    max-height: calc(100vh - 3rem);
+  }
+
+  .seller-popup-header {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .seller-popup-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .seller-popup-step-indicator {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .seller-popup-body {
+    padding: 1.5rem;
+  }
+
+  .step-heading {
+    font-size: 1.25rem;
+  }
+
+  .step-subheading {
+    font-size: 0.9rem;
+  }
+
+  .seller-popup-property-type-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.65rem;
+  }
+
+  .seller-popup-amenities-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.65rem;
+  }
+
+  .form-row.two-cols {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .form-row.three-cols {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .image-preview-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .seller-popup-summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .seller-popup-footer {
+    padding: 1.125rem 1.5rem;
+  }
+}
+
+/* Mobile (≤767px) */
+@media (max-width: 767px) {
+  .seller-popup-overlay {
+    padding: 0;
+    align-items: flex-start;
+  }
+
+  .seller-popup-container {
+    max-width: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+    height: 100vh;
+  }
+
+  .seller-popup-header {
+    padding: 1rem;
+  }
+
+  .seller-popup-header h2 {
+    font-size: 1.15rem;
+  }
+
+  .seller-popup-close-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .seller-popup-step-indicator {
+    padding: 1rem 0.5rem;
+    gap: 0;
+    justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    min-height: 90px;
+  }
+
+  .seller-popup-step-indicator::-webkit-scrollbar {
+    display: none;
+  }
+
+  .seller-popup-step-item {
+    min-width: 60px;
+    flex-shrink: 0;
+  }
+
+  .seller-popup-step-circle {
+    width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
+  }
+
+  .step-line {
+    width: 20px;
+    top: 0;
+    left: calc(50% + 18px);
+    transform: translateY(17px);
+  }
+
+  .seller-popup-step-title {
+    font-size: 0.65rem;
+    max-width: 60px;
+    display: none;
+  }
+
+  .seller-popup-body {
+    padding: 1rem;
+    overflow-y: auto;
+  }
+
+  .step-heading {
+    font-size: 1.15rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .step-subheading {
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .seller-popup-form-group {
+    margin-bottom: 1.25rem;
+  }
+
+  .seller-popup-form-group label {
+    font-size: 0.85rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .seller-popup-form-group input,
+  .seller-popup-form-group select,
+  .seller-popup-form-group textarea {
+    padding: 0.75rem 0.875rem;
+    font-size: 0.9rem;
+  }
+
+  .seller-popup-property-type-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .property-type-btn {
+    padding: 0.875rem 0.4rem;
+  }
+
+  .seller-popup-type-icon {
+    font-size: 1.35rem;
+  }
+
+  .seller-popup-type-label {
+    font-size: 0.7rem;
+  }
+
+  .seller-popup-amenities-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .amenity-btn {
+    padding: 0.75rem 0.4rem;
+  }
+
+  .seller-popup-amenity-icon {
+    font-size: 1.15rem;
+  }
+
+  .seller-popup-amenity-label {
+    font-size: 0.65rem;
+  }
+
+  .form-row.two-cols,
+  .form-row.three-cols {
+    grid-template-columns: 1fr;
+    gap: 0.875rem;
+  }
+
+  .toggle-buttons {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .toggle-btn {
+    padding: 0.875rem;
+    font-size: 0.9rem;
+    min-height: 44px;
+  }
+
+  .number-selector {
+    gap: 0.4rem;
+  }
+
+  .num-btn {
+    min-width: 40px;
+    height: 40px;
+    padding: 0 0.65rem;
+    font-size: 0.85rem;
+  }
+
+  .upload-zone {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .seller-popup-upload-icon {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 0.2rem;
+  }
+
+  .upload-content h4 {
+    font-size: 0.825rem;
+  }
+
+  .upload-content p {
+    font-size: 0.75rem;
+  }
+
+  .image-preview-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.65rem;
+  }
+
+  .seller-popup-summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.875rem;
+  }
+
+  .seller-popup-summary-label {
+    font-size: 0.75rem;
+  }
+
+  .seller-popup-summary-value {
+    font-size: 0.85rem;
+  }
+
+  .seller-popup-footer {
+    flex-direction: column;
+    gap: 0.875rem;
+    padding: 1rem;
+  }
+
+  .seller-popup-back-btn {
+    order: 2;
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    min-height: 44px;
+  }
+
+  .seller-popup-footer-right {
+    width: 100%;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-left: 0;
+  }
+
+  .seller-popup-cancel-btn,
+  .seller-popup-next-btn,
+  .seller-popup-submit-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+    min-height: 44px;
+  }
+
+  .seller-popup-limit-warning-modal {
+    max-width: 95%;
+    padding: 2rem 1.5rem;
+  }
+
+  .seller-popup-limit-warning-icon {
+    width: 70px;
+    height: 70px;
+  }
+
+  .seller-popup-limit-warning-content h3 {
+    font-size: 1.35rem;
+  }
+
+  .seller-popup-limit-warning-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .seller-popup-limit-btn-secondary,
+  .seller-popup-limit-btn-primary {
+    width: 100%;
+    padding: 0.875rem 1.25rem;
+    font-size: 0.9rem;
+    min-height: 44px;
+  }
+}
+
+/* Small Mobile (≤480px) */
+@media (max-width: 480px) {
+  .seller-popup-header {
+    padding: 0.875rem;
+  }
+
+  .seller-popup-header h2 {
+    font-size: 1.05rem;
+  }
+
+  .seller-popup-step-indicator {
+    padding: 0.875rem 0.4rem;
+    min-height: 85px;
+  }
+
+  .seller-popup-step-item {
+    min-width: 55px;
+  }
+
+  .seller-popup-step-circle {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
+
+  .step-line {
+    width: 18px;
+    left: calc(50% + 16px);
+    transform: translateY(15px);
+  }
+
+  .seller-popup-body {
+    padding: 0.875rem;
+  }
+
+  .step-heading {
+    font-size: 1.05rem;
+  }
+
+  .step-subheading {
+    font-size: 0.8rem;
+  }
+
+  .seller-popup-property-type-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .seller-popup-amenities-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .image-preview-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .seller-popup-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .seller-popup-footer {
+    padding: 0.875rem;
+  }
+
+  .seller-popup-limit-warning-modal {
+    padding: 1.75rem 1.25rem;
+  }
+
+  .seller-popup-limit-warning-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .seller-popup-limit-warning-icon svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .seller-popup-limit-warning-content h3 {
+    font-size: 1.2rem;
+  }
+
+  .seller-popup-limit-warning-content > p {
+    font-size: 0.95rem;
+  }
+}
+
+/* Extra Small Mobile (≤360px) */
+@media (max-width: 360px) {
+  .seller-popup-step-circle {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+  }
+
+  .step-line {
+    width: 16px;
+    left: calc(50% + 15px);
+    transform: translateY(14px);
+  }
+
+  .seller-popup-property-type-grid,
+  .seller-popup-amenities-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.4rem;
+  }
+
+  .image-preview-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.4rem;
+  }
+}
+
+/* ======================= */
+/* PROPERTY LIMIT WARNING  */
+/* ======================= */
+
+.seller-popup-limit-warning-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  padding: 1.5rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.seller-popup-limit-warning-modal {
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  width: 100%;
+  max-width: 480px;
+  padding: 2.5rem;
+  position: relative;
+  animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: var(--shadow-card);
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.seller-popup-limit-warning-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-warning-light, #FEF3C7) 0%, var(--color-warning, #FDE68A) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-warning-dark, #D97706);
+  animation: pulse-warning 2s ease-in-out infinite;
+}
+
+@keyframes pulse-warning {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 15px rgba(245, 158, 11, 0);
+  }
+}
+
+.seller-popup-limit-warning-content {
+  text-align: center;
+}
+
+.seller-popup-limit-warning-content h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.seller-popup-limit-warning-content > p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.seller-popup-limit-warning-content strong {
+  color: var(--danger-color);
+  font-weight: 700;
+}
+
+/* Progress Bar */
+.seller-popup-limit-progress {
+  margin-bottom: 1.75rem;
+}
+
+.seller-popup-limit-progress-bar {
+  height: 10px;
+  background: var(--color-border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.seller-popup-limit-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-warning, #F59E0B) 0%, var(--color-error) 100%);
+  border-radius: 10px;
+  transition: width 0.5s ease;
+  position: relative;
+}
+
+.seller-popup-limit-progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.seller-popup-limit-progress-text {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* Features List */
+.seller-popup-limit-warning-features {
+  background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+  border: 1px solid #BBF7D0;
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  margin-bottom: 1.75rem;
+  text-align: left;
+}
+
+.seller-popup-limit-warning-features .seller-popup-features-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-success-dark, #166534);
+  margin-bottom: 0.75rem;
+}
+
+.seller-popup-limit-warning-features ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.seller-popup-limit-warning-features li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  color: var(--color-success-dark, #15803D);
+  font-weight: 500;
+}
+
+.seller-popup-limit-warning-features li svg {
+  color: var(--color-success);
+  flex-shrink: 0;
+}
+
+/* Action Buttons */
+.seller-popup-limit-warning-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.seller-popup-limit-btn-secondary,
+.seller-popup-limit-btn-primary {
+  flex: 1;
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.seller-popup-limit-btn-secondary {
+  background: var(--color-surface);
+  border: 2px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+.seller-popup-limit-btn-secondary:hover {
+  border-color: var(--text-muted);
+  color: var(--text-primary);
+  background: var(--bg-primary);
+}
+
+.seller-popup-limit-btn-primary {
+  background: linear-gradient(135deg, var(--color-warning, #F59E0B) 0%, var(--color-warning-dark, #D97706) 100%);
+  border: none;
+  color: var(--color-text-white);
+  box-shadow: var(--shadow-card);
+}
+
+.seller-popup-limit-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+}
+
+.seller-popup-limit-btn-primary svg {
+  color: #FEF3C7;
+}
+
+/* Close Button */
+.seller-popup-limit-warning-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: var(--bg-primary);
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.seller-popup-limit-warning-close:hover {
+  background: var(--border-color);
+  color: var(--text-primary);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .seller-popup-limit-warning-modal {
+    padding: 2rem 1.5rem;
+  }
+
+  .seller-popup-limit-warning-icon {
+    width: 70px;
+    height: 70px;
+  }
+
+  .seller-popup-limit-warning-icon svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .seller-popup-limit-warning-content h3 {
+    font-size: 1.25rem;
+  }
+
+  .seller-popup-limit-warning-actions {
+    flex-direction: column;
+  }
+
+  .seller-popup-limit-btn-secondary {
+    order: 2;
+  }
+}
+
+/* Location Picker Button */
+.location-picker-btn {
+  width: 100%;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: var(--color-text-white);
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-card);
+}
+
+.location-picker-btn:hover {
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.location-picker-btn:active {
+  transform: translateY(0);
+}
+
+.location-picker-btn svg {
+  stroke: white;
+}
+
+/* ======================= */
+/* LOCATION PICKER MODAL DROPDOWN FIX */
+/* ======================= */
+/* ROOT CAUSE: location-dropdown clipped by location-picker-modal-content overflow-y: auto */
+/* Seller Dashboard ONLY - Match Agent Dashboard behavior */
+/* 
+ * The modal content has overflow-y: auto which creates a clipping context.
+ * Absolutely positioned children (dropdown) are clipped to this container's bounds.
+ * Solution: Remove overflow clipping from modal-content and ensure all parent
+ * containers allow overflow, enabling dropdown to escape modal bounds.
+ */
+
+/* FIX A: Responsive modal content - fits within viewport without scrolling */
+/* Content uses flexbox to distribute space, no internal scrolling */
+/* Height handled responsively in LocationPicker.css to account for overlay padding */
+.location-picker-modal-content {
+  overflow: hidden !important; /* No internal scrolling - content fits viewport */
+  position: relative !important; /* Maintain positioning context */
+  display: flex !important;
+  flex-direction: column !important;
+  /* Height and max-height handled by LocationPicker.css with proper padding calculations */
+  /* This ensures consistent behavior across Agent and Seller dashboards */
+}
+
+/* FIX B: Ensure modal overlay allows overflow for dropdowns */
+.location-picker-modal-overlay {
+  overflow: visible !important; /* Allow dropdown to escape overlay bounds */
+  /* Overlay padding handled responsively in LocationPicker.css */
+}
+
+/* FIX C: Ensure search section allows overflow */
+/* This is where LocationAutoSuggest would be rendered if used in modal */
+.location-picker-search-section {
+  position: relative !important;
+  overflow: visible !important; /* Critical: allow dropdown to escape */
+  z-index: 1 !important;
+  flex-shrink: 0 !important; /* Maintain layout - prevent shrinking */
+}
+
+/* FIX D: Ensure autosuggest containers allow overflow and proper stacking */
+.location-picker-modal-content .location-autosuggest,
+.location-picker-modal-content .state-autosuggest {
+  position: relative !important;
+  overflow: visible !important; /* Critical: allow dropdown to escape */
+  z-index: 10001 !important; /* Higher than modal z-index (2100) */
+  isolation: isolate !important; /* Create new stacking context */
+}
+
+/* FIX E: Ensure search box allows overflow */
+.location-picker-modal-content .search-box {
+  position: relative !important;
+  overflow: visible !important; /* Critical: allow dropdown to escape */
+}
+
+/* FIX F: Dropdown positioning and stacking - must escape modal bounds */
+.location-picker-modal-content .location-dropdown,
+.location-picker-modal-content .state-dropdown {
+  position: absolute !important; /* Absolute positioning relative to autosuggest parent */
+  z-index: 10002 !important; /* Highest z-index to ensure visibility above modal */
+  /* Dropdown now escapes modal-content bounds because parent has overflow: visible */
+}
+
+/* FIX G: Ensure header, footer, and hint sections don't interfere */
+.location-picker-header,
+.location-picker-footer,
+.location-picker-hint {
+  flex-shrink: 0 !important; /* Don't shrink - maintain layout */
+  overflow: visible !important; /* Allow any child elements to escape */
+  position: relative !important; /* Maintain positioning */
+}
+
+/* FIX H: Map section adapts to available space responsively */
+.location-picker-map {
+  flex: 1 1 auto !important; /* Take available space, shrink if needed */
+  overflow: hidden !important; /* Map handles its own overflow */
+  min-height: 0 !important; /* Allow flexbox to shrink below content size */
+  /* Height adapts responsively - see LocationPicker.css for breakpoints */
+}
+
+/* ======================= */
+/* CAMERA CAPTURE MODALS   */
+/* ======================= */
+
+/* Action Selector Modal */
+.camera-action-selector-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  backdrop-filter: blur(4px);
+}
+
+.camera-action-selector-modal {
+  background: var(--color-surface);
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: var(--shadow-card);
+  animation: modalFadeIn 0.2s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.camera-action-selector-modal h3 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+}
+
+.camera-action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.camera-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--color-surface);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.camera-action-btn:hover {
+  border-color: var(--accent-color);
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(124, 58, 237, 0.02) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.15);
+}
+
+.camera-action-btn svg {
+  flex-shrink: 0;
+  color: var(--accent-color);
+}
+
+.camera-action-close-btn {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--color-bg);
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 0.5rem;
+}
+
+.camera-action-close-btn:hover {
+  background: var(--color-border);
+  color: var(--text-primary);
+}
+
+/* Camera Capture Modal */
+.camera-capture-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10001;
+}
+
+.camera-capture-modal {
+  width: 100%;
+  max-width: 600px;
+  background: #000;
+  border-radius: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+}
+
+.camera-capture-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.camera-capture-header h3 {
+  margin: 0;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.camera-close-btn {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s ease;
+}
+
+.camera-close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.camera-preview-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.camera-preview-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1); /* Mirror for better UX */
+}
+
+.camera-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.8);
+  gap: 1rem;
+}
+
+.camera-flip-btn,
+.camera-cancel-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.camera-flip-btn {
+  padding: 0.75rem;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+}
+
+.camera-flip-btn:hover,
+.camera-cancel-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.camera-capture-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.camera-capture-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 4px solid var(--color-surface);
+  background: rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.camera-capture-btn:active .camera-capture-circle {
+  transform: scale(0.9);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.camera-capture-inner {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--color-surface);
+}
+
+/* Mobile Responsive */
+@media (max-width: 767px) {
+  .camera-action-selector-modal {
+    padding: 1.5rem;
+    max-width: 90%;
+  }
+
+  .camera-action-btn {
+    padding: 0.875rem 1.25rem;
+    font-size: 0.95rem;
+  }
+
+  .camera-capture-modal {
+    max-width: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .camera-controls {
+    padding: 1.25rem;
+  }
+
+  .camera-capture-circle {
+    width: 64px;
+    height: 64px;
+    border-width: 3px;
+  }
+
+  .camera-capture-inner {
+    width: 50px;
+    height: 50px;
+  }
+}

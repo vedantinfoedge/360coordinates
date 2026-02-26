@@ -1,0 +1,728 @@
+/* Admin Login Page */
+.admin-login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-dark) 100%);
+  padding: 1rem;
+}
+
+.admin-login-container {
+  width: 100%;
+  max-width: 450px;
+}
+
+.admin-login-card {
+  background: var(--color-surface);
+  border-radius: 1rem;
+  padding: 3rem 2.5rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.admin-login-icon {
+  width: 70px;
+  height: 70px;
+  background: var(--color-primary);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+.admin-login-icon svg {
+  width: 36px;
+  height: 36px;
+  color: var(--color-surface);
+}
+
+.admin-login-card h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.admin-login-subtitle {
+  color: var(--color-text-secondary);
+  font-size: 0.9375rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.admin-google-signin-container {
+  margin: 2rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50px;
+}
+
+.admin-google-signin-container > div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.admin-login-note {
+  text-align: center;
+  color: var(--color-primary);
+  font-size: 0.8125rem;
+  margin-top: 1.5rem;
+  font-weight: 500;
+  background: var(--color-light-accent);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-primary);
+}
+
+.admin-2fa-instructions {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: var(--color-primary-light);
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-light-accent);
+}
+
+.admin-2fa-instructions p {
+  margin: 0.5rem 0;
+  color: var(--color-primary);
+  font-size: 0.9375rem;
+}
+
+.admin-2fa-input {
+  text-align: center !important;
+  font-size: 1.5rem !important;
+  letter-spacing: 0.5rem !important;
+  font-weight: 600 !important;
+  padding: 1rem !important;
+}
+
+.admin-back-link {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: var(--color-primary);
+  cursor: pointer;
+  font-size: 0.875rem;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.admin-back-link:hover {
+  color: var(--color-primary-hover);
+}
+
+.admin-error-alert {
+  background: rgba(29, 36, 43, 0.08);
+  border: 1px solid var(--color-border);
+  color: var(--color-dark);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+}
+
+.admin-login-form {
+  text-align: left;
+}
+
+.admin-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.admin-form-group label {
+  display: block;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-bottom: 0.5rem;
+  font-size: 0.9375rem;
+}
+
+.admin-form-group input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  font-size: 0.9375rem;
+  transition: all 0.2s;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.admin-form-group input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 119, 192, 0.1);
+}
+
+.admin-form-group input:disabled {
+  background-color: var(--color-bg);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.admin-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.admin-input-icon {
+  position: absolute;
+  left: 1rem;
+  width: 18px;
+  height: 18px;
+  color: var(--color-text-secondary);
+  pointer-events: none;
+}
+
+.admin-input-wrapper input {
+  width: 100%;
+  padding: 0.875rem 1rem 0.875rem 3rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  font-size: 0.9375rem;
+  transition: all 0.2s;
+  outline: none;
+}
+
+.admin-input-wrapper input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 119, 192, 0.1);
+}
+
+.admin-input-wrapper input.admin-error {
+  border-color: var(--color-error);
+}
+
+.admin-input-wrapper input.admin-error:focus {
+  box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.1);
+}
+
+.admin-password-toggle {
+  position: absolute;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  color: var(--color-text-secondary);
+  transition: color 0.2s;
+}
+
+.admin-password-toggle:hover {
+  color: var(--color-text-secondary);
+}
+
+.admin-password-toggle svg {
+  width: 18px;
+  height: 18px;
+}
+
+.admin-error-message {
+  display: block;
+  color: var(--color-error);
+  font-size: 0.8125rem;
+  margin-top: 0.375rem;
+}
+
+.admin-login-button {
+  width: 100%;
+  padding: 0.875rem;
+  background: var(--color-primary);
+  color: var(--color-surface);
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 0.5rem;
+}
+
+.admin-login-button:hover {
+  background: var(--color-primary-hover);
+}
+
+.admin-login-button:active {
+  transform: scale(0.98);
+}
+
+.admin-login-button:disabled {
+  background: var(--color-text-secondary);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.admin-demo-credentials {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.admin-demo-credentials p {
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+}
+
+/* OTP Input Styles */
+.admin-otp-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.admin-otp-input {
+  width: 45px !important;
+  height: 50px !important;
+  font-size: 20px !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  border: 2px solid var(--color-border) !important;
+  text-align: center !important;
+  transition: all 0.2s !important;
+}
+
+.admin-otp-input::placeholder {
+  color: var(--color-text-disabled) !important;
+  font-size: 16px !important;
+  opacity: 0.6 !important;
+}
+
+.admin-otp-input:focus {
+  border-color: var(--color-primary) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(0, 119, 192, 0.1) !important;
+}
+
+.admin-otp-input.admin-otp-error {
+  border-color: var(--color-error) !important;
+}
+
+.admin-otp-input.admin-otp-error:focus {
+  box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.1) !important;
+}
+
+/* OTP Actions */
+.admin-otp-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.admin-resend-button {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-resend-button:hover:not(:disabled) {
+  background: var(--color-bg);
+  border-color: var(--color-border);
+  color: var(--color-text-secondary);
+}
+
+.admin-resend-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.admin-back-button {
+  background: transparent;
+  border: none;
+  color: var(--color-primary);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: underline;
+}
+
+.admin-back-button:hover:not(:disabled) {
+  color: var(--color-primary-hover);
+}
+
+.admin-back-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* 2FA Setup Styles */
+.admin-2fa-prompt {
+  text-align: center;
+  color: var(--color-text-secondary);
+  margin-bottom: 1.5rem;
+  font-size: 0.9375rem;
+}
+
+.admin-qr-container {
+  text-align: center;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: var(--color-bg);
+  border-radius: 0.5rem;
+}
+
+.admin-qr-container img {
+  max-width: 200px;
+  height: auto;
+}
+
+.admin-secret-key {
+  text-align: center;
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+  margin: 1rem 0;
+  word-break: break-all;
+}
+
+.admin-secret-key code {
+  background: var(--color-bg);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+}
+
+.admin-setup-link {
+  text-align: center;
+  margin-top: 1rem;
+  color: var(--color-primary);
+  cursor: pointer;
+  font-size: 0.875rem;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.admin-setup-link:hover {
+  color: var(--color-primary-hover);
+}
+
+.admin-back-link {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: var(--color-primary);
+  cursor: pointer;
+  font-size: 0.875rem;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.admin-back-link:hover {
+  color: var(--color-primary-hover);
+}
+
+/* Responsive */
+/* Tablet */
+@media (max-width: 1024px) {
+  .admin-login-page {
+    padding: 1.5rem;
+  }
+
+  .admin-login-container {
+    max-width: 420px;
+  }
+
+  .admin-login-card {
+    padding: 2.5rem 2rem;
+  }
+}
+
+/* Tablet Small */
+@media (max-width: 768px) {
+  .admin-login-page {
+    padding: 1rem;
+  }
+
+  .admin-login-container {
+    max-width: 400px;
+  }
+
+  .admin-login-card {
+    padding: 2rem 1.75rem;
+  }
+
+  .admin-login-card h1 {
+    font-size: 1.625rem;
+  }
+
+  .admin-login-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .admin-login-icon svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .admin-otp-input {
+    width: 42px !important;
+    height: 48px !important;
+    font-size: 19px !important;
+  }
+
+  .admin-qr-container img {
+    max-width: 180px;
+  }
+}
+
+/* Mobile Large */
+@media (max-width: 640px) {
+  .admin-login-page {
+    padding: 1rem;
+  }
+
+  .admin-login-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .admin-login-card h1 {
+    font-size: 1.5rem;
+  }
+
+  .admin-login-subtitle {
+    font-size: 0.875rem;
+  }
+
+  .admin-login-icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .admin-login-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .admin-form-group label {
+    font-size: 0.875rem;
+  }
+
+  .admin-form-group input {
+    padding: 0.75rem 0.875rem;
+    font-size: 0.875rem;
+  }
+
+  .admin-input-wrapper input {
+    padding: 0.75rem 0.875rem 0.75rem 2.75rem;
+  }
+
+  .admin-login-button {
+    padding: 0.75rem;
+    font-size: 0.9375rem;
+  }
+
+  .admin-otp-input {
+    width: 40px !important;
+    height: 45px !important;
+    font-size: 18px !important;
+  }
+
+  .admin-qr-container {
+    padding: 0.875rem;
+  }
+
+  .admin-qr-container img {
+    max-width: 150px;
+  }
+
+  .admin-2fa-instructions {
+    padding: 0.875rem;
+  }
+
+  .admin-2fa-instructions p {
+    font-size: 0.875rem;
+  }
+
+  .admin-otp-actions {
+    gap: 0.625rem;
+  }
+
+  .admin-resend-button,
+  .admin-back-button {
+    padding: 0.625rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .admin-login-page {
+    padding: 0.75rem;
+  }
+
+  .admin-login-container {
+    max-width: 100%;
+  }
+
+  .admin-login-card {
+    padding: 1.75rem 1.25rem;
+    border-radius: 0.75rem;
+  }
+
+  .admin-login-card h1 {
+    font-size: 1.375rem;
+  }
+
+  .admin-login-subtitle {
+    font-size: 0.8125rem;
+  }
+
+  .admin-login-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 1.25rem;
+  }
+
+  .admin-login-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .admin-form-group {
+    margin-bottom: 1.25rem;
+  }
+
+  .admin-form-group label {
+    font-size: 0.8125rem;
+    margin-bottom: 0.375rem;
+  }
+
+  .admin-form-group input {
+    padding: 0.625rem 0.75rem;
+    font-size: 0.8125rem;
+  }
+
+  .admin-input-wrapper input {
+    padding: 0.625rem 0.75rem 0.625rem 2.5rem;
+  }
+
+  .admin-input-icon {
+    left: 0.75rem;
+    width: 16px;
+    height: 16px;
+  }
+
+  .admin-password-toggle {
+    right: 0.75rem;
+  }
+
+  .admin-password-toggle svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .admin-login-button {
+    padding: 0.625rem;
+    font-size: 0.875rem;
+    margin-top: 0.375rem;
+  }
+
+  .admin-error-alert {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.8125rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .admin-error-message {
+    font-size: 0.75rem;
+  }
+
+  .admin-otp-container {
+    margin-bottom: 0.375rem;
+  }
+
+  .admin-otp-input {
+    width: 36px !important;
+    height: 42px !important;
+    font-size: 16px !important;
+    border-radius: 6px !important;
+  }
+
+  .admin-qr-container {
+    padding: 0.75rem;
+    margin: 1.25rem 0;
+  }
+
+  .admin-qr-container img {
+    max-width: 130px;
+  }
+
+  .admin-2fa-instructions {
+    padding: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .admin-2fa-instructions p {
+    font-size: 0.8125rem;
+    margin: 0.375rem 0;
+  }
+
+  .admin-2fa-prompt {
+    font-size: 0.875rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .admin-secret-key {
+    font-size: 0.75rem;
+    margin: 0.875rem 0;
+  }
+
+  .admin-secret-key code {
+    font-size: 0.6875rem;
+    padding: 0.2rem 0.375rem;
+  }
+
+  .admin-setup-link,
+  .admin-back-link {
+    font-size: 0.8125rem;
+    margin-top: 1.25rem;
+  }
+
+  .admin-otp-actions {
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+  }
+
+  .admin-resend-button,
+  .admin-back-button {
+    padding: 0.625rem;
+    font-size: 0.8125rem;
+  }
+
+  .admin-demo-credentials {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+  }
+
+  .admin-demo-credentials p {
+    font-size: 0.8125rem;
+  }
+
+  .admin-login-note {
+    font-size: 0.75rem;
+    padding: 0.625rem;
+    margin-top: 1.25rem;
+  }
+
+  .admin-google-signin-container {
+    margin: 1.5rem 0;
+  }
+}

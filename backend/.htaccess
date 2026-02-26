@@ -1,0 +1,43 @@
+# Enable Rewrite Engine
+RewriteEngine On
+
+# Preserve Authorization header for Hostinger Apache servers
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+
+# Allow CORS
+# Note: CORS is primarily handled by PHP in config.php
+# This .htaccess is a fallback. Update the domain below for production.
+<IfModule mod_headers.c>
+    # CORS is primarily handled by PHP (config.php / response.php)
+    # If you need Apache-level CORS in production, uncomment and set your domain:
+    # Header set Access-Control-Allow-Origin "https://demo1.360coordinates.com"
+    # For local development, you can temporarily use:
+    # Header set Access-Control-Allow-Origin "http://localhost:3000"
+    Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
+    Header set Access-Control-Allow-Credentials "true"
+</IfModule>
+
+# Handle preflight requests
+RewriteCond %{REQUEST_METHOD} OPTIONS
+RewriteRule ^(.*)$ $1 [R=200,L]
+
+# Prevent directory listing
+Options -Indexes
+
+# Protect sensitive files
+<FilesMatch "\.(sql|log|ini|conf)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# PHP settings
+<IfModule mod_php7.c>
+    php_value upload_max_filesize 50M
+    php_value post_max_size 50M
+    php_value max_execution_time 300
+    php_value max_input_time 300
+</IfModule>
+

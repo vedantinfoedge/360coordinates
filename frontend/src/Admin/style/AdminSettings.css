@@ -1,0 +1,405 @@
+.admin-settings {
+  max-width: 1200px;
+}
+
+.admin-page-header {
+  margin-bottom: 2rem;
+}
+
+.admin-page-header h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.admin-page-header p {
+  color: var(--color-text-secondary);
+  font-size: 0.9375rem;
+}
+
+.admin-settings-grid {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.admin-settings-card {
+  background: var(--color-surface);
+  border-radius: 0.75rem;
+  padding: 2rem;
+  box-shadow: var(--shadow-card);
+}
+
+.admin-settings-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.admin-settings-header svg {
+  width: 24px;
+  height: 24px;
+  color: var(--color-primary);
+}
+
+.admin-settings-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.admin-settings-description {
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+}
+
+.admin-settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.admin-message {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+}
+
+.admin-message-success {
+  background: var(--color-success-light);
+  color: var(--color-success);
+  border: 1px solid var(--color-success);
+}
+
+.admin-message-error {
+  background: var(--color-error-light);
+  color: var(--color-error);
+  border: 1px solid var(--color-error);
+}
+
+.admin-message svg {
+  flex-shrink: 0;
+}
+
+.admin-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-form-group label {
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-bottom: 0.5rem;
+  font-size: 0.9375rem;
+}
+
+.admin-form-group input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  font-size: 0.9375rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.admin-form-group input:focus {
+  border-color: var(--color-primary);
+}
+
+.admin-password-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.admin-change-password-btn {
+  padding: 0.75rem 1.5rem;
+  background: var(--color-primary);
+  color: var(--color-surface);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  transition: background 0.2s;
+  align-self: flex-start;
+}
+
+.admin-change-password-btn:hover:not(:disabled) {
+  background: var(--color-primary-dark);
+}
+
+.admin-change-password-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.admin-settings-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1.5rem;
+}
+
+.admin-save-settings-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: var(--color-primary);
+  color: var(--color-surface);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+
+.admin-save-settings-btn:hover {
+  background: var(--color-primary-dark);
+}
+
+.admin-save-settings-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .admin-settings {
+    max-width: 100%;
+  }
+
+  .admin-settings-card {
+    padding: 1.75rem;
+  }
+
+  .admin-page-header h1 {
+    font-size: 1.75rem;
+  }
+}
+
+/* Tablet Small */
+@media (max-width: 768px) {
+  .admin-settings-card {
+    padding: 1.5rem;
+  }
+
+  .admin-password-row {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-page-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .admin-settings-header h2 {
+    font-size: 1.125rem;
+  }
+
+  .admin-settings-header svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .admin-settings-description {
+    font-size: 0.8125rem;
+  }
+
+  .admin-settings-footer {
+    padding-top: 1.25rem;
+  }
+
+  .admin-save-settings-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+  }
+}
+
+/* Mobile Large */
+@media (max-width: 640px) {
+  .admin-settings-card {
+    padding: 1.25rem;
+  }
+
+  .admin-page-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .admin-page-header h1 {
+    font-size: 1.375rem;
+  }
+
+  .admin-page-header p {
+    font-size: 0.875rem;
+  }
+
+  .admin-settings-grid {
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .admin-settings-header {
+    gap: 0.625rem;
+    margin-bottom: 0.375rem;
+  }
+
+  .admin-settings-header svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .admin-settings-header h2 {
+    font-size: 1.0625rem;
+  }
+
+  .admin-settings-description {
+    font-size: 0.8125rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .admin-settings-form {
+    gap: 1rem;
+  }
+
+  .admin-message {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.8125rem;
+    margin-bottom: 0.875rem;
+  }
+
+  .admin-form-group {
+    margin-bottom: 0;
+  }
+
+  .admin-form-group label {
+    font-size: 0.875rem;
+    margin-bottom: 0.375rem;
+  }
+
+  .admin-form-group input {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.875rem;
+  }
+
+  .admin-password-row {
+    gap: 0.875rem;
+  }
+
+  .admin-change-password-btn {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+  }
+
+  .admin-settings-footer {
+    padding-top: 1rem;
+    justify-content: stretch;
+  }
+
+  .admin-save-settings-btn {
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+    justify-content: center;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .admin-settings-card {
+    padding: 1rem;
+    border-radius: 0.625rem;
+  }
+
+  .admin-page-header {
+    margin-bottom: 1.25rem;
+  }
+
+  .admin-page-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .admin-page-header p {
+    font-size: 0.8125rem;
+  }
+
+  .admin-settings-grid {
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .admin-settings-header {
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .admin-settings-header svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .admin-settings-header h2 {
+    font-size: 1rem;
+  }
+
+  .admin-settings-description {
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .admin-settings-form {
+    gap: 0.875rem;
+  }
+
+  .admin-message {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .admin-message svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .admin-form-group label {
+    font-size: 0.8125rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .admin-form-group input {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8125rem;
+  }
+
+  .admin-password-row {
+    gap: 0.75rem;
+  }
+
+  .admin-change-password-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.8125rem;
+  }
+
+  .admin-settings-footer {
+    padding-top: 0.875rem;
+  }
+
+  .admin-save-settings-btn {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+  }
+
+  .admin-save-settings-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+}

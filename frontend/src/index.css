@@ -1,0 +1,244 @@
+/* ============================================
+   APP COLOR THEME – Fresh Blue Modern (SOURCE OF TRUTH)
+   See: APP_COLOR_THEME.md
+   ============================================ */
+:root {
+  /* Brand colors */
+  --color-primary: #0077C0;
+  --color-primary-rgb: 0, 119, 192;
+  --color-primary-dark: #005A94;
+  --color-primary-light: #3399D6;
+  --color-secondary: #1D242B;
+  --color-accent: #C7EEFF;
+  --color-cta: #0077C0;
+
+  /* Background & surface */
+  --color-bg: #FAFAFA;
+  --color-bg-pure: #FFFFFF;
+  --color-bg-off-white: #FAFAFA;
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #F5F8FA;
+  --color-surface-tertiary: #F5F8FA;
+  --color-surface-card: #FFFFFF;
+  --color-accent-light: #C7EEFF;
+  --color-accent-lighter: #E3F6FF;
+  --color-accent-soft: #F0FAFF;
+
+  /* Text */
+  --color-text: #1D242B;
+  --color-text-primary: #1D242B;
+  --color-text-secondary: #5A6978;
+  --color-text-tertiary: #8B97A6;
+  --color-text-muted: #8B97A6;
+  --color-text-disabled: #CBD5DC;
+  --color-text-black: #000000;
+
+  /* UI elements */
+  --color-border: #E1E8ED;
+  --color-border-light: #F0F4F8;
+  --color-border-focus: #0077C0;
+  --color-disabled: #CBD5DC;
+
+  /* Status */
+  --color-error: #E53935;
+  --color-success: #00C853;
+  --color-warning: #FF9800;
+  --color-info: #0077C0;
+  --color-success-light: #E8F5E9;
+  --color-error-light: #FFEBEE;
+  --color-warning-light: #FFF3E0;
+  --color-info-light: #E3F6FF;
+
+  /* Property card & overlays */
+  --color-property-card-bg: #FFFFFF;
+  --color-property-card-shadow: rgba(29, 36, 43, 0.08);
+  --color-overlay: rgba(29, 36, 43, 0.6);
+  --color-overlay-light: rgba(29, 36, 43, 0.3);
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 48px;
+  --spacing-xxxl: 64px;
+
+  /* Border radius */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-xxl: 24px;
+  --radius-round: 9999px;
+
+  /* Shadows */
+  --shadow-card: 0 2px 12px rgba(29, 36, 43, 0.08);
+  --shadow-card-hover: 0 4px 16px rgba(29, 36, 43, 0.12);
+  --shadow-button: 0 3px 8px rgba(0, 119, 192, 0.25);
+  --shadow-subtle: 0 1px 4px rgba(29, 36, 43, 0.05);
+
+  /* Legacy / aliases (map to theme) */
+  --color-dark: var(--color-secondary);
+  --color-light-accent: var(--color-accent);
+  --color-primary-hover: var(--color-primary-dark);
+  --color-primary-light-bg: #E3F6FF;
+  --color-bg-light: var(--color-bg);
+  --color-bg-primary: var(--color-bg);
+  --color-bg-secondary: var(--color-surface);
+  --color-bg-dark: var(--color-secondary);
+  --color-bg-accent: var(--color-accent);
+  --color-text-light: var(--color-text-secondary);
+  --color-text-white: #ffffff;
+  --color-text-on-primary: #ffffff;
+  --color-border-primary: var(--color-primary);
+  --color-shadow: rgba(29, 36, 43, 0.12);
+  --color-shadow-light: rgba(29, 36, 43, 0.1);
+  --color-shadow-medium: rgba(29, 36, 43, 0.15);
+  --color-shadow-primary: rgba(0, 119, 192, 0.2);
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  --gradient-accent: linear-gradient(135deg, var(--color-accent) 0%, var(--color-primary) 100%);
+  --gradient-dark: linear-gradient(180deg, var(--color-secondary) 0%, #0f1418 100%);
+
+  /* Legacy aliases for components */
+  --success-color: var(--color-success);
+  --accent-gradient: var(--color-primary);
+  --accent-color: var(--color-primary);
+  --border-color: var(--color-border);
+  --text-primary: var(--color-text-primary);
+  --text-secondary: var(--color-text-secondary);
+  --text-muted: var(--color-text-tertiary);
+  --bg-primary: var(--color-bg);
+}
+
+/* ============================================
+   GLOBAL SCROLLBAR FIX - SINGLE SCROLLBAR ONLY
+   ============================================ */
+
+html {
+  overflow-x: hidden;
+  /* CRITICAL: html should NOT scroll - only body scrolls */
+  overflow-y: visible !important;
+  height: auto;
+  min-height: 100%;
+  /* HP Device Fix: Enable touch scrolling */
+  touch-action: pan-y;
+  -ms-touch-action: pan-y;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  /* CRITICAL: Only body should scroll - this creates the single scrollbar */
+  overflow-y: auto;
+  width: 100%;
+  max-width: 100vw;
+  height: auto;
+  min-height: 100vh;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* HP Device Fix: Enable touch scrolling and smooth scrolling */
+  touch-action: pan-y;
+  -ms-touch-action: pan-y;
+  /* Better scroll performance on HP devices */
+  -webkit-overflow-scrolling: touch;
+}
+
+
+
+/* CRITICAL: Root container should NOT scroll */
+#root {
+  height: auto !important;
+  min-height: 100vh;
+  overflow: visible !important;
+  overflow-x: hidden;
+  overflow-y: visible;
+  width: 100%;
+}
+
+/* CRITICAL: Prevent ALL layout containers from creating scrollbars */
+.buyer-dashboard-app,
+.buyer-main-content,
+.buyer-page-wrapper,
+.buyer-content-wrapper,
+.buyer-layout-wrapper,
+.buyer-contact-main,
+.buyer-contact-container,
+.App,
+.buyer-app-container,
+/* Seller Dashboard containers - prevent nested scrollbars */
+.seller-dashboard,
+.seller-main,
+.seller-main-content-wrapper,
+.main-content-wrapper,
+.seller-content-area {
+  overflow: visible !important;
+  overflow-y: visible !important;
+  height: auto !important;
+  max-height: none !important;
+}
+
+/* Only allow horizontal overflow control, never vertical */
+.buyer-dashboard-app,
+.buyer-main-content,
+.buyer-page-wrapper,
+.buyer-content-wrapper,
+.buyer-layout-wrapper,
+.buyer-contact-main,
+.seller-dashboard,
+.seller-main,
+.seller-main-content-wrapper,
+.main-content-wrapper,
+.seller-content-area {
+  overflow-x: hidden;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* ============================================
+   HP DEVICE SCROLLING FIX
+   ============================================ */
+
+/* HP Device Specific: Ensure touchpad and touchscreen scrolling works */
+@media (pointer: fine), (pointer: coarse) {
+  html, body {
+    /* Enable smooth scrolling on HP devices */
+    scroll-behavior: smooth;
+  }
+  
+  /* Fix for HP touchpad scrolling */
+  * {
+    /* Allow scrolling on all elements */
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* HP Device: Fine pointer (mouse/touchpad) optimization */
+@media (pointer: fine) {
+  body {
+    /* Ensure body scrolls properly on HP laptops */
+    overflow-y: auto !important;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+}
+
+/* HP Device: Coarse pointer (touchscreen) optimization */
+@media (pointer: coarse) {
+  html, body {
+    /* Better touch scrolling on HP tablets */
+    touch-action: pan-y pinch-zoom;
+    -ms-touch-action: pan-y pinch-zoom;
+  }
+}

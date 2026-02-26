@@ -1,0 +1,509 @@
+/* Filteredproperties.css */
+
+/* ========== FILTERED PROPERTIES PAGE - 55/45 Layout ========== */
+/* Page wrapper matching home page structure */
+.buyer-filtered-properties-page {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  padding: 0;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* Override search bar hero + container to 55vh on filtered pages (no media queries) */
+.buyer-filtered-properties-page .buyer-search-bar-hero {
+  height: 55vh;
+  min-height: 55vh;
+  max-height: 55vh;
+}
+
+.buyer-filtered-properties-page .buyer-search-bar-container {
+  height: 100%;
+  min-height: 0;
+}
+
+.buyer-filtered-properties-page .buyer-search-bar-wrapper {
+  margin-top: 0;
+}
+
+/* Filtered Header - full width so View All can sit at screen right */
+.buyer-filtered-header {
+  width: 100%;
+  margin: 2rem 0;
+  padding: 0 max(1rem, env(safe-area-inset-right)) 0 max(1rem, env(safe-area-inset-left));
+  position: relative;
+  box-sizing: border-box;
+}
+
+.buyer-filtered-header-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+  min-height: 3.5rem;
+}
+
+.buyer-filtered-header-content > div:first-child {
+  text-align: center;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+/* View All button: pinned to the right side of the screen (at header's right edge) */
+.buyer-filtered-header-content > .buyer-view-all-btn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Reserve space so title doesn't overlap button on narrow desktop */
+@media (min-width: 1024px) {
+  .buyer-filtered-header-content {
+    padding-right: 7rem;
+  }
+}
+
+.buyer-filtered-header h1 {
+  font-size: 2rem;
+  color: #1d242b;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.buyer-filtered-count {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+/* View All Button */
+.buyer-view-all-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: 2px solid #1e293b;
+  color: #1e293b;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.625rem 1.25rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.buyer-view-all-btn:hover {
+  background: #1e293b;
+  color: var(--color-surface);
+  box-shadow: var(--shadow-button);
+}
+
+/* Keep vertically centered when hovered (button is position: absolute with translateY(-50%)) */
+.buyer-filtered-header-content > .buyer-view-all-btn:hover {
+  transform: translateY(calc(-50% - 2px));
+}
+
+.buyer-view-all-btn:active {
+  transform: translateY(0);
+}
+
+.buyer-view-all-btn svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+
+.buyer-view-all-btn:hover svg {
+  transform: translateX(4px);
+}
+
+/* Properties Grid */
+.buyer-filtered-properties-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  animation: buyer-fadeIn 0.5s ease-in;
+}
+
+@keyframes buyer-fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* List View */
+.buyer-filtered-properties-grid.buyer-list-view {
+  grid-template-columns: 1fr;
+}
+
+/* No Properties Found */
+.buyer-no-properties {
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 4rem 2rem;
+  background: var(--color-surface);
+  border-radius: 12px;
+  box-shadow: var(--shadow-card);
+  text-align: center;
+}
+
+.buyer-no-properties svg {
+  margin: 0 auto 1.5rem;
+  opacity: 0.5;
+}
+
+.buyer-no-properties h2 {
+  font-size: 1.75rem;
+  color: var(--color-primary);
+  margin: 0 0 1rem 0;
+  font-weight: 700;
+}
+
+.buyer-no-properties p {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* Responsive Design - 55/45 Layout maintained across all breakpoints */
+
+/* Large Desktop (≥1440px) */
+@media (min-width: 1440px) {
+  .buyer-filtered-header {
+    padding: 0 2.5rem;
+  }
+
+  .buyer-filtered-header-content {
+    gap: 1.5rem;
+  }
+
+  .buyer-filtered-header-content > .buyer-view-all-btn {
+    right: 0;
+  }
+
+  .buyer-filtered-header h1 {
+    font-size: 2.25rem;
+  }
+
+  .buyer-filtered-properties-grid {
+    max-width: 1400px;
+    padding: 2.5rem 2.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 2rem;
+  }
+}
+
+/* Laptop (1024px - 1439px) */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .buyer-filtered-header {
+    padding: 0 2rem;
+  }
+
+  .buyer-filtered-header-content {
+    gap: 1.25rem;
+  }
+
+  .buyer-filtered-header h1 {
+    font-size: 2rem;
+  }
+
+  .buyer-filtered-properties-grid {
+    max-width: 1200px;
+    padding: 2rem 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.75rem;
+  }
+}
+
+/* Tablet (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .buyer-filtered-header {
+    padding: 0 1.5rem;
+    margin: 1.75rem 0;
+  }
+
+  .buyer-filtered-header-content {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    min-height: 0;
+  }
+
+  .buyer-filtered-header-content > div:first-child {
+    text-align: center;
+  }
+
+  .buyer-filtered-header-content > .buyer-view-all-btn {
+    position: static;
+    right: auto;
+    top: auto;
+    transform: none;
+    align-self: flex-end;
+    width: fit-content;
+    min-height: 44px;
+  }
+
+  .buyer-filtered-header-content > .buyer-view-all-btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .buyer-filtered-header h1 {
+    font-size: clamp(1.7rem, 4vw, 1.85rem);
+    text-align: center;
+  }
+
+  .buyer-filtered-count {
+    font-size: clamp(0.95rem, 2.5vw, 1rem);
+    text-align: center;
+  }
+
+  .buyer-view-all-btn {
+    align-self: flex-end;
+    min-height: 44px;
+  }
+
+  .buyer-filtered-properties-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    padding: 1.75rem 1.5rem;
+    gap: 1.5rem;
+  }
+}
+
+/* Mobile (≤767px) */
+@media (max-width: 767px) {
+  .buyer-filtered-header {
+    padding: 0 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .buyer-filtered-header-content {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    min-height: 0;
+  }
+
+  .buyer-filtered-header-content > div:first-child {
+    text-align: center;
+  }
+
+  .buyer-filtered-header-content > .buyer-view-all-btn {
+    position: static;
+    right: auto;
+    top: auto;
+    transform: none;
+    align-self: flex-end;
+    width: fit-content;
+    min-height: 44px;
+    -webkit-tap-highlight-color: rgba(0, 119, 192, 0.2);
+  }
+
+  .buyer-filtered-header-content > .buyer-view-all-btn:hover {
+    transform: none;
+  }
+
+  .buyer-filtered-header h1 {
+    font-size: clamp(1.5rem, 5vw, 1.75rem);
+    text-align: center;
+  }
+
+  .buyer-filtered-count {
+    font-size: clamp(0.95rem, 2.5vw, 1rem);
+    text-align: center;
+  }
+
+  .buyer-view-all-btn {
+    align-self: flex-end;
+    min-height: 44px;
+    -webkit-tap-highlight-color: rgba(0, 119, 192, 0.2);
+  }
+
+  .buyer-view-all-btn:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .buyer-view-all-btn:active {
+    transform: scale(0.98);
+    background: var(--color-primary);
+    color: var(--color-surface);
+  }
+
+  .buyer-view-all-btn:hover svg {
+    transform: none;
+  }
+
+  .buyer-view-all-btn:active svg {
+    transform: translateX(4px);
+  }
+
+  .buyer-filtered-properties-grid {
+    grid-template-columns: 1fr;
+    padding: 1.5rem 1rem;
+    gap: 1.25rem;
+  }
+
+  .buyer-no-properties {
+    padding: 3rem 1.5rem;
+    margin: 2rem auto;
+  }
+
+  .buyer-no-properties h2 {
+    font-size: clamp(1.4rem, 4vw, 1.6rem);
+  }
+
+  .buyer-no-properties p {
+    font-size: clamp(0.95rem, 2.5vw, 1rem);
+  }
+}
+
+/* Small Mobile (≤480px) */
+@media (max-width: 480px) {
+  .buyer-filtered-header {
+    padding: 0 0.75rem;
+    margin: 1.25rem 0;
+  }
+
+  .buyer-filtered-header-content {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.875rem;
+  }
+
+  .buyer-filtered-header-content > div:first-child {
+    text-align: center;
+  }
+
+  .buyer-filtered-header-content > .buyer-view-all-btn {
+    position: static;
+    right: auto;
+    top: auto;
+    transform: none;
+    align-self: flex-end;
+    width: fit-content;
+    min-height: 44px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    -webkit-tap-highlight-color: rgba(0, 119, 192, 0.2);
+  }
+
+  .buyer-filtered-header-content > .buyer-view-all-btn:hover {
+    transform: none;
+  }
+
+  .buyer-filtered-header h1 {
+    font-size: clamp(1.3rem, 5vw, 1.5rem);
+    text-align: center;
+  }
+
+  .buyer-filtered-count {
+    font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+    text-align: center;
+  }
+
+  .buyer-view-all-btn {
+    align-self: flex-end;
+    min-height: 44px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    -webkit-tap-highlight-color: rgba(0, 119, 192, 0.2);
+  }
+
+  .buyer-filtered-properties-grid {
+    padding: 1.25rem 0.75rem;
+    gap: 1rem;
+  }
+
+  .buyer-no-properties {
+    padding: 2.5rem 1.25rem;
+    margin: 1.75rem auto;
+  }
+
+  .buyer-no-properties h2 {
+    font-size: clamp(1.3rem, 4vw, 1.4rem);
+  }
+
+  .buyer-no-properties p {
+    font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+  }
+}
+
+/* Extra Small Mobile (≤360px) */
+@media (max-width: 360px) {
+  .buyer-filtered-header {
+    padding: 0 0.625rem;
+    margin: 1rem 0;
+  }
+
+  .buyer-filtered-header-content {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .buyer-filtered-header-content > div:first-child {
+    text-align: center;
+  }
+
+  .buyer-filtered-header-content > .buyer-view-all-btn {
+    position: static;
+    right: auto;
+    top: auto;
+    transform: none;
+    align-self: flex-end;
+    width: fit-content;
+    min-height: 44px;
+    padding: 0.5rem 0.875rem;
+    font-size: 0.85rem;
+    -webkit-tap-highlight-color: rgba(0, 119, 192, 0.2);
+  }
+
+  .buyer-filtered-header-content > .buyer-view-all-btn:hover {
+    transform: none;
+  }
+
+  .buyer-filtered-header h1 {
+    font-size: clamp(1.2rem, 5vw, 1.3rem);
+    text-align: center;
+  }
+
+  .buyer-filtered-count {
+    text-align: center;
+  }
+
+  .buyer-view-all-btn {
+    align-self: flex-end;
+    min-height: 44px;
+    padding: 0.5rem 0.875rem;
+    font-size: 0.85rem;
+    -webkit-tap-highlight-color: rgba(0, 119, 192, 0.2);
+  }
+
+  .buyer-filtered-properties-grid {
+    padding: 1rem 0.625rem;
+    gap: 0.875rem;
+  }
+}

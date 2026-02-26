@@ -1,0 +1,923 @@
+/* ContactPage.buyer-css - Updated for Borders */
+
+.buyer-contact-main {
+  min-height: 100vh;
+  background: transparent;
+  position: relative;
+  /* CRITICAL: NO overflow at all - let body handle ALL scrolling */
+  overflow: visible !important;
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+  /* Removed scroll-behavior: smooth for better performance - can cause lag */
+  scroll-padding-top: 100px; /* Prevent scroll jumps when focusing inputs */
+  /* Enable hardware acceleration */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  /* Ensure no height constraint that creates scrollbar */
+  height: auto !important;
+  /* CRITICAL: Prevent any nested scrollbar */
+  max-height: none !important;
+}
+
+/* When BuyerContactPage is inside Seller Dashboard, ensure no double scrollbar */
+.seller-dashboard .buyer-contact-main,
+.seller-main .buyer-contact-main,
+.main-content-wrapper .buyer-contact-main {
+  overflow: visible !important;
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+  height: auto !important;
+  max-height: none !important;
+  min-height: auto !important;
+}
+
+/* Decorative Background Elements */
+.buyer-contact-main::before,
+.buyer-contact-main::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  /* GPU acceleration for smooth animations */
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  /* Reduce animation complexity for better scroll performance */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.buyer-contact-main::before {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0, 119, 192, 0.08) 0%, transparent 70%);
+  top: -200px;
+  left: -200px;
+  /* Slower, smoother animation to reduce repaints */
+  animation: buyer-float 30s ease-in-out infinite;
+}
+
+.buyer-contact-main::after {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(30, 58, 138, 0.06) 0%, transparent 70%);
+  bottom: -150px;
+  right: -150px;
+  /* Slower, smoother animation to reduce repaints */
+  animation: buyer-float 25s ease-in-out infinite reverse;
+}
+
+@keyframes buyer-float {
+  0%, 100% { 
+    transform: translate3d(0, 0, 0) scale(1); 
+  }
+  50% { 
+    transform: translate3d(50px, 50px, 0) scale(1.1); 
+  }
+}
+
+.buyer-contact-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 5rem 1rem;
+  position: relative;
+  z-index: 1;
+  /* CRITICAL: NO overflow - let body handle scrolling */
+  overflow: visible !important;
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+  height: auto !important;
+  max-height: none !important;
+}
+
+/* When inside Seller Dashboard, ensure container doesn't create scroll */
+.seller-dashboard .buyer-contact-container,
+.seller-main .buyer-contact-container,
+.main-content-wrapper .buyer-contact-container {
+  overflow: visible !important;
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+  height: auto !important;
+  max-height: none !important;
+}
+
+/* Header Section */
+.buyer-contact-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  animation: buyer-fadeInDown 0.8s ease;
+}
+
+.buyer-contact-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--color-primary) 0%, #1d242b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 1rem 0;
+  line-height: 1.2;
+}
+
+.buyer-header-text {
+  font-size: 1.25rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Two Column Layout */
+.buyer-contact-two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+/* Contact Information Card (Left Column) */
+.buyer-contact-info-card {
+  background: var(--color-surface);
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: var(--shadow-card);
+  animation: buyer-fadeInUp 0.8s ease forwards;
+  opacity: 0;
+  height: fit-content;
+  text-align: left;
+}
+
+.buyer-contact-info-card:nth-child(1) {
+  animation-delay: 0.2s;
+}
+
+.buyer-contact-info-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1d242b;
+  margin: 0 0 2rem 0;
+  text-align: left;
+}
+
+.buyer-contact-info-item {
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-card);
+  border: 2px solid var(--color-border);
+  padding: 1rem;
+  border-radius: 8px;
+  background: var(--color-surface);
+}
+
+.buyer-contact-info-item:last-child {
+  margin-bottom: 0;
+}
+
+.buyer-contact-info-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.buyer-contact-info-link {
+  font-size: 1rem;
+  display: block;
+  transition: color 0.3s ease;
+}
+
+.buyer-contact-info-link:hover {
+  color: var(--color-primary);
+}
+
+.buyer-contact-info-address {
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  line-height: 1.6;
+  text-decoration: none;
+  display: block;
+  transition: color 0.3s ease;
+}
+
+.buyer-contact-info-address:hover {
+  color: var(--color-text-primary);
+}
+
+.buyer-contact-info-hours {
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.buyer-contact-info-hours > div {
+  margin-bottom: 0.5rem;
+}
+
+.buyer-contact-info-hours > div:last-child {
+  margin-bottom: 0;
+}
+
+.buyer-contact-emergency {
+  color: #f97316;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+/* Info Cards Section (Old - keeping for backward compatibility if needed) */
+.buyer-info-section {
+  display: flex;
+  justify-content: center;
+  align-items: stretch; /* Changed from center to stretch - makes cards same height */
+  gap: 2rem;
+  margin-bottom: 4rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  flex-wrap: wrap;
+}
+
+.buyer-info-card {
+  background: var(--color-surface);
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  box-shadow: var(--shadow-card);
+  /* Optimize transitions - only animate transform and box-shadow, not 'all' */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  border: 2px solid var(--color-primary); /* Added visible border */
+  animation: buyer-fadeInUp 0.8s ease forwards;
+  opacity: 0;
+  flex: 1; /* Makes cards equal width and allows stretching */
+  min-width: 280px; /* Minimum width for responsiveness */
+  /* GPU acceleration */
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+.buyer-info-card:nth-child(1) { animation-delay: 0.2s; }
+.buyer-info-card:nth-child(2) { animation-delay: 0.4s; }
+.buyer-info-card:nth-child(3) { animation-delay: 0.6s; }
+
+.buyer-info-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--color-primary);
+}
+
+.buyer-info-card-clickable {
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  text-decoration: none;
+  color: inherit;
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  /* Optimize transitions - only animate transform and box-shadow, not 'all' */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  border: 2px solid var(--color-primary);
+  animation: buyer-fadeInUp 0.8s ease forwards;
+  opacity: 0;
+  flex: 1; /* Makes cards equal width and allows stretching */
+  min-width: 280px; /* Minimum width for responsiveness */
+  /* GPU acceleration */
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+.buyer-info-card-clickable:nth-child(1) { animation-delay: 0.2s; }
+.buyer-info-card-clickable:nth-child(2) { animation-delay: 0.4s; }
+
+.buyer-info-card-clickable:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 40px rgba(0, 119, 192, 0.2);
+  border-color: var(--color-primary);
+}
+
+.buyer-info-card-clickable:hover .buyer-info-icon::before {
+  transform: translate3d(0, 0, 0);
+}
+
+.buyer-info-card-clickable:hover .buyer-info-icon {
+  transform: rotate(10deg) scale(1.1);
+}
+
+.buyer-info-icon {
+  width: 60px;
+  height: 60px;
+  min-width: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  /* Optimize transitions - only animate transform, not 'all' */
+  transition: transform 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  /* GPU acceleration */
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+.buyer-info-icon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate3d(-100%, 0, 0);
+  transition: transform 0.3s ease;
+  /* GPU acceleration */
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.buyer-info-card:hover .buyer-info-icon::before {
+  transform: translate3d(0, 0, 0);
+}
+
+.buyer-info-icon svg {
+  width: 28px;
+  height: 28px;
+  position: relative;
+  z-index: 1;
+}
+
+.buyer-bg-blue {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary) 100%);
+  box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
+}
+
+.buyer-bg-purple {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-light-accent) 100%);
+  box-shadow: 0 4px 15px rgba(0, 119, 192, 0.3);
+}
+
+.buyer-info-card:hover .buyer-info-icon {
+  transform: rotate(10deg) scale(1.1);
+}
+
+.buyer-info-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex: 1;
+  min-width: 0; /* Prevents flex item from overflowing */
+}
+
+.buyer-info-text h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0 0 0.5rem 0;
+  line-height: 1.3;
+}
+
+.buyer-info-text p {
+  font-size: 0.95rem;
+  color: #64748b;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Contact Form Grid (Old - keeping for backward compatibility) */
+.buyer-contact-grid {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.buyer-form-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  /* Optimize transitions - only animate box-shadow, not 'all' */
+  transition: box-shadow 0.3s ease;
+  animation: buyer-fadeInUp 0.8s ease forwards;
+  opacity: 0;
+  position: relative;
+  overflow: hidden;
+  height: fit-content;
+  /* Prevent scroll jumps */
+  scroll-margin-top: 100px;
+  /* GPU acceleration */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+.buyer-form-card:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.buyer-form-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1d242b;
+  margin: 0 0 2rem 0;
+}
+
+.buyer-form-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-primary) 50%, var(--color-primary) 100%);
+  background-size: 200% 100%;
+  /* Slower animation to reduce repaints during scroll */
+  animation: buyer-gradientShift 5s ease infinite;
+  /* GPU acceleration */
+  will-change: background-position;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+@keyframes buyer-gradientShift {
+  0%, 100% { background-position: 0% 0%; }
+  50% { background-position: 100% 0%; }
+}
+
+.buyer-form-card:hover {
+  box-shadow: 0 12px 50px rgba(0, 119, 192, 0.15);
+}
+
+.buyer-form-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.buyer-header-icon {
+  width: 36px;
+  height: 36px;
+  color: var(--color-primary);
+  /* Slower pulse animation to reduce repaints */
+  animation: buyer-pulse 3s ease-in-out infinite;
+  /* GPU acceleration */
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+@keyframes buyer-pulse {
+  0%, 100% { transform: translateZ(0) scale(1); }
+  50% { transform: translateZ(0) scale(1.1); }
+}
+
+.buyer-form-header h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+/* Success Message */
+.buyer-success-box {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+  animation: buyer-slideInDown 0.5s ease;
+  /* Prevent scroll jump when success message appears */
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes buyer-slideInDown {
+  from { opacity: 0; transform: translate3d(0, -20px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+/* Form Inputs */
+.buyer-form-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.buyer-form-inputs > div {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  align-items: center;
+  gap: 1rem;
+}
+
+.buyer-form-inputs label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 0.5rem;
+  display: block;
+  text-align: left;
+}
+
+.buyer-form-inputs input,
+.buyer-form-inputs textarea {
+  width: 100%;
+  padding: 0.875rem 1.125rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  color: #1e293b;
+  background: white;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: inherit;
+  box-sizing: border-box;
+  /* Prevent scroll jumps on focus */
+  scroll-margin-top: 100px;
+}
+
+.buyer-form-inputs input:focus,
+.buyer-form-inputs textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(0, 119, 192, 0.1);
+  /* Removed transform to prevent scroll jumps */
+}
+
+.buyer-form-inputs textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Submit Button */
+.buyer-form-inputs button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  /* Optimize transitions - only animate transform and box-shadow, not 'all' */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 6px 20px rgba(0, 119, 192, 0.4);
+  /* GPU acceleration */
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* Animations */
+@keyframes buyer-fadeInUp {
+  from { opacity: 0; transform: translate3d(0, 40px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes buyer-fadeInDown {
+  from { opacity: 0; transform: translate3d(0, -40px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+/* Responsive Design */
+/* Large Desktop (≥1440px) */
+@media (min-width: 1440px) {
+  .buyer-contact-container {
+    padding: 6rem 2.5rem;
+    max-width: 1400px;
+  }
+
+  .buyer-contact-title {
+    font-size: 3.75rem;
+  }
+
+  .buyer-header-text {
+    font-size: 1.35rem;
+  }
+
+  .buyer-contact-two-column {
+    gap: 2.5rem;
+  }
+}
+
+/* Laptop (1024px - 1439px) */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .buyer-contact-container {
+    padding: 5rem 2rem;
+    max-width: 1200px;
+  }
+
+  .buyer-contact-title {
+    font-size: 3rem;
+  }
+
+  .buyer-header-text {
+    font-size: 1.25rem;
+  }
+}
+
+/* Tablet (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .buyer-contact-container {
+    padding: 4rem 1.5rem;
+  }
+
+  .buyer-contact-header {
+    margin-bottom: 3rem;
+  }
+
+  .buyer-contact-title {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+  }
+
+  .buyer-header-text {
+    font-size: clamp(1.1rem, 2.5vw, 1.2rem);
+  }
+
+  .buyer-contact-two-column {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .buyer-info-section {
+    gap: 1.5rem;
+  }
+
+  .buyer-contact-info-card {
+    padding: 2rem;
+  }
+
+  .buyer-form-card {
+    padding: 2rem;
+  }
+
+  .buyer-form-inputs > div {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .buyer-form-inputs input,
+  .buyer-form-inputs textarea,
+  .buyer-form-inputs button {
+    min-height: 44px; /* Tap-friendly */
+  }
+}
+
+/* Mobile (≤767px) */
+@media (max-width: 767px) {
+  .buyer-contact-container {
+    padding: 3rem 1rem;
+  }
+
+  .buyer-contact-header {
+    margin-bottom: 3rem;
+  }
+
+  .buyer-contact-title {
+    font-size: clamp(1.75rem, 5vw, 2rem);
+  }
+
+  .buyer-header-text {
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
+  }
+
+  .buyer-contact-two-column {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .buyer-contact-info-card {
+    padding: 1.75rem;
+  }
+
+  .buyer-contact-info-title,
+  .buyer-form-title {
+    font-size: clamp(1.2rem, 4vw, 1.35rem);
+  }
+
+  .buyer-info-section {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .buyer-form-card {
+    padding: 1.75rem;
+  }
+
+  .buyer-form-inputs > div {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .buyer-form-inputs input,
+  .buyer-form-inputs textarea {
+    min-height: 44px; /* Tap-friendly */
+  }
+
+  .buyer-form-inputs button {
+    width: 100%;
+    min-height: 44px; /* Tap-friendly */
+  }
+
+  .buyer-faq-question {
+    min-height: 44px; /* Tap-friendly */
+    padding: 1rem 1.25rem;
+    font-size: clamp(0.9rem, 2.5vw, 0.95rem);
+  }
+
+  .buyer-faq-answer {
+    padding: 0 1.25rem 1.25rem 1.25rem;
+    font-size: clamp(0.85rem, 2.5vw, 0.9rem);
+  }
+}
+
+/* Small Mobile (≤480px) */
+@media (max-width: 480px) {
+  .buyer-contact-container {
+    padding: 2rem 0.75rem;
+  }
+
+  .buyer-contact-header {
+    margin-bottom: 2rem;
+  }
+
+  .buyer-contact-title {
+    font-size: clamp(1.5rem, 5vw, 1.75rem);
+  }
+
+  .buyer-header-text {
+    font-size: clamp(0.95rem, 2.5vw, 1rem);
+  }
+
+  .buyer-contact-info-card {
+    padding: 1.5rem;
+  }
+
+  .buyer-contact-info-title,
+  .buyer-form-title {
+    font-size: clamp(1.15rem, 4vw, 1.25rem);
+  }
+
+  .buyer-info-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem;
+  }
+
+  .buyer-info-icon {
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+    min-height: 50px; /* Tap-friendly */
+  }
+
+  .buyer-form-card {
+    padding: 1.5rem;
+  }
+
+  .buyer-form-inputs > div {
+    grid-template-columns: 1fr;
+    gap: 0.625rem;
+  }
+
+  .buyer-form-inputs button {
+    width: 100%;
+    min-height: 44px; /* Tap-friendly */
+  }
+}
+
+/* Extra Small Mobile (≤360px) */
+@media (max-width: 360px) {
+  .buyer-contact-container {
+    padding: 1.75rem 0.625rem;
+  }
+
+  .buyer-contact-info-card,
+  .buyer-form-card {
+    padding: 1.25rem;
+  }
+}
+
+/* FAQ Section */
+.buyer-faq-section {
+  max-width: 1200px;
+  margin: 4rem auto 0;
+  padding: 0 1rem;
+  animation: buyer-fadeInUp 0.8s ease forwards;
+  animation-delay: 0.6s;
+  opacity: 0;
+}
+
+.buyer-faq-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: #1d242b;
+  text-align: center;
+  margin: 0 0 2.5rem 0;
+}
+
+.buyer-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.buyer-faq-item {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.buyer-faq-item:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.buyer-faq-question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  background: white;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  transition: background-color 0.3s ease;
+}
+
+.buyer-faq-question:hover {
+  background: #f8fafc;
+}
+
+.buyer-faq-question span {
+  flex: 1;
+  padding-right: 1rem;
+}
+
+.buyer-faq-icon {
+  color: var(--color-primary);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.buyer-faq-icon.open {
+  transform: rotate(180deg);
+}
+
+.buyer-faq-answer {
+  padding: 0 1.5rem 1.5rem 1.5rem;
+  color: #64748b;
+  line-height: 1.7;
+  font-size: 0.95rem;
+  animation: buyer-fadeInDown 0.3s ease;
+}
+
+.buyer-faq-answer p {
+  margin: 0;
+}
+
+@keyframes buyer-fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .buyer-faq-section {
+    margin-top: 3rem;
+  }
+  
+  .buyer-faq-question {
+    padding: 1rem 1.25rem;
+    font-size: 0.95rem;
+  }
+  
+  .buyer-faq-answer {
+    padding: 0 1.25rem 1.25rem 1.25rem;
+    font-size: 0.9rem;
+  }
+}

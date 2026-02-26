@@ -1,0 +1,18 @@
+# API .htaccess
+RewriteEngine On
+
+# Preserve Authorization header for Hostinger Apache servers
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+# CORS is handled by PHP in response.php
+# This ensures PHP has full control over CORS headers
+
+# Set default charset
+AddDefaultCharset UTF-8
+
+# Error handling
+# Use relative paths for error documents
+ErrorDocument 404 error.php
+ErrorDocument 500 error.php
+

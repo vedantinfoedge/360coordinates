@@ -1,0 +1,370 @@
+/* -------------------- GLOBAL -------------------- */
+.seller-timer-page {
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  font-family: 'Poppins', sans-serif;
+}
+
+.seller-timer-content {
+  max-width: 1200px;
+  width: 100%;
+  text-align: center;
+  animation: fadeIn 0.7s ease;
+}
+
+/* Badge */
+.seller-timer-badge {
+  display: inline-block;
+  color: var(--color-text-primary);
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-card);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Titles */
+.seller-timer-title {
+  margin: 24px 0 40px;
+  line-height: 1.3;
+}
+
+.seller-timer-title-purple {
+  color: var(--color-text-primary);
+  font-size: 2.8rem;
+  font-weight: 800;
+}
+
+.seller-timer-title-white {
+  color: var(--color-text-secondary);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+/* Timer Card */
+.seller-timer-card {
+  max-width: 700px;
+  margin: 0 auto 60px;
+  padding: 48px 40px;
+  border-radius: 20px;
+  box-shadow: 0 4px 16px var(--color-primary);
+  animation: scaleIn 0.5s ease-out;
+}
+
+/* Timer Header */
+.seller-timer-header {
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.seller-timer-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  padding-top: 0;
+}
+
+.seller-timer-clock-icon {
+  color: var(--color-text-secondary);
+  animation: rotateClock 2s linear infinite;
+}
+
+/* Timer Display */
+.seller-timer-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+}
+
+.seller-timer-time-block {
+  text-align: center;
+}
+
+.seller-timer-time-box {
+  height: 80px;
+  width: 80px;
+  color: var(--color-text-primary);
+  font-size: 2rem;
+  font-weight: 700;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  box-shadow: var(--shadow-card);
+}
+
+.seller-timer-time-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.seller-timer-time-label {
+  font-size: 0.85rem;
+  margin-top: 10px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.5px;
+}
+
+.seller-timer-separator {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0 8px;
+  opacity: 0.3;
+}
+
+/* Pricing card section (after trial) */
+.seller-timer-pricing-section {
+  max-width: 560px;
+  margin: 0 auto;
+  text-align: left;
+  padding-top: 1rem;
+}
+
+.seller-timer-pricing-heading {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes rotateClock {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* -------------------- RESPONSIVE -------------------- */
+
+/* Large Desktop (≥1440px) - Default styles apply */
+
+/* Laptop (1024px – 1439px) */
+@media (max-width: 1439px) {
+  .seller-timer-content {
+    max-width: 1100px;
+  }
+
+  .seller-timer-card {
+    max-width: 650px;
+    padding: 42px 36px;
+  }
+}
+
+/* Tablet (768px – 1023px) */
+@media (max-width: 1023px) {
+  .seller-timer-page {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .seller-timer-content {
+    max-width: 100%;
+  }
+
+  .seller-timer-badge {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+    margin-bottom: 28px;
+  }
+
+  .seller-timer-title {
+    margin: 20px 0 36px;
+  }
+
+  .seller-timer-title-purple {
+    font-size: 2.4rem;
+  }
+
+  .seller-timer-title-white {
+    font-size: 1.8rem;
+  }
+
+  .seller-timer-card {
+    max-width: 600px;
+    padding: 40px 32px;
+    margin-bottom: 50px;
+  }
+
+  .seller-timer-header h2 {
+    font-size: 1.35rem;
+  }
+
+  .seller-timer-display {
+    gap: 20px;
+  }
+
+  .seller-timer-time-box {
+    width: 70px;
+    height: 70px;
+    font-size: 1.85rem;
+  }
+
+  .seller-timer-time-label {
+    font-size: 0.8rem;
+    margin-top: 8px;
+  }
+
+  .seller-timer-separator {
+    font-size: 1.85rem;
+  }
+}
+
+/* Mobile (≤767px) */
+@media (max-width: 767px) {
+  .seller-timer-page {
+    padding: 1.25rem 1rem;
+  }
+
+  .seller-timer-badge {
+    padding: 8px 18px;
+    font-size: 0.8rem;
+    margin-bottom: 24px;
+  }
+
+  .seller-timer-title {
+    margin: 18px 0 32px;
+  }
+
+  .seller-timer-title-purple {
+    font-size: 2rem;
+  }
+
+  .seller-timer-title-white {
+    font-size: 1.5rem;
+  }
+
+  .seller-timer-card {
+    max-width: 100%;
+    padding: 32px 24px;
+    margin-bottom: 40px;
+    border-radius: 16px;
+  }
+
+  .seller-timer-header {
+    margin-bottom: 28px;
+  }
+
+  .seller-timer-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .seller-timer-display {
+    gap: 16px;
+  }
+
+  .seller-timer-time-box {
+    width: 65px;
+    height: 65px;
+    font-size: 1.7rem;
+    border-radius: 10px;
+  }
+
+  .seller-timer-time-label {
+    font-size: 0.75rem;
+    margin-top: 6px;
+  }
+
+  .seller-timer-separator {
+    font-size: 1.7rem;
+    margin: 0 6px;
+  }
+}
+
+/* Small Mobile (≤480px) */
+@media (max-width: 480px) {
+  .seller-timer-page {
+    padding: 1rem 0.875rem;
+  }
+
+  .seller-timer-badge {
+    padding: 8px 16px;
+    font-size: 0.75rem;
+    margin-bottom: 20px;
+  }
+
+  .seller-timer-title {
+    margin: 16px 0 28px;
+  }
+
+  .seller-timer-title-purple {
+    font-size: 1.75rem;
+  }
+
+  .seller-timer-title-white {
+    font-size: 1.35rem;
+  }
+
+  .seller-timer-card {
+    padding: 28px 20px;
+    margin-bottom: 36px;
+  }
+
+  .seller-timer-header h2 {
+    font-size: 1.15rem;
+  }
+
+  .seller-timer-display {
+    gap: 12px;
+  }
+
+  .seller-timer-time-box {
+    width: 60px;
+    height: 60px;
+    font-size: 1.6rem;
+  }
+
+  .seller-timer-time-label {
+    font-size: 0.7rem;
+    margin-top: 6px;
+  }
+
+  .seller-timer-separator {
+    font-size: 1.6rem;
+    margin: 0 4px;
+  }
+}
+
+/* Extra Small Mobile (≤360px) */
+@media (max-width: 360px) {
+  .seller-timer-title-purple {
+    font-size: 1.6rem;
+  }
+
+  .seller-timer-title-white {
+    font-size: 1.25rem;
+  }
+
+  .seller-timer-time-box {
+    width: 55px;
+    height: 55px;
+    font-size: 1.5rem;
+  }
+}
+@media (max-width: 420px) {
+  .seller-timer-display {
+    flex-direction: column;
+    gap: 24px;
+    justify-content: center;
+    align-items: center;
+  }
+}

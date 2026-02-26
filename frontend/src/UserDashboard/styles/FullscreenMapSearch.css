@@ -1,0 +1,83 @@
+/* Fullscreen map: compact search bar — match main CompactSearchBar layout and sizing exactly */
+.map-fullscreen-compact-search {
+  width: 100%;
+  background: var(--color-surface, #fff);
+  border-bottom: 1px solid var(--color-border, #e5e7eb);
+  box-shadow: var(--shadow-subtle);
+  flex-shrink: 0;
+}
+
+/* Same as main .compact-search-bar: padding and overflow */
+.map-fullscreen-compact-search .compact-search-bar {
+  padding-top: 1rem;
+  padding-bottom: 0;
+  max-width: 100%;
+  overflow: visible;
+}
+
+/* Same as main .compact-search-form */
+.map-fullscreen-compact-search .compact-search-form {
+  width: 100%;
+}
+
+/* Same as main .compact-search-filters: padding, gap, max-width, alignment */
+.map-fullscreen-compact-search .compact-search-filters {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  overflow: visible;
+}
+
+/* Same as main .compact-search-field */
+.map-fullscreen-compact-search .compact-search-field {
+  min-width: 150px;
+  flex: 1;
+}
+
+.map-fullscreen-compact-search .compact-search-field:first-child {
+  flex: 1.5;
+  min-width: 200px;
+}
+
+.map-fullscreen-compact-search .compact-search-field:last-of-type {
+  flex: 0 0 auto;
+}
+
+/* Same as main labels and inputs */
+.map-fullscreen-compact-search .compact-search-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* .map-fullscreen-compact-search .compact-search-input,
+.map-fullscreen-compact-search .compact-search-select {
+  padding: 0.625rem 0.875rem;
+  font-size: 0.875rem;
+} */
+
+/* Same as main search button */
+.map-fullscreen-compact-search .compact-search-button {
+  padding: 0.625rem 1.5rem;
+  font-size: 0.875rem;
+  margin-top: 1.5rem;
+}
+
+.map-fullscreen-compact-search .compact-filters-button {
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  margin-top: 1.5rem;
+}
+
+/* Location input in map bar — match main CompactSearchBar */
+.map-fullscreen-compact-search .compact-search-field .location-autosuggest .location-input {
+  padding: 0.625rem 2.5rem 0.625rem 0.875rem !important;
+  font-size: 0.875rem !important;
+  border-radius: 8px !important;
+}

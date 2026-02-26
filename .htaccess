@@ -1,0 +1,20 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    
+    # Backend API requests (don't touch these)
+    RewriteCond %{REQUEST_URI} ^/backend/
+    RewriteRule ^ - [L]
+    
+    # Block direct access to vendor folder (security)
+    RewriteCond %{REQUEST_URI} ^/vendor/
+    RewriteRule ^ - [F,L]
+    
+    # Block direct access to composer files (security)
+    RewriteCond %{REQUEST_URI} ^/composer\.(json|lock)$
+    RewriteRule ^ - [F,L]
+    
+    # Route everything else to public/ folder
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ /public/$1 [L]
+</IfModule>

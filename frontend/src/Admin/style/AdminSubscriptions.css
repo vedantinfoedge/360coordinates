@@ -1,0 +1,88 @@
+.admin-subscriptions {
+  padding: 20px;
+}
+
+.admin-subscriptions-table-container {
+  background: var(--color-surface);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: var(--shadow-card);
+}
+
+.admin-subscriptions-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-subscriptions-table thead {
+  background: var(--color-bg);
+}
+
+.admin-subscriptions-table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--color-border);
+}
+
+.admin-subscriptions-table td {
+  padding: 16px 12px;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 14px;
+}
+
+.admin-subscriptions-table tbody tr:hover {
+  background: var(--color-bg);
+}
+
+.admin-subscription-user-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-subscription-user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-dark) 100%);
+  color: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.admin-subscription-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.admin-subscription-user-name {
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-size: 14px;
+}
+
+.admin-subscription-user-email {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.admin-subscription-user-phone {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.admin-subscription-date-cell {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}

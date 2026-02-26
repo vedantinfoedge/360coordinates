@@ -1,0 +1,472 @@
+/* BuyerSearchBar - Mobile-first (XS < 360, S 360-575, M 576-767, L 768-1023, XL 1024-1439, XXL 1440+) */
+
+.buyer-search-bar-hero {
+  position: relative;
+  width: 100%;
+  max-width: 100vw;
+  overflow: hidden;
+  min-height: 50vh;
+  height: 70vh;
+  max-height: 70vh;
+  box-sizing: border-box;
+}
+
+.buyer-search-bar-bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  z-index: 0;
+  display: block;
+}
+
+.buyer-search-bar-container {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  padding: 0.5rem 0.4rem 0.75rem;
+  height: 100%;
+  min-height: 50vh;
+  position: relative;
+  scroll-behavior: smooth;
+  scroll-padding-top: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: hidden;
+  z-index: 1;
+}
+
+.buyer-search-bar-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 0;
+}
+
+.buyer-search-bar-wrapper {
+  max-width: 100%;
+  margin-top: 0;
+  position: relative;
+  z-index: 1;
+  padding: 0 0.4rem;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* ============================================================================
+   BACK BUTTON INSIDE SEARCH BAR
+   ============================================================================ */
+
+.buyer-search-back-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  margin-bottom: 20px;
+  border: 2px solid;
+  border-radius: 10px;
+  background-color: transparent;
+  color: #ffffff;
+  font-weight: 100;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(30, 58, 138, 0.15);
+  font-family: inherit;
+  width: fit-content;
+}
+
+.buyer-search-back-button:hover {
+  color: #ffffff;
+  transform: translateX(-4px);
+  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.25);
+}
+
+.buyer-search-back-button:active {
+  transform: translateX(-2px) scale(0.98);
+}
+
+.buyer-search-back-button svg {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.buyer-search-back-button:hover svg {
+  transform: translateX(-2px);
+}
+
+/* ============================================================================
+   SEARCH BAR TITLE AND SUBTITLE
+   ============================================================================ */
+
+.buyer-search-title {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fefeff;
+  margin: 0 0 0.15rem 0;
+  line-height: 1.2;
+}
+
+.buyer-search-subtitle {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #ffffff;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.4;
+}
+
+.buyer-search-form {
+  background: transparent;
+  border-radius: 8px;
+  padding: 0.5rem 0.6rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.buyer-search-inputs {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.buyer-search-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.buyer-search-field:first-child {
+  flex: 1;
+}
+
+.buyer-search-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.buyer-search-label svg {
+  width: 16px;
+  height: 16px;
+  color: var(--color-primary);
+}
+
+.buyer-search-input,
+.buyer-search-select {
+  width: 100%;
+  min-width: 0;
+  padding: 0.7rem 0.875rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #1e293b;
+  background: white;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: inherit;
+  box-sizing: border-box;
+  scroll-margin-top: 50px;
+}
+
+/* Override LocationAutoSuggest input styling to match buyer-search-input exactly */
+.buyer-search-field .location-autosuggest {
+  width: 100%;
+  min-width: 0;
+  display: block;
+  margin: 0;
+  padding: 0;
+  height: auto;
+}
+
+.buyer-search-field .location-autosuggest .location-input-wrapper {
+  width: 100%;
+  min-width: 0;
+  position: relative;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+.buyer-search-field .location-autosuggest .location-input {
+  width: 100% !important;
+  min-width: 0 !important;
+  padding: 0.7rem 2rem 0.7rem 0.875rem !important;
+  border: 2px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  font-size: 0.9rem !important;
+  line-height: 1.2 !important;
+  color: #1e293b !important;
+  background: white !important;
+  transition: all 0.3s ease !important;
+  font-family: inherit !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  display: block !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+}
+
+.buyer-search-field .location-autosuggest .location-input:focus {
+  outline: none !important;
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 4px rgba(0, 119, 192, 0.1) !important;
+  background-color: #ffffff !important;
+}
+
+.buyer-search-field .location-autosuggest .location-input::placeholder {
+  color: #94a3b8 !important;
+}
+
+.buyer-search-field .location-autosuggest .location-clear-btn {
+  right: 0.75rem !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  font-size: 1.25rem !important;
+  line-height: 1 !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.buyer-search-field .location-autosuggest .location-spinner {
+  right: 0.75rem !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  margin: 0 !important;
+}
+
+.buyer-search-input:focus,
+.buyer-search-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(0, 119, 192, 0.1);
+  /* Prevent scroll jumps on focus */
+  scroll-margin-top: 100px;
+}
+
+.buyer-search-input::placeholder {
+  color: #94a3b8;
+}
+
+.buyer-search-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%231e293b' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+.buyer-search-button {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 119, 192, 0.3);
+}
+
+.buyer-search-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.buyer-search-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 119, 192, 0.5);
+}
+
+.buyer-search-button:active {
+  transform: translateY(0);
+}
+
+/* Quick Search */
+.buyer-quick-search {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.buyer-quick-search-label {
+  font-size: 0.85rem;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.buyer-quick-search-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.buyer-quick-search-btn {
+  padding: 0.4rem 1rem;
+  background: white;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.buyer-quick-search-btn:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 119, 192, 0.4);
+}
+
+/* Search bar responsive - mobile-first breakpoints only */
+@media (max-width: 480px) {
+  .buyer-search-title { margin-top: 18rem; }
+}
+
+@media (min-width: 360px) {
+  .buyer-search-bar-container { padding: 0.75rem 0.5rem 1rem; }
+  .buyer-search-bar-wrapper { padding: 0 0.5rem; }
+  .buyer-search-title { font-size: clamp(1.3rem, 5vw, 1.5rem); }
+  .buyer-search-subtitle { font-size: clamp(0.8rem, 2.5vw, 0.85rem); margin-bottom: 0.4rem; }
+  .buyer-search-form { padding: 0.6rem 0.75rem; border-radius: 10px; }
+  .buyer-search-inputs { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+  .buyer-search-input, .buyer-search-select { padding: 0.5rem 0.55rem; font-size: 0.75rem; min-height: 34px; }
+  .buyer-search-button { font-size: 0.85rem; padding: 0.5rem 0.75rem; min-height: 38px; }
+  .buyer-quick-search-btn { padding: 0.25rem 0.5rem; font-size: 0.65rem; }
+}
+
+@media (min-width: 576px) {
+  .buyer-search-bar-container { padding: 1rem 0.75rem 1.5rem; }
+  .buyer-search-bar-wrapper { padding: 0 0.75rem; width: 90%; max-width: 540px; }
+  .buyer-search-title { font-size: clamp(1.5rem, 5vw, 1.75rem); }
+  .buyer-search-subtitle { font-size: clamp(0.85rem, 2.5vw, 0.9rem); margin-bottom: 0.5rem; }
+  .buyer-search-form { padding: 0.75rem 1rem; border-radius: 12px; }
+  .buyer-search-inputs { gap: 0.6rem; margin-bottom: 0.75rem; }
+  .buyer-search-input, .buyer-search-select { padding: 0.55rem 0.65rem; font-size: 0.8rem; min-height: 36px; }
+  .buyer-search-button { font-size: 0.9rem; padding: 0.6rem 1rem; min-height: 40px; }
+  .buyer-quick-search-label { font-size: 0.8rem; }
+  .buyer-quick-search-btn { padding: 0.3rem 0.6rem; font-size: 0.7rem; }
+}
+
+@media (min-width: 768px) {
+  .buyer-search-bar-container { padding: 1.5rem 1rem 2rem; }
+  .buyer-search-bar-wrapper { padding: 0 1rem; width: 90%; max-width: 720px; gap: 0.75rem; }
+  .buyer-search-title { font-size: clamp(1.8rem, 4vw, 2rem); }
+  .buyer-search-subtitle { font-size: 0.95rem; margin-bottom: 0.75rem; }
+  .buyer-search-form { padding: 1rem 1.25rem; }
+  .buyer-search-inputs { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-bottom: 1rem; }
+  .buyer-search-input, .buyer-search-select { padding: 0.65rem 0.75rem; font-size: 0.85rem; min-height: 40px; }
+  .buyer-search-button { min-height: 42px; padding: 0.65rem 1rem; }
+  .buyer-search-back-button { padding: 0.5rem 1rem; font-size: 0.85rem; }
+}
+
+@media (min-width: 1024px) {
+  .buyer-search-bar-hero { min-height: 70vh; height: 70vh; max-height: 70vh; }
+  .buyer-search-bar-container { padding: 1.5rem 2rem 2rem; }
+  .buyer-search-bar-wrapper { padding: 0 1.5rem; width: 100%; max-width: 1100px; gap: 0.75rem;margin-top: 50px; }
+  .buyer-search-title { font-size: 2.2rem; }
+  .buyer-search-subtitle { font-size: 1rem; margin-bottom: 1rem; }
+  .buyer-search-form { padding: 1rem 1.5rem; }
+  .buyer-search-inputs { grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  .buyer-search-input, .buyer-search-select { padding: 0.7rem 0.875rem; font-size: 0.9rem; }
+  .buyer-search-button { padding: 0.75rem 1.5rem; font-size: 1rem; }
+  .buyer-quick-search-label { font-size: 0.85rem; }
+  .buyer-quick-search-btn { padding: 0.4rem 1rem; font-size: 0.8rem; }
+}
+
+@media (min-width: 1440px) {
+  .buyer-search-bar-container { padding: 2rem 2.5rem 2.5rem; }
+  .buyer-search-bar-wrapper { max-width: 1300px; padding: 0 2rem; }
+  .buyer-search-title { font-size: 2.5rem; }
+  .buyer-search-subtitle { font-size: 1.1rem; }
+  .buyer-search-form { padding: 1.25rem 2rem; }
+}
+
+/* Animation */
+@keyframes buyer-slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.buyer-search-field:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.buyer-search-field:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.buyer-search-field:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.buyer-search-field:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+/* ============================================================================
+   DISABLED OPTION STYLING FOR PG/HOSTEL PAGE
+   ============================================================================ */
+.buyer-search-select option:disabled,
+.buyer-search-select .buyer-disabled-option {
+  opacity: 0.4;
+  filter: blur(0.5px) grayscale(50%);
+  cursor: not-allowed;
+  background-color: #f1f5f9;
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+.buyer-search-select option:disabled:hover,
+.buyer-search-select .buyer-disabled-option:hover {
+  background-color: #f1f5f9;
+  color: #94a3b8;
+}
+
+/* Prevent selection of disabled options */
+.buyer-search-select:has(option:disabled:checked) {
+  border-color: #fbbf24;
+  box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.1);
+}

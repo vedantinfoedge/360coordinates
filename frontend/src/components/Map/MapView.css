@@ -1,0 +1,793 @@
+/* Fullscreen wrapper: when active, shows compact search on top and map below */
+.map-view-fullscreen-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.map-view-fullscreen-wrapper .map-view-fullscreen-search {
+  flex-shrink: 0;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: height 0.2s ease, opacity 0.2s ease;
+}
+
+.map-view-fullscreen-wrapper.fullscreen-active .map-view-fullscreen-search {
+  height: auto;
+  overflow: visible;
+  opacity: 1;
+  flex-shrink: 0;
+}
+
+.map-view-fullscreen-wrapper .map-wrapper {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Map Container Styles */
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+}
+
+.map-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Loading State */
+.map-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.9);
+  z-index: 10;
+  border-radius: 12px;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Custom Price Tag Markers - Small Pill-Shaped */
+.price-tag-marker {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.price-tag-marker:hover {
+  transform: scale(1.1);
+  z-index: 10;
+}
+
+.price-tag {
+  background: var(--color-primary);
+  color: var(--color-text-white);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+  display: inline-block;
+  min-width: auto;
+  width: auto;
+}
+
+.price-tag:hover {
+  transform: scale(1.1);
+}
+
+/* Selected/Current Property Marker - Orange */
+.price-tag-marker.selected .price-tag {
+  background: var(--color-warning, #F97316);
+  z-index: 100;
+}
+
+.price-tag-marker.selected:hover {
+  transform: scale(1.1);
+  z-index: 10;
+}
+
+/* ========== POPUP STYLES - VERTICAL CARD LAYOUT (screenshot match) ========== */
+
+/* Map Card Container - White card with rounded corners, floating above map */
+.mapboxgl-popup.map-card-container,
+.mapboxgl-popup.property-map-popup-container {
+  width: 340px !important;
+  min-width: 320px;
+  max-width: 380px !important;
+  max-height: 560px !important;
+}
+
+/* Hide popup tip for clean floating card look like screenshot */
+.mapboxgl-popup.map-card-container .mapboxgl-popup-tip {
+  display: none;
+}
+
+/* Details page: slightly wider card */
+.mapboxgl-popup.map-card-container.premium-variant,
+.mapboxgl-popup.property-map-popup-container.premium-variant {
+  width: 360px !important;
+  max-width: 400px !important;
+}
+
+.mapboxgl-popup-content {
+  padding: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), 0 4px 16px rgba(0, 0, 0, 0.08);
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: none;
+}
+
+.map-card-container.premium-variant {
+  z-index: 999; /* Below navbar (1000) so popup doesn't overlap when scrolling */
+}
+
+.premium-variant .mapboxgl-popup-content {
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.18);
+}
+
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+  border-bottom-color: #fff;
+}
+
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+  border-top-color: #fff;
+}
+
+.mapboxgl-popup-close-button {
+  display: none;
+  /* Hide default close button, using custom one */
+}
+
+/* Property Popup Card - Fixed dimensions, image drives aspect (same size for all cards) */
+.property-popup-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: #fff;
+  overflow: hidden;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 20px;
+}
+
+.property-popup-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.14);
+}
+
+/* Image section: fixed aspect ratio (4:3) so all cards same size; image fills with object-fit */
+.popup-card-image-container {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(145deg, #e8e8e8 0%, #f5f5f5 100%);
+  aspect-ratio: 4 / 3;
+  flex-shrink: 0;
+}
+
+.popup-card-image-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Carousel: track and slides */
+.popup-card-carousel {
+  touch-action: pan-y pinch-zoom;
+}
+
+.popup-card-carousel-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.35s ease-out;
+  will-change: transform;
+}
+
+.popup-card-carousel-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.popup-card-carousel-slide .popup-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.premium-variant .popup-card-image-container {
+  aspect-ratio: 4 / 3;
+}
+
+.popup-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Image Overlay - Heart & Share left, Close right (white icons on dark circle) */
+.popup-card-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 14px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.popup-card-action-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.popup-card-heart-btn,
+.popup-card-share-btn,
+.popup-card-close-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: all 0.2s ease;
+  color: #fff;
+  padding: 0;
+}
+
+.popup-card-heart-btn:hover,
+.popup-card-share-btn:hover,
+.popup-card-close-btn:hover {
+  background: rgba(0, 0, 0, 0.65);
+  transform: scale(1.08);
+}
+
+.popup-card-heart-btn.active {
+  background: rgba(220, 38, 38, 0.85);
+}
+
+.popup-card-heart-btn.active:hover {
+  background: rgba(220, 38, 38, 1);
+}
+
+.popup-card-heart-btn svg,
+.popup-card-share-btn svg,
+.popup-card-close-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Pagination Dots */
+.popup-card-pagination {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 3;
+  pointer-events: auto;
+  max-width: 90%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 2px 4px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.popup-card-pagination::-webkit-scrollbar {
+  display: none;
+}
+
+.pagination-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.pagination-dot.active {
+  background: var(--color-text-white);
+  width: 8px;
+  height: 8px;
+}
+
+/* Carousel Arrows */
+.popup-card-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: all 0.2s ease;
+  z-index: 5;
+  padding: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+}
+
+.popup-card-image-container:hover .popup-card-arrow {
+  opacity: 1;
+}
+
+.popup-card-arrow:hover {
+  background: #fff;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.popup-card-arrow-prev {
+  left: 8px;
+}
+
+.popup-card-arrow-next {
+  right: 8px;
+}
+
+.popup-card-arrow svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Content Section - Title, location, price (screenshot style) */
+.popup-card-content {
+  padding: 16px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-height: 0;
+  background: #fff;
+}
+
+.popup-card-header {
+  margin: 0;
+}
+
+/* Property title - dark grey/black, medium-bold, sans-serif */
+.popup-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.premium-variant .popup-card-title {
+  font-size: 15px;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+/* Location - lighter grey, smaller, regular weight */
+.popup-card-location {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1.35;
+  font-weight: 400;
+}
+
+.popup-card-location svg {
+  flex-shrink: 0;
+  color: #6b7280;
+  opacity: 0.9;
+}
+
+.popup-card-footer {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 8px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Price - most prominent, large and bold, dark (screenshot: ₹7.0L) */
+.popup-card-price-section {
+  flex: 1;
+  min-width: 0;
+}
+
+.popup-card-price {
+  font-size: 22px;
+  font-weight: 800;
+  color: #1a1a1a;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.premium-variant .popup-card-price {
+  font-size: 23px;
+}
+
+.popup-card-details-link {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-white);
+  background: var(--color-primary-dark, #003B73);
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  transition: background 0.2s ease, transform 0.15s ease;
+  box-shadow: 0 2px 8px rgba(0, 59, 115, 0.25);
+}
+
+.popup-card-details-link:hover {
+  background: var(--color-primary);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 59, 115, 0.3);
+}
+
+.popup-card-view-details-btn {
+  width: 100%;
+  margin: 14px 0 0 0;
+  padding: 11px 18px;
+  background: var(--color-primary-dark, #003B73);
+  color: var(--color-text-white);
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  text-transform: none;
+  letter-spacing: 0;
+  box-shadow: var(--shadow-card);
+  flex-shrink: 0;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.popup-card-view-details-btn:hover {
+  background: var(--color-primary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.popup-card-view-details-btn:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-card);
+}
+
+.popup-card-view-details-btn svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
+}
+
+.popup-card-view-details-btn:hover svg {
+  transform: translateX(2px);
+}
+
+/* Mapbox Controls Customization */
+.mapboxgl-ctrl-group {
+  border-radius: 8px !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+.mapboxgl-ctrl-group button {
+  width: 36px !important;
+  height: 36px !important;
+}
+
+.mapboxgl-ctrl-geolocate {
+  background-color: var(--color-surface);
+}
+
+/* ========== TABLET RESPONSIVE (768px - 1024px) ========== */
+@media (max-width: 1024px) {
+
+
+  .popup-card-content {
+    padding: 14px 16px 16px 16px;
+    gap: 8px;
+  }
+
+  .popup-card-title {
+    font-size: 16px;
+    padding-top: 12px;
+  }
+
+  .popup-card-description {
+    font-size: 12px;
+  }
+
+  .popup-card-price {
+    font-size: 18px;
+  }
+
+  .popup-card-view-details-btn {
+    padding: 8px 14px;
+    font-size: 13px;
+    margin-top: 10px;
+    flex-shrink: 0;
+  }
+
+  .popup-card-view-details-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .popup-card-heart-btn,
+  .popup-card-close-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .popup-card-heart-btn svg,
+  .popup-card-close-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* ========== MOBILE RESPONSIVE (< 768px) ========== */
+@media (max-width: 768px) {
+  .map-wrapper {
+    min-height: 300px;
+  }
+
+
+
+  .mapboxgl-popup.map-card-container,
+  .mapboxgl-popup.property-map-popup-container {
+    max-width: 90vw !important;
+    width: auto !important;
+    min-width: 280px;
+  }
+
+  .mapboxgl-popup-content {
+    border-radius: 10px;
+  }
+
+  .popup-card-image-container {
+    aspect-ratio: 16 / 11;
+  }
+
+  .popup-card-image-overlay {
+    padding: 10px;
+  }
+
+  .popup-card-heart-btn,
+  .popup-card-close-btn {
+    width: 26px;
+    height: 26px;
+  }
+
+  .popup-card-heart-btn svg,
+  .popup-card-close-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .popup-card-pagination {
+    bottom: 10px;
+    gap: 5px;
+  }
+
+  .pagination-dot {
+    width: 5px;
+    height: 5px;
+  }
+
+  .pagination-dot.active {
+    width: 7px;
+    height: 7px;
+  }
+
+  .popup-card-content {
+    padding: 12px 12px 14px 12px;
+    gap: 6px;
+  }
+
+  .popup-card-title {
+    font-size: 14px;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  .popup-card-description {
+    font-size: 11px;
+  }
+
+  .popup-card-price {
+    font-size: 16px;
+  }
+
+  .popup-card-view-details-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+    margin-top: 8px;
+    flex-shrink: 0;
+  }
+
+  .popup-card-view-details-btn svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  /* Smaller price tags on mobile */
+  .price-tag {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+}
+
+/* ========== SMALL MOBILE (< 480px) ========== */
+@media (max-width: 480px) {
+
+  .popup-card-image-container {
+    aspect-ratio: 16 / 12;
+  }
+
+  .popup-card-image-overlay {
+    padding: 8px;
+  }
+
+  .popup-card-heart-btn,
+  .popup-card-close-btn {
+    width: 24px;
+    height: 24px;
+  }
+
+  .popup-card-heart-btn svg,
+  .popup-card-close-btn svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .popup-card-pagination {
+    bottom: 8px;
+    gap: 4px;
+  }
+
+  .popup-card-content {
+    padding: 10px 10px 12px 10px;
+    gap: 5px;
+  }
+
+  .popup-card-title {
+    font-size: 13px;
+  }
+
+  .popup-card-description {
+    font-size: 10px;
+  }
+
+  .popup-card-price {
+    font-size: 15px;
+  }
+
+  /* Even smaller price tags */
+  .price-tag {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+}
+
+/* ========== EXTRA SMALL MOBILE (< 360px) ========== */
+@media (max-width: 360px) {
+
+  .popup-card-image-container {
+    aspect-ratio: 16 / 13;
+  }
+
+  .popup-card-content {
+    padding: 8px 8px 10px 8px;
+    gap: 4px;
+  }
+
+  .popup-card-title {
+    font-size: 12px;
+  }
+
+  .popup-card-description {
+    font-size: 9px;
+  }
+
+  .popup-card-price {
+    font-size: 14px;
+  }
+
+  .popup-card-duration {
+    font-size: 10px;
+  }
+
+  .popup-card-dates {
+    font-size: 9px;
+  }
+
+  .price-tag {
+    padding: 3px 6px;
+    font-size: 9px;
+    border-radius: 12px;
+  }
+}
+
+.mapboxgl-canvas {
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100% !important;
+}

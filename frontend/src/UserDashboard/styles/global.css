@@ -1,0 +1,164 @@
+/* global.css - Prevents horizontal scrolling and fixes navbar overlap */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* CRITICAL: html/body overflow rules moved to index.css to prevent conflicts */
+/* This file now only handles buyer-dashboard specific styles */
+
+/* Prevent elements from overflowing */
+.container,
+.wrapper,
+div {
+  max-width: 100%;
+}
+
+/* ============================================================================
+   RESPONSIVE IMAGE RULES - CRITICAL FOR ALL SCREEN SIZES
+   ============================================================================ */
+
+/* Ensure all images are responsive by default */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Background images should cover properly */
+[style*="background-image"],
+[class*="background-image"],
+[class*="banner"] {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* ============================================================================
+   RESPONSIVE TYPOGRAPHY
+   ============================================================================ */
+
+/* Base font size scaling */
+html {
+  font-size: 16px;
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 360px) {
+  html {
+    font-size: 13px;
+  }
+}
+
+/* ============================================================================
+   RESPONSIVE UTILITIES
+   ============================================================================ */
+
+/* Hide on mobile */
+@media (max-width: 767px) {
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+/* Hide on desktop */
+@media (min-width: 768px) {
+  .hide-desktop {
+    display: none !important;
+  }
+}
+
+/* Touch-friendly targets */
+/* @media (max-width: 767px) {
+  button,
+  a,
+  input[type="button"],
+  input[type="submit"],
+  select {
+    min-height: 44px;
+    min-width: 44px;
+  }
+} */
+
+/* ===================== */
+/* FIX FOR NAVBAR OVERLAP */
+/* ===================== */
+
+/* Buyer Dashboard App Container */
+.buyer-dashboard-app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* CRITICAL: No overflow - let body handle all scrolling */
+  overflow: visible;
+  height: auto;
+}
+
+/* Main content area - add padding to push content below fixed navbar */
+/* CRITICAL: Match navbar height exactly (90px) */
+.buyer-main-content {
+  padding-top: 90px; /* Must match .buyer-navbar height exactly (90px) */
+  flex: 1;
+  width: 100%;
+  /* CRITICAL: No overflow - let body handle all scrolling */
+  overflow: visible;
+  height: auto;
+  min-height: auto;
+}
+
+/* Responsive padding adjustments */
+/* Large Desktop (≥1440px) */
+@media (min-width: 1440px) {
+  .buyer-main-content {
+    padding-top: 90px;
+  }
+}
+
+/* Laptop (1024px - 1439px) */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .buyer-main-content {
+    padding-top: 90px;
+  }
+}
+
+/* Tablet (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .buyer-main-content {
+    padding-top: 90px;
+  }
+}
+
+/* Mobile (≤767px) */
+@media (max-width: 767px) {
+  .buyer-main-content {
+    padding-top: 90px; /* Keep same padding on mobile since navbar height is same (90px) */
+  }
+}
+
+/* If you want less spacing, use this instead */
+/*
+.buyer-main-content {
+  padding-top: 7.5rem;
+}
+*/
+/* Remove padding-top for home page only */
+.buyer-main-content:has(.home-page) {
+  flex: 1 1;
+  height: auto;
+  overflow: visible;
+  width: 100%;
+  padding-top: 0 !important; 
+}
+
+@media (max-width: 767px) {
+  .buyer-main-content:has(.home-page) {
+    padding-top: 0 !important; 
+  }
+}
