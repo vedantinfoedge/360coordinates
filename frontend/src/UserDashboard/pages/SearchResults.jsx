@@ -46,6 +46,7 @@ const SearchResults = () => {
     budget: '',
     bedrooms: '',
     area: '',
+    seats: '',
     status: '',
     upload_time: '',
     expected_possession: '',
@@ -94,6 +95,7 @@ const SearchResults = () => {
         const budget = searchParams.get('budget') || '';
         const bedrooms = searchParams.get('bedrooms') || '';
         const area = searchParams.get('area') || '';
+        const seats = searchParams.get('seats') || '';
         let status = searchParams.get('status') || '';
         const uploadTime = searchParams.get('upload_time') || '';
         const expectedPossession = searchParams.get('expected_possession') || '';
@@ -189,13 +191,14 @@ const SearchResults = () => {
         if (budget) apiParams.budget = budget;
         if (bedrooms) apiParams.bedrooms = bedrooms;
         if (area) apiParams.area = area;
+        if (seats) apiParams.seats = seats;
         if (status) {
           // Convert "For Sale" / "For Rent" to "sale" / "rent"
           apiParams.status = status.toLowerCase().replace('for ', '');
         }
         if (uploadTime) apiParams.upload_time = uploadTime;
 
-        console.log('🔍 Search parameters from URL:', { city, location, type, budget, bedrooms, area, status });
+        console.log('🔍 Search parameters from URL:', { city, location, type, budget, bedrooms, area, seats, status });
 
         let response;
 
@@ -270,6 +273,7 @@ const SearchResults = () => {
                   bedrooms: prop.bedrooms || '0',
                   bathrooms: prop.bathrooms || '0',
                   area: parseFloat(prop.area) || 0,
+                  seats: prop.seats || '',
                   type: prop.property_type || prop.type || 'Unknown',
                   status: prop.status === 'sale' ? 'For Sale' : (prop.status === 'rent' ? 'For Rent' : prop.status || 'For Sale'),
                   propertyType: prop.property_type || prop.type || 'Unknown',
@@ -291,7 +295,7 @@ const SearchResults = () => {
             const statusForFilter = status === 'sale' ? 'For Sale' : status === 'rent' ? 'For Rent' : status || '';
             const locationForFilter = location || city || '';
             const typeForFilter = isPGHostelSearch ? '' : type;
-            const filtered = filterProperties(locationForFilter, typeForFilter, budget, bedrooms, area, statusForFilter, backendProperties);
+            const filtered = filterProperties(locationForFilter, typeForFilter, budget, bedrooms, area, seats, statusForFilter, backendProperties);
 
             console.log(`✅ Setting ${filtered.length} properties to state (upcoming projects excluded)`);
             setFilteredProperties(filtered);
@@ -319,6 +323,7 @@ const SearchResults = () => {
           const fallbackBudget = searchParams.get('budget') || '';
           const fallbackBedrooms = searchParams.get('bedrooms') || '';
           const fallbackArea = searchParams.get('area') || '';
+          const fallbackSeats = searchParams.get('seats') || '';
           const fallbackResponse = await propertiesAPI.list({ limit: 100 });
           if (fallbackResponse.success && fallbackResponse.data) {
             const fallbackProperties = fallbackResponse.data.properties || fallbackResponse.data.property || [];
@@ -355,6 +360,7 @@ const SearchResults = () => {
                   bedrooms: prop.bedrooms || '0',
                   bathrooms: prop.bathrooms || '0',
                   area: parseFloat(prop.area) || 0,
+                  seats: prop.seats || '',
                   type: prop.property_type || prop.type || 'Unknown',
                   status: prop.status === 'sale' ? 'For Sale' : (prop.status === 'rent' ? 'For Rent' : prop.status || 'For Sale'),
                   propertyType: prop.property_type || prop.type || 'Unknown',
@@ -372,7 +378,7 @@ const SearchResults = () => {
               // Client-side fallback: apply filters to fallback results (no type filter for PG/Hostel so all bachelor-available types show)
               const fallbackStatusForFilter = fallbackStatus === 'sale' ? 'For Sale' : fallbackStatus === 'rent' ? 'For Rent' : fallbackStatus || '';
               const fallbackTypeForFilter = isPGHostelSearchFallback ? '' : fallbackType;
-              const fallbackFiltered = filterProperties(fallbackLocation || fallbackCity, fallbackTypeForFilter, fallbackBudget, fallbackBedrooms, fallbackArea, fallbackStatusForFilter, convertedProperties);
+              const fallbackFiltered = filterProperties(fallbackLocation || fallbackCity, fallbackTypeForFilter, fallbackBudget, fallbackBedrooms, fallbackArea, fallbackSeats, fallbackStatusForFilter, convertedProperties);
               console.log(`✅ Fallback: Setting ${fallbackFiltered.length} properties (upcoming projects excluded)`);
               setFilteredProperties(fallbackFiltered);
             } else {
@@ -423,7 +429,7 @@ const SearchResults = () => {
     return comparePrice >= range.min && comparePrice <= range.max;
   };
 
-  const filterProperties = useCallback((location, type, budget, bedrooms, area, status, properties) => {
+  const filterProperties = useCallback((location, type, budget, bedrooms, area, seats, status, properties) => {
     let results = [...(properties || [])];
 
     // Filter by status (For Sale / For Rent)
@@ -513,6 +519,28 @@ const SearchResults = () => {
       }
     }
 
+    // Filter by seats (if provided)
+    if (seats) {
+      // Parse seat range like "2-5 seats" or "10+ seats"
+      const seatMatch = seats.match(/(\d+)[–-](\d+)/); // Handle both en-dash and hyphen
+      if (seatMatch) {
+        const minSeats = parseInt(seatMatch[1]);
+        const maxSeats = parseInt(seatMatch[2]);
+        results = results.filter(property => {
+          const propSeats = parseInt(property.seats) || 0;
+          return propSeats >= minSeats && propSeats <= maxSeats;
+        });
+      } else if (seats.includes('+')) {
+        const minSeats = parseInt(seats.replace(/\D/g, ''));
+        results = results.filter(property => {
+          const propSeats = parseInt(property.seats) || 0;
+          return propSeats >= minSeats;
+        });
+      } else if (seats.includes('1 seat')) {
+        results = results.filter(property => (parseInt(property.seats) || 0) === 1);
+      }
+    }
+
     return results;
   }, []);
 
@@ -524,6 +552,7 @@ const SearchResults = () => {
     const budget = searchParams.get('budget') || '';
     const bedrooms = searchParams.get('bedrooms') || '';
     const area = searchParams.get('area') || '';
+    const seats = searchParams.get('seats') || '';
     let status = searchParams.get('status') || '';
     const upload_time = searchParams.get('upload_time') || '';
     const expected_possession = searchParams.get('expected_possession') || '';
@@ -542,7 +571,7 @@ const SearchResults = () => {
       else if (status === 'rent') status = 'For Rent';
     }
 
-    setActiveFilters({ city, location, type, budget, bedrooms, area, status, upload_time, expected_possession, project_status });
+    setActiveFilters({ city, location, type, budget, bedrooms, area, seats, status, upload_time, expected_possession, project_status });
   }, [searchParams]);
 
 
@@ -555,7 +584,7 @@ const SearchResults = () => {
     } else {
       navigate(basePath);
     }
-    setActiveFilters({ city: '', location: '', type: '', budget: '', bedrooms: '', area: '', status: '', upload_time: '', expected_possession: '', project_status: '' });
+    setActiveFilters({ city: '', location: '', type: '', budget: '', bedrooms: '', area: '', seats: '', status: '', upload_time: '', expected_possession: '', project_status: '' });
   };
 
   const removeFilter = (filterName) => {
@@ -796,6 +825,17 @@ const SearchResults = () => {
                     <div className="filter-tag filter-tag-area">
                       <span>Area: {activeFilters.area}</span>
                       <button onClick={() => removeFilter('area')} className="remove-filter">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <line x1="18" y1="6" x2="6" y2="18"></line>
+                          <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                      </button>
+                    </div>
+                  )}
+                  {activeFilters.seats && (
+                    <div className="filter-tag filter-tag-area">
+                      <span>Seat Capacity: {activeFilters.seats}</span>
+                      <button onClick={() => removeFilter('seats')} className="remove-filter">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                           <line x1="18" y1="6" x2="6" y2="18"></line>
                           <line x1="6" y1="6" x2="18" y2="18"></line>

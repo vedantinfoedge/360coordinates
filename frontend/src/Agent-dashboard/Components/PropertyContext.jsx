@@ -27,8 +27,8 @@ const transformProperty = (prop) => ({
   age: prop.age || '',
   amenities: Array.isArray(prop.amenities) ? prop.amenities : (prop.amenities ? prop.amenities.split(',') : []),
   description: prop.description || '',
-  images: Array.isArray(prop.images) && prop.images.length > 0 
-    ? prop.images 
+  images: Array.isArray(prop.images) && prop.images.length > 0
+    ? prop.images
     : (prop.cover_image ? [prop.cover_image] : []),
   createdAt: prop.created_at,
   views: prop.views_count || 0,
@@ -43,6 +43,8 @@ const transformProperty = (prop) => ({
   priceNegotiable: prop.price_negotiable || false,
   maintenanceCharges: prop.maintenance_charges?.toString() || '',
   depositAmount: prop.deposit_amount?.toString() || '',
+  seats: prop.seats || '',
+  pricePerSeat: prop.price_per_seat?.toString() || '',
   videoUrl: prop.video_url,
   brochureUrl: prop.brochure_url
 });
@@ -54,7 +56,7 @@ const transformInquiry = (inq) => {
     console.warn('Invalid inquiry object:', inq);
     return null;
   }
-  
+
   try {
     const buyerName = inq.buyer?.name || inq.name || 'Unknown';
     return {
@@ -84,7 +86,7 @@ export const PropertyProvider = ({ children }) => {
   const [inquiriesLoading, setInquiriesLoading] = useState(false);
   const [error, setError] = useState(null);
   const [inquiriesError, setInquiriesError] = useState(null);
-  
+
   // Refs to track polling and prevent duplicate requests
   const pollingIntervalRef = useRef(null);
   const isFetchingPropertiesRef = useRef(false);
@@ -103,9 +105,9 @@ export const PropertyProvider = ({ children }) => {
         setLoading(true);
       }
       setError(null);
-      
+
       const response = await sellerPropertiesAPI.list();
-      
+
       if (response.success && response.data && response.data.properties) {
         const backendProperties = response.data.properties.map(transformProperty);
         setProperties(backendProperties);
@@ -139,9 +141,9 @@ export const PropertyProvider = ({ children }) => {
         setInquiriesLoading(true);
       }
       setInquiriesError(null);
-      
+
       const response = await sellerInquiriesAPI.list();
-      
+
       if (response.success && response.data && response.data.inquiries) {
         // Filter out null values from transformInquiry
         const backendInquiries = response.data.inquiries
@@ -270,7 +272,7 @@ export const PropertyProvider = ({ children }) => {
       console.log('PropertyContext: API response:', response);
       console.log('PropertyContext: Response success:', response.success);
       console.log('PropertyContext: Response data:', response.data);
-      
+
       // Handle both success formats: {success: true} and direct data
       if (response.success === true || (response.data && response.data.property)) {
         // Always refresh from backend after successful add to get latest data
@@ -296,10 +298,10 @@ export const PropertyProvider = ({ children }) => {
         data: error.data,
         response: error.response
       });
-      
+
       // Extract validation errors from error object
       let errorMessage = 'Failed to save property to database. Please check your connection and try again.';
-      
+
       // Check various error formats
       if (error.message) {
         errorMessage = error.message;
@@ -312,7 +314,7 @@ export const PropertyProvider = ({ children }) => {
       } else if (error.data?.message) {
         errorMessage = error.data.message;
       }
-      
+
       console.error('PropertyContext: Final error message:', errorMessage);
       setError(errorMessage);
       throw new Error(errorMessage);
@@ -357,7 +359,7 @@ export const PropertyProvider = ({ children }) => {
       };
 
       const response = await sellerPropertiesAPI.update(id, propertyData);
-      
+
       if (response.success) {
         // Refresh from backend after successful update to get latest data
         await fetchProperties(false);
@@ -375,7 +377,7 @@ export const PropertyProvider = ({ children }) => {
   const deleteProperty = async (id) => {
     try {
       const response = await sellerPropertiesAPI.delete(id);
-      
+
       if (response.success) {
         // Refresh from backend after successful delete
         await fetchProperties(false);
@@ -395,7 +397,7 @@ export const PropertyProvider = ({ children }) => {
   const updateInquiryStatus = async (id, status) => {
     try {
       const response = await sellerInquiriesAPI.updateStatus(id, status);
-      
+
       if (response.success) {
         // Optimistically update local state for immediate UI feedback
         setInquiries(prev =>
@@ -440,8 +442,8 @@ export const PropertyProvider = ({ children }) => {
   };
 
   return (
-    <PropertyContext.Provider value={{ 
-      properties, 
+    <PropertyContext.Provider value={{
+      properties,
       setProperties,
       inquiries,
       setInquiries,

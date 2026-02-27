@@ -14,7 +14,7 @@ const CompactSearchBar = () => {
     propertyType: searchParams.get('type') || searchParams.get('property_type') || '',
     budget: searchParams.get('budget') || '',
     bedrooms: searchParams.get('bedrooms') || '',
-    area: searchParams.get('area') || '',
+    area: searchParams.get('area') || searchParams.get('seats') || '',
     uploadTime: searchParams.get('upload_time') || '',
     listingType: (() => {
       const statusParam = searchParams.get('status');
@@ -34,7 +34,7 @@ const CompactSearchBar = () => {
   const [isLocationLocked, setIsLocationLocked] = useState(
     () => !!(searchParams.get('location') || searchParams.get('city'))
   );
-  
+
   // Mobile detection and filters modal state
   const [isMobile, setIsMobile] = useState(false);
   const [showFiltersModal, setShowFiltersModal] = useState(false);
@@ -44,7 +44,7 @@ const CompactSearchBar = () => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 767);
     };
-    
+
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
@@ -57,13 +57,13 @@ const CompactSearchBar = () => {
         setShowFiltersModal(false);
       }
     };
-    
+
     if (showFiltersModal) {
       document.addEventListener('keydown', handleEscape);
       // Prevent body scroll when modal is open
       document.body.style.overflow = 'hidden';
     }
-    
+
     return () => {
       document.removeEventListener('keydown', handleEscape);
       document.body.style.overflow = '';
@@ -76,14 +76,14 @@ const CompactSearchBar = () => {
     const locationParam = searchParams.get('location');
     const latParam = searchParams.get('lat');
     const lngParam = searchParams.get('lng');
-    
+
     if (cityParam || locationParam) {
       // Extract city from location string if city param is not available
       let extractedCity = cityParam || '';
       if (!extractedCity && locationParam) {
         const locationStr = locationParam.trim();
         const parts = locationStr.split(',').map(p => p.trim()).filter(p => p.length > 0);
-        
+
         // For formats like "Locality, City, State, Country" - city is usually the second part
         // For formats like "City, State, Country" - city is the first part
         if (parts.length >= 3) {
@@ -97,7 +97,7 @@ const CompactSearchBar = () => {
           extractedCity = parts[0];
         }
       }
-      
+
       setSelectedLocation({
         city: extractedCity,
         placeName: locationParam || '',
@@ -151,7 +151,7 @@ const CompactSearchBar = () => {
     } else if (!statusParam) {
       setSearchData(prev => ({ ...prev, listingType: 'All' }));
     }
-    
+
     // Sync uploadTime from URL params
     const uploadTimeParam = searchParams.get('upload_time') || '';
     setSearchData(prev => {
@@ -166,13 +166,13 @@ const CompactSearchBar = () => {
     const typeVal = searchParams.get('type') || searchParams.get('property_type') || '';
     const budgetVal = searchParams.get('budget') || '';
     const bedroomsVal = searchParams.get('bedrooms') || '';
-    const areaVal = searchParams.get('area') || '';
+    const areaVal = searchParams.get('area') || searchParams.get('seats') || '';
     const expectedPossessionVal = searchParams.get('expected_possession') || '';
     const projectStatusVal = searchParams.get('project_status') || '';
     setSearchData(prev => {
       if (prev.propertyType === typeVal && prev.budget === budgetVal &&
-          prev.bedrooms === bedroomsVal && prev.area === areaVal &&
-          prev.expectedPossession === expectedPossessionVal && prev.projectStatus === projectStatusVal) return prev;
+        prev.bedrooms === bedroomsVal && prev.area === areaVal &&
+        prev.expectedPossession === expectedPossessionVal && prev.projectStatus === projectStatusVal) return prev;
       return { ...prev, propertyType: typeVal, budget: budgetVal, bedrooms: bedroomsVal, area: areaVal, expectedPossession: expectedPossessionVal, projectStatus: projectStatusVal };
     });
 
@@ -181,14 +181,14 @@ const CompactSearchBar = () => {
     const locationParam = searchParams.get('location');
     const latParam = searchParams.get('lat');
     const lngParam = searchParams.get('lng');
-    
+
     if (cityParam || locationParam) {
       // Extract city from location string if city param is not available
       let extractedCity = cityParam || '';
       if (!extractedCity && locationParam) {
         const locationStr = locationParam.trim();
         const parts = locationStr.split(',').map(p => p.trim()).filter(p => p.length > 0);
-        
+
         // For formats like "Locality, City, State, Country" - city is usually the second part
         // For formats like "City, State, Country" - city is the first part
         if (parts.length >= 3) {
@@ -202,7 +202,7 @@ const CompactSearchBar = () => {
           extractedCity = parts[0];
         }
       }
-      
+
       const newLocation = {
         city: extractedCity,
         placeName: locationParam || '',
@@ -212,14 +212,14 @@ const CompactSearchBar = () => {
           lng: parseFloat(lngParam)
         } : null
       };
-      
+
       setSelectedLocation(prev => {
         if (!prev || prev.city !== newLocation.city || prev.placeName !== newLocation.placeName) {
           return newLocation;
         }
         return prev;
       });
-      
+
       // Always sync searchData.location to URL value (including '' when location was removed)
       setSearchData(prev => {
         const newLoc = locationParam || '';
@@ -380,15 +380,23 @@ const CompactSearchBar = () => {
     '10000+ sq ft'
   ];
 
+  const seatRanges = [
+    '1 seat',
+    '2–5 seats',
+    '6–10 seats',
+    '10+ seats'
+  ];
+
   const isBedroomBased = useMemo(() => bedroomBasedTypes.includes(searchData.propertyType), [searchData.propertyType]);
   const isAreaBased = useMemo(() => areaBasedTypes.includes(searchData.propertyType), [searchData.propertyType]);
+  const isCoworking = useMemo(() => searchData.propertyType === 'Co-working Space', [searchData.propertyType]);
 
   // Get budget ranges based on search type, listing type, and property type
   const getBudgetRanges = () => {
     // Determine if we should use Buy or Rent budgets based on listingType or searchType
     const useBuyBudgets = searchType === 'buy' || searchData.listingType === 'Buy';
     const useRentBudgets = searchType === 'rent' || searchType === 'pg' || searchData.listingType === 'Rent';
-    
+
     // For Buy page or Buy selected - must match BuyerSearchBar.jsx exactly
     if (useBuyBudgets && searchData.listingType !== 'Rent') {
       if (!searchData.propertyType) {
@@ -470,7 +478,7 @@ const CompactSearchBar = () => {
 
     return propertyBudgetMap[searchData.propertyType] || saleResidentialBudget;
   };
-// hahaha
+  // hahaha
   const budgetRanges = useMemo(() => getBudgetRanges(), [searchData.propertyType, searchData.listingType, searchType]);
 
   const handleInputChange = (e) => {
@@ -510,7 +518,7 @@ const CompactSearchBar = () => {
       // Trigger search immediately when filter changes (only on search results page)
       if (location.pathname.includes('/buyer-dashboard/search') || location.pathname.includes('/searchresults')) {
         setTimeout(() => {
-          const syntheticEvent = { preventDefault: () => {}, stopPropagation: () => {} };
+          const syntheticEvent = { preventDefault: () => { }, stopPropagation: () => { } };
           handleSearch(syntheticEvent);
         }, 0);
       }
@@ -518,7 +526,7 @@ const CompactSearchBar = () => {
       setSearchData(prev => ({ ...prev, [name]: value }));
       if (location.pathname.includes('/buyer-dashboard/search') || location.pathname.includes('/searchresults')) {
         setTimeout(() => {
-          const syntheticEvent = { preventDefault: () => {}, stopPropagation: () => {} };
+          const syntheticEvent = { preventDefault: () => { }, stopPropagation: () => { } };
           handleSearch(syntheticEvent);
         }, 0);
       }
@@ -571,7 +579,7 @@ const CompactSearchBar = () => {
     else if (!override?.selectedLocationOverride && searchData.location && searchData.location.trim() !== '') {
       const locationStr = searchData.location.trim();
       const parts = locationStr.split(',').map(p => p.trim()).filter(p => p.length > 0);
-      
+
       // For formats like "Locality, City, State, Country" - city is usually the second part
       // For formats like "City, State, Country" - city is the first part
       // For formats like "City" - city is the only part
@@ -598,7 +606,7 @@ const CompactSearchBar = () => {
     if (cityToAdd && cityToAdd.trim() !== '') {
       queryParams.set('city', cityToAdd.trim());
     }
-    
+
     // Add location: use full selected value (placeName/fullAddress) when we have loc; otherwise typed/URL
     if (loc && (loc.placeName || loc.fullAddress)) {
       queryParams.append('location', loc.placeName || loc.fullAddress);
@@ -664,7 +672,11 @@ const CompactSearchBar = () => {
       if (isBedroomBased && searchData.bedrooms && searchData.bedrooms.trim() !== '') {
         queryParams.append('bedrooms', searchData.bedrooms);
       } else if (isAreaBased && searchData.area && searchData.area.trim() !== '') {
-        queryParams.append('area', searchData.area);
+        if (isCoworking) {
+          queryParams.append('seats', searchData.area);
+        } else {
+          queryParams.append('area', searchData.area);
+        }
       }
 
       // Add upload time filter
@@ -688,7 +700,7 @@ const CompactSearchBar = () => {
 
     const queryString = queryParams.toString();
     const searchUrl = queryString ? `/buyer-dashboard/search?${queryString}` : '/buyer-dashboard/search';
-    
+
     navigate(searchUrl);
   };
 
@@ -811,8 +823,8 @@ const CompactSearchBar = () => {
             {propertyTypes.map(type => {
               const isEnabled = isPropertyTypeEnabled(type);
               return (
-                <option 
-                  key={type} 
+                <option
+                  key={type}
                   value={type}
                   disabled={!isEnabled}
                   className={!isEnabled ? 'buyer-disabled-option' : ''}
@@ -823,9 +835,9 @@ const CompactSearchBar = () => {
             })}
           </select>
           {searchType === 'pg' && (
-            <small style={{ 
-              fontSize: '0.75rem', 
-              color: '#94a3b8', 
+            <small style={{
+              fontSize: '0.75rem',
+              color: '#94a3b8',
               marginTop: '0.25rem',
               display: 'block'
             }}>
@@ -876,7 +888,7 @@ const CompactSearchBar = () => {
           ) : isAreaBased ? (
             <>
               <label htmlFor="area" className="compact-search-label">
-                Area
+                {isCoworking ? 'Seat Capacity' : 'Area'}
               </label>
               <select
                 id="area"
@@ -885,8 +897,8 @@ const CompactSearchBar = () => {
                 onChange={handleInputChange}
                 className="compact-search-select"
               >
-                <option value="">Any Area</option>
-                {areaRanges.map(range => (
+                <option value="">{isCoworking ? 'Any Capacity' : 'Any Area'}</option>
+                {(isCoworking ? seatRanges : areaRanges).map(range => (
                   <option key={range} value={range}>{range}</option>
                 ))}
               </select>
@@ -937,8 +949,8 @@ const CompactSearchBar = () => {
 
   return (
     <div className="compact-search-bar">
-      <form 
-        className="compact-search-form" 
+      <form
+        className="compact-search-form"
         onSubmit={handleSearch}
         noValidate
       >
@@ -969,15 +981,15 @@ const CompactSearchBar = () => {
                   setIsLocationLocked(false);
                   return;
                 }
-                
+
                 // Extract city from locationData or location string
                 let extractedCity = locationData.city || '';
-                
+
                 // If locationData doesn't have city, try to extract from location string
                 if (!extractedCity && (locationData.fullAddress || locationData.placeName)) {
                   const locationStr = (locationData.fullAddress || locationData.placeName || '').trim();
                   const parts = locationStr.split(',').map(p => p.trim()).filter(p => p.length > 0);
-                  
+
                   // For formats like "Locality, City, State" - city is usually the second part
                   if (parts.length >= 2) {
                     extractedCity = parts[1];
@@ -985,12 +997,12 @@ const CompactSearchBar = () => {
                     extractedCity = parts[0];
                   }
                 }
-                
+
                 setSelectedLocation({
                   ...locationData,
                   city: extractedCity
                 });
-                
+
                 setSearchData(prev => ({
                   ...prev,
                   location: locationData.fullAddress || locationData.placeName || ''
@@ -1002,12 +1014,12 @@ const CompactSearchBar = () => {
                 if (locationData) {
                   // Extract city from locationData or location string
                   let extractedCity = locationData.city || '';
-                  
+
                   // If locationData doesn't have city, try to extract from location string
                   if (!extractedCity && (locationData.fullAddress || locationData.placeName)) {
                     const locationStr = (locationData.fullAddress || locationData.placeName || '').trim();
                     const parts = locationStr.split(',').map(p => p.trim()).filter(p => p.length > 0);
-                    
+
                     // For formats like "Locality, City, State" - city is usually the second part
                     if (parts.length >= 2) {
                       extractedCity = parts[1];
@@ -1015,12 +1027,12 @@ const CompactSearchBar = () => {
                       extractedCity = parts[0];
                     }
                   }
-                  
+
                   setSelectedLocation({
                     ...locationData,
                     city: extractedCity
                   });
-                  
+
                   setSearchData(prev => ({
                     ...prev,
                     location: locationData.fullAddress || locationData.placeName || ''
@@ -1055,8 +1067,8 @@ const CompactSearchBar = () => {
           {!isMobile && renderFilters()}
 
           {/* Search Button */}
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className="compact-search-button"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

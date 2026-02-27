@@ -116,7 +116,8 @@ try {
         'state', 'additional_address', 'bedrooms', 'bathrooms', 'balconies', 'area', 'carpet_area', 'floor',
         'total_floors', 'facing', 'age', 'furnishing', 'description', 'price',
         'price_negotiable', 'maintenance_charges', 'deposit_amount',
-        'cover_image', 'video_url', 'brochure_url', 'is_active', 'available_for_bachelors', 'upcoming_project_data'
+        'cover_image', 'video_url', 'brochure_url', 'is_active', 'available_for_bachelors', 'upcoming_project_data',
+        'seats', 'price_per_seat'
     ];
     
     // Get current property status and type for business rule enforcement

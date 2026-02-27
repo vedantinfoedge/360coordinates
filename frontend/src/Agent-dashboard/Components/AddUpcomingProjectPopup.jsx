@@ -187,6 +187,7 @@ const PROJECT_TYPES = [
   { value: "Plot / Land / Indusrtial Property", icon: "📐" },
   { value: "Commercial Office", icon: "🏢" },
   { value: "Commercial Shop", icon: "🏪" },
+  { value: "Co-working Space", icon: "🏢" },
   { value: "PG / Hostel", icon: "🛏️" },
   { value: "Warehouse / Godown", icon: "🏪" }
 ];
@@ -206,8 +207,9 @@ const CONFIGURATION_BY_PROJECT_TYPE = {
   "Penthouse": ["3BHK Penthouse", "4BHK Penthouse", "5+BHK Penthouse"],
   "Studio Apartment": ["Studio Unit", "Studio + Balcony", "Studio Deluxe"],
   "Plot / Land / Indusrtial Property": ["Residential Plot", "Commercial Plot", "Industrial Plot", "NA Plot", "Agricultural Land"],
-  "Commercial Office": ["Office Space (Bare Shell)", "Furnished Office", "Co-working Space", "IT / Tech Park Office", "Business Center Office"],
+  "Commercial Office": ["Office Space (Bare Shell)", "Furnished Office", "IT / Tech Park Office", "Business Center Office"],
   "Commercial Shop": ["Retail Shop", "Showroom", "Food Court Shop", "Kiosk", "Mall Shop"],
+  "Co-working Space": ["Hot Desk / Dedicated Desk", "Private Cabins", "Team Rooms (4-10 Seats)", "Large Team Suites (10+ Seats)", "Meeting Room Bundles", "Virtual Office Packages"],
   "PG / Hostel": ["Single Sharing", "Double Sharing", "Triple Sharing", "Dormitory", "Girls Hostel / Boys Hostel"],
   "Warehouse / Godown": ["Small Warehouse", "Medium Warehouse", "Large Warehouse", "Cold Storage", "Logistics Warehouse"]
 };
@@ -230,7 +232,58 @@ const AMENITIES = [
   { id: "gas_pipeline", label: "Gas Pipeline", icon: "🔥" },
   { id: "wifi", label: "WiFi", icon: "📶" },
   { id: "ac", label: "Air Conditioning", icon: "❄️" },
-  { id: "electricity", label: "Electricity", icon: "⚡" }
+  { id: "electricity", label: "Electricity", icon: "⚡" },
+
+  // Plot/Land specific
+  { id: "internal_roads", label: "Internal Roads", icon: "🛣️" },
+  { id: "led_lighting", label: "LED Street Lighting", icon: "💡" },
+  { id: "rainwater_harvesting", label: "Rainwater Harvesting", icon: "🌧️" },
+  { id: "underground_drainage", label: "Underground Drainage", icon: "🚰" },
+  { id: "stormwater_drainage", label: "Stormwater Drainage", icon: "🌊" },
+  { id: "water_line", label: "Water Supply Line/Borewell", icon: "💧" },
+  { id: "electricity_provision", label: "Electricity Provision", icon: "⚡" },
+  { id: "gated_entrance", label: "Gated Entrance", icon: "🚧" },
+  { id: "compound_wall", label: "Compound Wall", icon: "🧱" },
+  { id: "security_cabin", label: "Security Cabin", icon: "🏠" },
+  { id: "landscaped_garden", label: "Landscaped Garden", icon: "🌳" },
+  { id: "jogging_track", label: "Jogging/Walking Track", icon: "🏃" },
+  { id: "open_gym", label: "Open Gym/Fitness Zone", icon: "💪" },
+  { id: "visitor_parking", label: "Visitor Parking", icon: "🅿️" },
+
+  // Commercial/Office/Coworking
+  { id: "power_backup_ups", label: "24/7 Power Backup (UPS/DG)", icon: "⚡" },
+  { id: "high_speed_internet", label: "High-Speed Internet/Fiber Ready", icon: "🌐" },
+  { id: "centralized_ac", label: "Centralized AC (HVAC)", icon: "❄️" },
+  { id: "lifts_high_speed", label: "Elevators/High-Speed Lifts", icon: "🛗" },
+  { id: "access_control", label: "Access Control (RFID/Biometric)", icon: "🔐" },
+  { id: "security_staff", label: "Security Staff (24×7)", icon: "👮" },
+  { id: "reception_desk", label: "Reception Desk", icon: "💁" },
+  { id: "lobby_area", label: "Lobby Area", icon: "🛋️" },
+  { id: "conference_room", label: "Conference Room", icon: "🤝" },
+  { id: "washrooms", label: "Washrooms (Private/Common)", icon: "🚻" },
+  { id: "pantry", label: "Pantry/Kitchenette", icon: "☕" },
+
+  // Commercial Shop
+  { id: "power_supply_247", label: "24/7 Power Supply", icon: "⚡" },
+  { id: "customer_parking", label: "Customer Parking", icon: "🚗" },
+  { id: "two_wheeler_parking", label: "Two-Wheeler Parking", icon: "🛵" },
+  { id: "wheelchair_accessible", label: "Wheelchair Accessible/Ramp", icon: "♿" },
+  { id: "escalator_access", label: "Lift/Escalator Access", icon: "🛗" },
+  { id: "display_window", label: "Glass Front/Display Window", icon: "🪟" },
+  { id: "shutter_door", label: "Shutter Door", icon: "🚪" },
+  { id: "mezzanine_floor", label: "Mezzanine Floor/Storage Room", icon: "📦" },
+
+  // Coworking specific
+  { id: "dedicated_desk", label: "Dedicated Desk/Hot Desk", icon: "💻" },
+  { id: "private_cabins", label: "Private Cabins", icon: "🏢" },
+  { id: "meeting_rooms", label: "Meeting Rooms", icon: "👥" },
+  { id: "coffee_tea", label: "Coffee/Tea/Water", icon: "☕" },
+  { id: "office_supplies", label: "Printer/Scanner/Office Supplies", icon: "🖨️" },
+  { id: "housekeeping", label: "Housekeeping & Daily Cleaning", icon: "🧹" },
+  { id: "quiet_zones", label: "Quiet Zones/Phone Booths", icon: "🤫" },
+  { id: "mobile_app_access", label: "Mobile App Access", icon: "📱" },
+  { id: "event_space", label: "Event Space/Community Area", icon: "🎉" },
+  { id: "lounge", label: "Lounge/Breakout Zones", icon: "🛋️" }
 ];
 
 const RERA_STATUS_OPTIONS = [
@@ -1933,12 +1986,13 @@ export default function AddUpcomingProjectPopup({ onClose, editData = null }) {
   const isPlotOrLand = pt === "Plot / Land / Indusrtial Property";
   const isWarehouse = pt === "Warehouse / Godown";
   const isCommercialOffice = pt === "Commercial Office";
+  const isCoworking = pt === "Co-working Space";
   const isVilla = pt === "Villa / Banglow";
   const isIndependentHouse = pt === "Independent House";
   const isPGHostel = pt === "PG / Hostel";
   const isApartment = pt === "Apartment";
   // Area label by type
-  const areaLabel = isPlotOrLand ? "Plot Size Range (sq.ft)" : isCommercialOffice || pt === "Commercial Shop" ? "Area Range" : isWarehouse ? "Built-up Area Range" : isPGHostel ? "Carpet Area Range" : "Carpet Area Range (sq.ft)";
+  const areaLabel = isPlotOrLand ? "Plot Size Range (sq.ft)" : (isCommercialOffice || isCoworking || pt === "Commercial Shop") ? "Area Range" : isWarehouse ? "Built-up Area Range" : isPGHostel ? "Carpet Area Range" : "Carpet Area Range (sq.ft)";
   const areaSuffix = "sq.ft";
 
   const renderStep3 = () => (

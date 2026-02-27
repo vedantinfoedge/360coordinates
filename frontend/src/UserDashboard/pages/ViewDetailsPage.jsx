@@ -1722,6 +1722,24 @@ const ViewDetailsPage = () => {
                                     <span className="price-period">per month</span>
                                 )}
                             </div>
+
+                            {/* Extra Pricing Details Moved from below */}
+                            {(propertyData.maintenanceCharges || propertyData.depositAmount) && (
+                                <div className="extra-price-info">
+                                    {propertyData.maintenanceCharges && (
+                                        <div className="extra-price-item">
+                                            <span className="extra-price-label">Maintenance:</span>
+                                            <span className="extra-price-value">₹{propertyData.maintenanceCharges.toLocaleString('en-IN')}/mo</span>
+                                        </div>
+                                    )}
+                                    {propertyData.depositAmount && (
+                                        <div className="extra-price-item">
+                                            <span className="extra-price-label">Deposit:</span>
+                                            <span className="extra-price-value">₹{propertyData.depositAmount.toLocaleString('en-IN')}</span>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
                         </div>
 
                         {/* Property Highlights and Contact Card Side by Side */}
@@ -2013,7 +2031,7 @@ const ViewDetailsPage = () => {
                             </div>
                         </div>
 
-                        {/* Pricing Details - Full Width */}
+                        {/* Pricing Details - Only show Negotiable if others are moved */}
                         <div className="pricing-details-section">
                             <h2>Pricing Details</h2>
                             <div className="pricing-details-grid">
@@ -2023,22 +2041,6 @@ const ViewDetailsPage = () => {
                                         {propertyData.priceNegotiable ? 'Yes' : 'No'}
                                     </span>
                                 </div>
-                                {propertyData.maintenanceCharges && (
-                                    <div className="pricing-detail-item">
-                                        <span className="pricing-label">Maintenance Charge</span>
-                                        <span className="pricing-value">
-                                            ₹ {propertyData.maintenanceCharges.toLocaleString('en-IN')}/Month
-                                        </span>
-                                    </div>
-                                )}
-                                {propertyData.depositAmount && (
-                                    <div className="pricing-detail-item">
-                                        <span className="pricing-label">Deposit Amount</span>
-                                        <span className="pricing-value">
-                                            ₹ {propertyData.depositAmount.toLocaleString('en-IN')}
-                                        </span>
-                                    </div>
-                                )}
                             </div>
                         </div>
 

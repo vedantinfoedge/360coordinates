@@ -21,7 +21,7 @@ export const PropertyProvider = ({ children }) => {
         setLoading(true);
         setError(null);
         const response = await sellerPropertiesAPI.list();
-        
+
         if (response.success && response.data && response.data.properties) {
           // Convert backend format to frontend format
           const backendProperties = response.data.properties.map(prop => ({
@@ -41,8 +41,8 @@ export const PropertyProvider = ({ children }) => {
             age: prop.age || '',
             amenities: Array.isArray(prop.amenities) ? prop.amenities : (prop.amenities ? prop.amenities.split(',') : []),
             description: prop.description || '',
-            images: Array.isArray(prop.images) && prop.images.length > 0 
-              ? prop.images 
+            images: Array.isArray(prop.images) && prop.images.length > 0
+              ? prop.images
               : (prop.cover_image ? [prop.cover_image] : []),
             createdAt: prop.created_at,
             views: prop.views_count || 0,
@@ -57,9 +57,11 @@ export const PropertyProvider = ({ children }) => {
             depositAmount: prop.deposit_amount?.toString() || '',
             videoUrl: prop.video_url,
             brochureUrl: prop.brochure_url,
+            seats: prop.seats || '',
+            pricePerSeat: prop.price_per_seat?.toString() || '',
             isActive: prop.is_active !== false
           }));
-          
+
           // Set only backend data (no demo data)
           setProperties(backendProperties);
         } else {
@@ -99,15 +101,15 @@ export const PropertyProvider = ({ children }) => {
           createdAt: inq.created_at,
           avatar: inq.buyer?.profile_image || (inq.buyer?.name || inq.name || 'U')[0].toUpperCase()
         }));
-        
+
         // Group inquiries by unique buyer+property combination (like chat apps)
         // This ensures each user appears only once per property in the list
         const conversationMap = new Map();
-        
+
         backendInquiries.forEach(inquiry => {
           // Create unique key: buyerId_propertyId
           const conversationKey = `${inquiry.buyerId || 'guest'}_${inquiry.propertyId}`;
-          
+
           if (!conversationMap.has(conversationKey)) {
             // First time seeing this conversation - add it
             conversationMap.set(conversationKey, {
@@ -119,11 +121,11 @@ export const PropertyProvider = ({ children }) => {
           } else {
             // Conversation already exists - update with most recent data
             const existing = conversationMap.get(conversationKey);
-            
+
             // Compare timestamps to keep the most recent inquiry
             const existingDate = new Date(existing.createdAt);
             const newDate = new Date(inquiry.createdAt);
-            
+
             if (newDate > existingDate) {
               // This inquiry is more recent - update the conversation
               conversationMap.set(conversationKey, {
@@ -137,22 +139,22 @@ export const PropertyProvider = ({ children }) => {
             }
           }
         });
-        
+
         // Convert map to array - now we have unique conversations
         const uniqueConversations = Array.from(conversationMap.values());
-        
+
         // Sort by most recent activity (createdAt)
         uniqueConversations.sort((a, b) => {
           const dateA = new Date(a.createdAt);
           const dateB = new Date(b.createdAt);
           return dateB - dateA; // Most recent first
         });
-        
+
         // Log for debugging
-        console.log('[PropertyContext] Grouped inquiries into unique conversations:', 
+        console.log('[PropertyContext] Grouped inquiries into unique conversations:',
           uniqueConversations.length, 'conversations from', backendInquiries.length, 'inquiries'
         );
-        
+
         // Set unique conversations (no duplicates)
         setInquiries(uniqueConversations);
       } else {
@@ -167,12 +169,12 @@ export const PropertyProvider = ({ children }) => {
 
   useEffect(() => {
     fetchInquiries();
-    
+
     // Refresh inquiries every 30 seconds to detect new messages from buyers
     const intervalId = setInterval(() => {
       fetchInquiries();
     }, 30000); // 30 seconds
-    
+
     return () => {
       clearInterval(intervalId);
     };
@@ -209,13 +211,15 @@ export const PropertyProvider = ({ children }) => {
         images: property.images || [],
         video_url: property.videoUrl || null,
         brochure_url: property.brochureUrl || null,
+        seats: property.seats ? parseInt(property.seats) : null,
+        price_per_seat: property.pricePerSeat ? parseFloat(property.pricePerSeat) : null,
         amenities: property.amenities || [],
         available_for_bachelors: property.availableForBachelors || false
       };
 
       // Call backend API
       const response = await sellerPropertiesAPI.add(propertyData);
-      
+
       if (response.success && response.data && response.data.property) {
         // Convert backend response to frontend format
         const backendProp = response.data.property;
@@ -241,9 +245,11 @@ export const PropertyProvider = ({ children }) => {
           views: 0,
           inquiries: 0,
           featured: false,
+          seats: backendProp.seats || '',
+          pricePerSeat: backendProp.price_per_seat?.toString() || '',
           isActive: backendProp.is_active !== false
         };
-        
+
         // Refresh properties from backend after successful add
         const refreshResponse = await sellerPropertiesAPI.list();
         if (refreshResponse.success && refreshResponse.data && refreshResponse.data.properties) {
@@ -264,8 +270,8 @@ export const PropertyProvider = ({ children }) => {
             age: prop.age || '',
             amenities: Array.isArray(prop.amenities) ? prop.amenities : (prop.amenities ? prop.amenities.split(',') : []),
             description: prop.description || '',
-            images: Array.isArray(prop.images) && prop.images.length > 0 
-              ? prop.images 
+            images: Array.isArray(prop.images) && prop.images.length > 0
+              ? prop.images
               : (prop.cover_image ? [prop.cover_image] : []),
             createdAt: prop.created_at,
             views: prop.views_count || 0,
@@ -280,6 +286,8 @@ export const PropertyProvider = ({ children }) => {
             depositAmount: prop.deposit_amount?.toString() || '',
             videoUrl: prop.video_url,
             brochureUrl: prop.brochure_url,
+            seats: prop.seats || '',
+            pricePerSeat: prop.price_per_seat?.toString() || '',
             isActive: prop.is_active !== false
           }));
           // Set only backend data (no demo data)
@@ -306,7 +314,7 @@ export const PropertyProvider = ({ children }) => {
     try {
       // All properties are from backend now (no demo data)
       const isBackendProperty = true;
-      
+
       if (isBackendProperty) {
         // Prepare data for backend API
         const propertyData = {
@@ -336,6 +344,8 @@ export const PropertyProvider = ({ children }) => {
           images: updates.images || [],
           video_url: updates.videoUrl || null,
           brochure_url: updates.brochureUrl || null,
+          seats: updates.seats ? parseInt(updates.seats) : null,
+          price_per_seat: updates.pricePerSeat ? parseFloat(updates.pricePerSeat) : null,
           amenities: updates.amenities || [],
           available_for_bachelors: updates.availableForBachelors || false
         };
@@ -346,14 +356,14 @@ export const PropertyProvider = ({ children }) => {
         await refreshProperties();
         return;
       }
-      
+
       // Update local state if no backend call
-      setProperties(prev => 
+      setProperties(prev =>
         prev.map(p => p.id === id ? { ...p, ...updates } : p)
       );
     } catch (error) {
       console.error('Error updating property:', error);
-      setProperties(prev => 
+      setProperties(prev =>
         prev.map(p => p.id === id ? { ...p, ...updates } : p)
       );
       throw error;
@@ -364,7 +374,7 @@ export const PropertyProvider = ({ children }) => {
   const deleteProperty = async (id) => {
     try {
       const isBackendProperty = true;
-      
+
       if (isBackendProperty) {
         await sellerPropertiesAPI.delete(id);
         // Refetch to keep counts and list in sync
@@ -406,16 +416,16 @@ export const PropertyProvider = ({ children }) => {
       // Optimistically update local state first for immediate UI feedback
       return prev.map(i => i.id === id ? { ...i, status } : i);
     });
-    
+
     try {
       // All inquiries are from backend now (no demo data)
       const isBackendInquiry = true;
-      
+
       if (isBackendInquiry) {
         // Call backend API to persist the status to database
         console.log(`[PropertyContext] Updating inquiry ${id} status to: ${status}`);
         const response = await sellerInquiriesAPI.updateStatus(id, status);
-        
+
         if (!response.success) {
           console.error('[PropertyContext] Failed to update inquiry status:', response.message);
           console.error('[PropertyContext] Full response:', response);
@@ -427,7 +437,7 @@ export const PropertyProvider = ({ children }) => {
           }
           throw new Error(response.message || 'Failed to update status');
         }
-        
+
         // Use the status from API response to ensure consistency with database
         if (response.data && response.data.inquiry) {
           const confirmedStatus = response.data.inquiry.status;
@@ -439,34 +449,34 @@ export const PropertyProvider = ({ children }) => {
           console.warn('[PropertyContext] API response missing inquiry data:', response);
         }
       }
-      } catch (error) {
-        console.error('[PropertyContext] Error updating inquiry status:', error);
-        console.error('[PropertyContext] Error details:', {
-          message: error.message,
-          status: error.status,
-          data: error.data,
-          fullError: error
-        });
-        
-        // Check if error message indicates database schema issue
-        if (error.message && (
-          error.message.includes('database schema') || 
-          error.message.includes('ENUM') ||
-          error.message.includes('migration')
-        )) {
-          console.error('[PropertyContext] ⚠️ DATABASE MIGRATION REQUIRED!');
-          console.error('[PropertyContext] Please run: backend/database/run_inquiry_status_migration.php');
-          alert('Database migration required! Please contact administrator to run the migration script.');
-        }
-        
-        // Revert optimistic update on error
-        if (originalStatus !== null) {
-          setInquiries(prev =>
-            prev.map(i => i.id === id ? { ...i, status: originalStatus } : i)
-          );
-        }
-        throw error; // Re-throw so caller can handle it
+    } catch (error) {
+      console.error('[PropertyContext] Error updating inquiry status:', error);
+      console.error('[PropertyContext] Error details:', {
+        message: error.message,
+        status: error.status,
+        data: error.data,
+        fullError: error
+      });
+
+      // Check if error message indicates database schema issue
+      if (error.message && (
+        error.message.includes('database schema') ||
+        error.message.includes('ENUM') ||
+        error.message.includes('migration')
+      )) {
+        console.error('[PropertyContext] ⚠️ DATABASE MIGRATION REQUIRED!');
+        console.error('[PropertyContext] Please run: backend/database/run_inquiry_status_migration.php');
+        alert('Database migration required! Please contact administrator to run the migration script.');
       }
+
+      // Revert optimistic update on error
+      if (originalStatus !== null) {
+        setInquiries(prev =>
+          prev.map(i => i.id === id ? { ...i, status: originalStatus } : i)
+        );
+      }
+      throw error; // Re-throw so caller can handle it
+    }
   };
 
   // Delete inquiry
@@ -520,8 +530,8 @@ export const PropertyProvider = ({ children }) => {
           age: prop.age || '',
           amenities: Array.isArray(prop.amenities) ? prop.amenities : (prop.amenities ? prop.amenities.split(',') : []),
           description: prop.description || '',
-          images: Array.isArray(prop.images) && prop.images.length > 0 
-            ? prop.images 
+          images: Array.isArray(prop.images) && prop.images.length > 0
+            ? prop.images
             : (prop.cover_image ? [prop.cover_image] : []),
           createdAt: prop.created_at,
           views: prop.views_count || 0,
@@ -536,6 +546,8 @@ export const PropertyProvider = ({ children }) => {
           depositAmount: prop.deposit_amount?.toString() || '',
           videoUrl: prop.video_url,
           brochureUrl: prop.brochure_url,
+          seats: prop.seats || '',
+          pricePerSeat: prop.price_per_seat?.toString() || '',
           isActive: prop.is_active !== false
         }));
         setProperties(backendProperties);
@@ -546,8 +558,8 @@ export const PropertyProvider = ({ children }) => {
   };
 
   return (
-    <PropertyContext.Provider value={{ 
-      properties, 
+    <PropertyContext.Provider value={{
+      properties,
       setProperties,
       inquiries,
       setInquiries,
