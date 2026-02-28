@@ -97,10 +97,7 @@ const BuyerAboutUs = () => {
       <section className="about-hero" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/AboutUss.png)` }}>
         <div className="about-hero-overlay"></div>
         <div className="about-hero-content">
-          <h1 className="about-hero-title">About 360Coordinates</h1>
-          <p className="about-hero-subtitle">
-            Your Trusted Partner in Real Estate - Connecting Dreams to Reality
-          </p>
+         
         </div>
       </section>
 
