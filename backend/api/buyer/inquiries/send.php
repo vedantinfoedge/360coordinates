@@ -127,27 +127,6 @@ try {
     $message = $existingInquiry 
         ? 'Inquiry already exists. Using existing inquiry.' 
         : 'Inquiry created successfully';
-
-    // FCM push notification to seller (non-blocking, never fails the inquiry)
-    if (!$existingInquiry) {
-        try {
-            if (file_exists(__DIR__ . '/../../../services/FCMMessagingService.php')) {
-                require_once __DIR__ . '/../../../services/FCMMessagingService.php';
-                $propTitle = $inquiry['property_title'] ?? 'Property';
-                $buyerName = $name ?: 'Someone';
-                $notifTitle = 'New inquiry';
-                $notifBody = "{$buyerName} inquired about: {$propTitle}";
-                $notifData = [
-                    'type' => 'new_inquiry',
-                    'property_id' => (string)$propertyId,
-                    'inquiry_id' => (string)$inquiryId
-                ];
-                FCMMessagingService::sendToUser($sellerId, $notifTitle, $notifBody, $notifData);
-            }
-        } catch (Exception $fcmEx) {
-            error_log("FCM notification skipped (inquiry still saved): " . $fcmEx->getMessage());
-        }
-    }
     
     sendSuccess($message, ['inquiry' => $inquiry]);
     

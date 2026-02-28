@@ -79,7 +79,7 @@ if ($isLocalhost) {
     define('ENVIRONMENT', 'production');
     // Error reporting: Log errors but don't display them (prevents HTML breaking JSON responses)
     error_reporting(E_ALL);
-    ini_set('display_errors', 1);  // TEMPORARY: enabled for debugging 500 on add property — revert to 0 after debugging
+    ini_set('display_errors', 0);  // Don't display errors (prevents HTML in JSON responses)
     ini_set('log_errors', 1);
     // Log errors to a file in the backend directory
     $errorLogPath = __DIR__ . '/../logs/php_errors.log';
@@ -307,13 +307,6 @@ foreach ($moderationDirs as $dir) {
         mkdir($dir, 0755, true);
     }
 }
-
-// ============================================
-// FCM PUSH NOTIFICATIONS (Firebase Cloud Messaging)
-// ============================================
-// Uses same Firebase project & service account as Storage/Chat
-define('FCM_PROJECT_ID', getenv('FCM_PROJECT_ID') ?: 'my-chat-box-ec5b0');
-define('FCM_CREDENTIALS_PATH', getenv('FCM_CREDENTIALS_PATH') ?: (defined('GOOGLE_APPLICATION_CREDENTIALS') ? GOOGLE_APPLICATION_CREDENTIALS : (__DIR__ . '/../firebase-key.json')));
 
 // Database connection is handled by database.php
 // Use Database::getInstance()->getConnection() or getDB() function

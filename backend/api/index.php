@@ -37,10 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 'properties' => '/api/buyer/properties/',
                 'inquiries' => '/api/buyer/inquiries/send.php',
                 'favorites' => '/api/buyer/favorites/'
-            ],
-            'device_token' => [
-                'register' => '/api/device-token/register.php',
-                'unregister' => '/api/device-token/unregister.php'
             ]
         ]
     ]);

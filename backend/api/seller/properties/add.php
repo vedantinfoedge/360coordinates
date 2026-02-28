@@ -176,8 +176,6 @@ try {
     $images = $input['images'] ?? []; // Array of base64 or URLs
     $videoUrl = $input['video_url'] ?? null;
     $brochureUrl = $input['brochure_url'] ?? null;
-    $seats = isset($input['seats']) && !empty($input['seats']) ? intval($input['seats']) : null;
-    $pricePerSeat = isset($input['price_per_seat']) && !empty($input['price_per_seat']) ? floatval($input['price_per_seat']) : null;
     
     // Plot/Land area limit: max 5 lakh (500000) sq.ft
     $plotLandTypes = ['Plot / Land / Indusrtial Property', 'Plot / Land / Industrial Property', 'Plot / Land'];
@@ -375,9 +373,8 @@ try {
                     user_id, user_full_name, title, status, property_type, project_type, location, latitude, longitude,
                     state, additional_address, bedrooms, bathrooms, balconies, area, carpet_area, floor, total_floors,
                     facing, age, furnishing, description, price, price_negotiable,
-                    maintenance_charges, deposit_amount, cover_image, video_url, brochure_url, upcoming_project_data, available_for_bachelors, 
-                    seats, price_per_seat, is_active
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    maintenance_charges, deposit_amount, cover_image, video_url, brochure_url, upcoming_project_data, available_for_bachelors, is_active
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ");
             
             // coverImage will be set after base64 conversion, use null for now
@@ -387,8 +384,7 @@ try {
                 $user['id'], $userFullName, $title, $status, $propertyType, $projectType, $location, $latitude, $longitude,
                 $state, $additionalAddress, $bedrooms, $bathrooms, $balconies, $area, $carpetArea, $floor, $totalFloors,
                 $facing, $age, $furnishing, $description, $price, $priceNegotiable,
-                $maintenanceCharges, $depositAmount, $coverImage, $videoUrl, $brochureUrl, $upcomingProjectData, $availableForBachelors,
-                $seats, $pricePerSeat, 1
+                $maintenanceCharges, $depositAmount, $coverImage, $videoUrl, $brochureUrl, $upcomingProjectData, $availableForBachelors, 1
             ]);
         } else {
             // Old schema without project_type (backward compatibility)
@@ -397,9 +393,8 @@ try {
                     user_id, user_full_name, title, status, property_type, location, latitude, longitude,
                     state, additional_address, bedrooms, bathrooms, balconies, area, carpet_area, floor, total_floors,
                     facing, age, furnishing, description, price, price_negotiable,
-                    maintenance_charges, deposit_amount, cover_image, video_url, brochure_url, available_for_bachelors, 
-                    seats, price_per_seat, is_active
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    maintenance_charges, deposit_amount, cover_image, video_url, brochure_url, available_for_bachelors, is_active
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ");
             
             // coverImage will be set after base64 conversion, use null for now
@@ -409,8 +404,7 @@ try {
                 $user['id'], $userFullName, $title, $status, $propertyType, $location, $latitude, $longitude,
                 $state, $additionalAddress, $bedrooms, $bathrooms, $balconies, $area, $carpetArea, $floor, $totalFloors,
                 $facing, $age, $furnishing, $description, $price, $priceNegotiable,
-                $maintenanceCharges, $depositAmount, $coverImage, $videoUrl, $brochureUrl, $availableForBachelors,
-                $seats, $pricePerSeat, 1
+                $maintenanceCharges, $depositAmount, $coverImage, $videoUrl, $brochureUrl, $availableForBachelors, 1
             ]);
         }
         

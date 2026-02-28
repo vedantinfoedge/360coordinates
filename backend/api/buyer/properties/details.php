@@ -29,7 +29,6 @@ try {
         SELECT p.*,
                u.id as seller_id,
                u.user_type as seller_user_type,
-               u.created_at as seller_created_at,
                COALESCE(p.user_full_name, u.full_name) as seller_name,
                u.email as seller_email,
                u.phone as seller_phone,
@@ -219,8 +218,7 @@ try {
         'email' => $property['seller_email'],
         'phone' => $property['seller_phone'],
         'profile_image' => $sellerProfileImage,
-        'user_type' => $property['seller_user_type'],
-        'created_at' => $property['seller_created_at'] ?? null
+        'user_type' => $property['seller_user_type']
     ];
     
     // Add user_type directly to property for easy access
@@ -228,8 +226,7 @@ try {
     
     // Remove individual seller fields
     unset($property['seller_id'], $property['seller_name'], $property['seller_email'], 
-          $property['seller_phone'], $property['seller_profile_image'], $property['seller_user_type'],
-          $property['seller_created_at']);
+          $property['seller_phone'], $property['seller_profile_image'], $property['seller_user_type']);
     
     sendSuccess('Property details retrieved successfully', ['property' => $property]);
     
