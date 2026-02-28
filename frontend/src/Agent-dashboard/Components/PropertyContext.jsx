@@ -261,6 +261,8 @@ export const PropertyProvider = ({ children }) => {
         video_url: property.videoUrl || property.video_url || null,
         brochure_url: property.brochureUrl || property.brochure_url || null,
         amenities: property.amenities || [],
+        seats: property.seats || 0,
+        price_per_seat: property.pricePerSeat || property.price_per_seat || 0,
         // Upcoming project fields
         project_type: property.project_type || null,
         upcoming_project_data: property.upcoming_project_data || null,
@@ -352,6 +354,8 @@ export const PropertyProvider = ({ children }) => {
         video_url: updates.videoUrl || null,
         brochure_url: updates.brochureUrl || null,
         amenities: updates.amenities || [],
+        seats: updates.seats || 0,
+        price_per_seat: updates.pricePerSeat || updates.price_per_seat || 0,
         // Upcoming project fields
         project_type: updates.project_type || null,
         upcoming_project_data: updates.upcoming_project_data || null,

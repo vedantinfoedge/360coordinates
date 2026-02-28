@@ -119,7 +119,7 @@ const PROPERTY_TYPE_FIELDS = {
     showAge: true,
     showCarpetArea: true,
     bedroomsRequired: false,
-    bathroomsRequired: false // Optional for commercial
+    bathroomsRequired: true // Required by backend API
   },
   // Commercial Shop
   commercial_shop: {
@@ -133,7 +133,7 @@ const PROPERTY_TYPE_FIELDS = {
     showAge: true,
     showCarpetArea: true,
     bedroomsRequired: false,
-    bathroomsRequired: false
+    bathroomsRequired: true // Required by backend API
   },
   // Co-working Space
   commercial_coworking: {
@@ -1065,6 +1065,7 @@ export default function AddPropertyPopup({ onClose, editIndex = null, initialDat
   const validateStep = async (step) => {
     const newErrors = {};
     let stepErrorMessage = null;
+    const fieldConfig = getPropertyTypeConfig();
 
     switch (step) {
       case 1:
@@ -1147,7 +1148,6 @@ export default function AddPropertyPopup({ onClose, editIndex = null, initialDat
         }
 
         // Dynamic validation based on property type
-        const fieldConfig = getPropertyTypeConfig();
         if (fieldConfig.bedroomsRequired && !formData.bedrooms) {
           newErrors.bedrooms = "Bedroom / Bathroom not selected";
         } else if (formData.bedrooms) {

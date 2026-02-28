@@ -36,9 +36,40 @@ const AMENITIES_WITH_ICONS = [
     { id: "fire_safety", label: "Fire Safety", icon: "🔥" },
     { id: "water_supply", label: "24x7 Water", icon: "💧" },
     { id: "gas_pipeline", label: "Gas Pipeline", icon: "🔥" },
-    { id: "wifi", label: "WiFi", icon: "📶" },
     { id: "ac", label: "Air Conditioning", icon: "❄️" },
-    { id: "Covered Parking", label: "Covered Parking", icon: "🚗" }
+    { id: "Covered Parking", label: "Covered Parking", icon: "🚗" },
+    // Commercial/Office/Coworking
+    { id: "power_backup_ups", label: "24/7 Power Backup (UPS/DG)", icon: "⚡" },
+    { id: "high_speed_internet", label: "High-Speed Internet/Fiber Ready", icon: "🌐" },
+    { id: "centralized_ac", label: "Centralized AC (HVAC)", icon: "❄️" },
+    { id: "lifts_high_speed", label: "Elevators/High-Speed Lifts", icon: "🛗" },
+    { id: "access_control", label: "Access Control (RFID/Biometric)", icon: "🔐" },
+    { id: "security_staff", label: "Security Staff (24×7)", icon: "👮" },
+    { id: "reception_desk", label: "Reception Desk", icon: "💁" },
+    { id: "lobby_area", label: "Lobby Area", icon: "🛋️" },
+    { id: "conference_room", label: "Conference Room", icon: "🤝" },
+    { id: "washrooms", label: "Washrooms (Private/Common)", icon: "🚻" },
+    { id: "pantry", label: "Pantry/Kitchenette", icon: "☕" },
+    // Commercial Shop
+    { id: "power_supply_247", label: "24/7 Power Supply", icon: "⚡" },
+    { id: "customer_parking", label: "Customer Parking", icon: "🚗" },
+    { id: "two_wheeler_parking", label: "Two-Wheeler Parking", icon: "🛵" },
+    { id: "wheelchair_accessible", label: "Wheelchair Accessible/Ramp", icon: "♿" },
+    { id: "escalator_access", label: "Lift/Escalator Access", icon: "🛗" },
+    { id: "display_window", label: "Glass Front/Display Window", icon: "🪟" },
+    { id: "shutter_door", label: "Shutter Door", icon: "🚪" },
+    { id: "mezzanine_floor", label: "Mezzanine Floor/Storage Room", icon: "📦" },
+    // Coworking specific
+    { id: "dedicated_desk", label: "Dedicated Desk/Hot Desk", icon: "💻" },
+    { id: "private_cabins", label: "Private Cabins", icon: "🏢" },
+    { id: "meeting_rooms", label: "Meeting Rooms", icon: "👥" },
+    { id: "coffee_tea", label: "Coffee/Tea/Water", icon: "☕" },
+    { id: "office_supplies", label: "Printer/Scanner/Office Supplies", icon: "🖨️" },
+    { id: "housekeeping", label: "Housekeeping & Daily Cleaning", icon: "🧹" },
+    { id: "quiet_zones", label: "Quiet Zones/Phone Booths", icon: "🤫" },
+    { id: "mobile_app_access", label: "Mobile App Access", icon: "📱" },
+    { id: "event_space", label: "Event Space/Community Area", icon: "🎉" },
+    { id: "lounge", label: "Lounge/Breakout Zones", icon: "🛋️" }
 ];
 
 // Helper function to get icon for amenity
@@ -310,7 +341,9 @@ const getPropertyDetails = (property) => {
         additionalAddress: property.additional_address || property.additionalAddress || null,
         propertyType: property.property_type || property.propertyType || property.type || null,
         videoUrl: normalizeVideoUrl(property.video_url || property.videoUrl),
-        availableForBachelors: property.available_for_bachelors === 1 || property.available_for_bachelors === true || false
+        availableForBachelors: property.available_for_bachelors === 1 || property.available_for_bachelors === true || false,
+        seats: property.seats || null,
+        pricePerSeat: property.price_per_seat || property.pricePerSeat || null
     };
 }
 
@@ -1993,6 +2026,18 @@ const ViewDetailsPage = () => {
                                     <div className="property-detail-item">
                                         <span className="property-detail-label">Furnishing</span>
                                         <span className="property-detail-value">{propertyData.furnishing}</span>
+                                    </div>
+                                )}
+                                {propertyData.seats && (
+                                    <div className="property-detail-item">
+                                        <span className="property-detail-label">Number of Seats</span>
+                                        <span className="property-detail-value">{propertyData.seats}</span>
+                                    </div>
+                                )}
+                                {propertyData.pricePerSeat && (
+                                    <div className="property-detail-item">
+                                        <span className="property-detail-label">Price per Seat</span>
+                                        <span className="property-detail-value">₹ {(propertyData.pricePerSeat).toLocaleString('en-IN')}/mo</span>
                                     </div>
                                 )}
                                 {propertyData.state && (
