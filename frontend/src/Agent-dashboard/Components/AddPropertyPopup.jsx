@@ -1550,9 +1550,8 @@ export default function AddPropertyPopup({ onClose, editIndex = null, initialDat
           typeof img === 'string' && !img.startsWith('blob:')
         );
 
-        // Combine approved new images with existing URLs
+        // Combine approved new images with existing URLs (do not mutate formData)
         uploadedImageUrls = [...existingUrls, ...approvedImageUrls];
-        formData.images = uploadedImageUrls;
       }
 
       setUploadingImages(false);
@@ -1674,17 +1673,18 @@ export default function AddPropertyPopup({ onClose, editIndex = null, initialDat
           return;
         }
       } else {
-        // Editing existing property
+        // Editing existing property (build payload immutably; do not mutate formData)
         const propertyId = properties[editIndex]?.id;
         if (propertyId) {
+          let updatePayload = { ...formData, images: uploadedImageUrls };
+
           // Upload video if a new video file was selected
           if (formData.video && formData.video.file) {
             try {
               console.log('Uploading video for property ID:', propertyId);
               const videoResponse = await sellerPropertiesAPI.uploadVideo(formData.video.file, propertyId);
               if (videoResponse.success && videoResponse.data?.url) {
-                // Update formData with the uploaded video URL
-                formData.videoUrl = videoResponse.data.url;
+                updatePayload = { ...updatePayload, videoUrl: videoResponse.data.url };
                 console.log('Video uploaded successfully:', videoResponse.data.url);
               }
             } catch (videoError) {
@@ -1693,7 +1693,7 @@ export default function AddPropertyPopup({ onClose, editIndex = null, initialDat
             }
           }
 
-          await updateProperty(propertyId, formData);
+          await updateProperty(propertyId, updatePayload);
           // Show success modal instead of alert
           setUploadingImages(false);
           setIsSubmitting(false);
@@ -1707,12 +1707,14 @@ export default function AddPropertyPopup({ onClose, editIndex = null, initialDat
       // Do not call onClose() here as it would unmount the component before modal can render
     } catch (error) {
       setUploadingImages(false);
-      // Show detailed error message
-      const errorMessage = error.message || error.status === 401
-        ? 'Authentication required. Please log in to add properties.'
-        : error.status === 403
-          ? 'Access denied. Please check your permissions.'
-          : 'Failed to save property. Please check your connection and try again.';
+      // Show detailed error message (use error.message when present, else status-based message)
+      const errorMessage = error.message || (
+        error.status === 401
+          ? 'Authentication required. Please log in to add properties.'
+          : error.status === 403
+            ? 'Access denied. Please check your permissions.'
+            : 'Failed to save property. Please check your connection and try again.'
+      );
       alert(errorMessage);
       console.error('Property save error:', error);
     } finally {
