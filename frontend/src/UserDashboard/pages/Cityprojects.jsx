@@ -23,7 +23,7 @@ const CityProjects = () => {
     bedrooms: ''
   });
 
-  const propertyTypes = ['Apartment', 'Villa', 'Plot', 'Commercial',"PG / Hostel","Independent House","Row House","Bungalow","Studio Apartment","Penthouse","Farm House","Industrial N/A Land ","Plot / Land","Commercial Office","Commercial Shop","Retail Space","Co-working Space","Warehouse / Godown","Industrial Property","Hotel / Guest House",];
+  const propertyTypes = ['Apartment', 'Villa', 'Plot', 'Commercial',"PG / Hostel","Independent House","Row House","Bungalow","Studio Apartment","Penthouse","Farm House","Industrial N/A Land ","Plot / Land","Commercial Office","Commercial Shop","Retail Space","Warehouse / Godown","Industrial Property","Hotel / Guest House",];
   const bedroomOptions = ['1', '2', '3', '4', '5+'];
   const budgetRanges = [
     '0-25L',

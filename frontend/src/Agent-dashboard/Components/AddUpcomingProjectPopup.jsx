@@ -187,7 +187,6 @@ const PROJECT_TYPES = [
   { value: "Plot / Land / Indusrtial Property", icon: "📐" },
   { value: "Commercial Office", icon: "🏢" },
   { value: "Commercial Shop", icon: "🏪" },
-  { value: "Co-working Space", icon: "🏢" },
   { value: "PG / Hostel", icon: "🛏️" },
   { value: "Warehouse / Godown", icon: "🏪" }
 ];
@@ -209,7 +208,6 @@ const CONFIGURATION_BY_PROJECT_TYPE = {
   "Plot / Land / Indusrtial Property": ["Residential Plot", "Commercial Plot", "Industrial Plot", "NA Plot", "Agricultural Land"],
   "Commercial Office": ["Office Space (Bare Shell)", "Furnished Office", "IT / Tech Park Office", "Business Center Office"],
   "Commercial Shop": ["Retail Shop", "Showroom", "Food Court Shop", "Kiosk", "Mall Shop"],
-  "Co-working Space": ["Hot Desk / Dedicated Desk", "Private Cabins", "Team Rooms (4-10 Seats)", "Large Team Suites (10+ Seats)", "Meeting Room Bundles", "Virtual Office Packages"],
   "PG / Hostel": ["Single Sharing", "Double Sharing", "Triple Sharing", "Dormitory", "Girls Hostel / Boys Hostel"],
   "Warehouse / Godown": ["Small Warehouse", "Medium Warehouse", "Large Warehouse", "Cold Storage", "Logistics Warehouse"]
 };
@@ -1986,13 +1984,12 @@ export default function AddUpcomingProjectPopup({ onClose, editData = null }) {
   const isPlotOrLand = pt === "Plot / Land / Indusrtial Property";
   const isWarehouse = pt === "Warehouse / Godown";
   const isCommercialOffice = pt === "Commercial Office";
-  const isCoworking = pt === "Co-working Space";
   const isVilla = pt === "Villa / Banglow";
   const isIndependentHouse = pt === "Independent House";
   const isPGHostel = pt === "PG / Hostel";
   const isApartment = pt === "Apartment";
   // Area label by type
-  const areaLabel = isPlotOrLand ? "Plot Size Range (sq.ft)" : (isCommercialOffice || isCoworking || pt === "Commercial Shop") ? "Area Range" : isWarehouse ? "Built-up Area Range" : isPGHostel ? "Carpet Area Range" : "Carpet Area Range (sq.ft)";
+  const areaLabel = isPlotOrLand ? "Plot Size Range (sq.ft)" : (isCommercialOffice || pt === "Commercial Shop") ? "Area Range" : isWarehouse ? "Built-up Area Range" : isPGHostel ? "Carpet Area Range" : "Carpet Area Range (sq.ft)";
   const areaSuffix = "sq.ft";
 
   const renderStep3 = () => (

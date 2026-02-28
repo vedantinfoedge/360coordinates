@@ -310,7 +310,6 @@ const CompactSearchBar = () => {
       'Plot / Land / Industrial Property',
       'Commercial Office',
       'Commercial Shop',
-      'Co-working Space',
       'Warehouse / Godown',
       'PG / Hostel'
     ];
@@ -357,7 +356,6 @@ const CompactSearchBar = () => {
     'Plot / Land / Industrial Property',
     'Commercial Office',
     'Commercial Shop',
-    'Co-working Space',
     'Warehouse / Godown'
   ];
 
@@ -380,17 +378,8 @@ const CompactSearchBar = () => {
     '10000+ sq ft'
   ];
 
-  const seatRanges = [
-    '1 seat',
-    '2–5 seats',
-    '6–10 seats',
-    '10+ seats'
-  ];
-
   const isBedroomBased = useMemo(() => bedroomBasedTypes.includes(searchData.propertyType), [searchData.propertyType]);
   const isAreaBased = useMemo(() => areaBasedTypes.includes(searchData.propertyType), [searchData.propertyType]);
-  const isCoworking = useMemo(() => searchData.propertyType === 'Co-working Space', [searchData.propertyType]);
-
   // Get budget ranges based on search type, listing type, and property type
   const getBudgetRanges = () => {
     // Determine if we should use Buy or Rent budgets based on listingType or searchType
@@ -412,8 +401,7 @@ const CompactSearchBar = () => {
         'Plot / Land / Industrial Property': commercialBudget,
         'Commercial Office': commercialBudget,
         'Commercial Shop': commercialBudget,
-        'Co-working Space': commercialRentBudget, // Matches BuyerSearchBar.jsx line 118
-        'Warehouse / Godown': commercialRentBudget, // Matches BuyerSearchBar.jsx line 119
+        'Warehouse / Godown': commercialRentBudget,
       };
 
       return propertyBudgetMap[searchData.propertyType] || saleResidentialBudget;
@@ -437,7 +425,6 @@ const CompactSearchBar = () => {
         'Plot / Land / Industrial Property': commercialRentBudgetForPage,
         'Commercial Office': commercialRentBudgetForPage,
         'Commercial Shop': commercialRentBudgetForPage,
-        'Co-working Space': commercialRentBudgetForPage,
         'Warehouse / Godown': commercialRentBudgetForPage,
       };
 
@@ -472,13 +459,11 @@ const CompactSearchBar = () => {
       'Plot / Land / Industrial Property': commercialBudget,
       'Commercial Office': commercialBudget,
       'Commercial Shop': commercialBudget,
-      'Co-working Space': commercialRentBudget,
       'Warehouse / Godown': commercialRentBudget
     };
 
     return propertyBudgetMap[searchData.propertyType] || saleResidentialBudget;
   };
-  // hahaha
   const budgetRanges = useMemo(() => getBudgetRanges(), [searchData.propertyType, searchData.listingType, searchType]);
 
   const handleInputChange = (e) => {
@@ -672,11 +657,7 @@ const CompactSearchBar = () => {
       if (isBedroomBased && searchData.bedrooms && searchData.bedrooms.trim() !== '') {
         queryParams.append('bedrooms', searchData.bedrooms);
       } else if (isAreaBased && searchData.area && searchData.area.trim() !== '') {
-        if (isCoworking) {
-          queryParams.append('seats', searchData.area);
-        } else {
-          queryParams.append('area', searchData.area);
-        }
+        queryParams.append('area', searchData.area);
       }
 
       // Add upload time filter
@@ -888,7 +869,7 @@ const CompactSearchBar = () => {
           ) : isAreaBased ? (
             <>
               <label htmlFor="area" className="compact-search-label">
-                {isCoworking ? 'Seat Capacity' : 'Area'}
+                Area
               </label>
               <select
                 id="area"
@@ -897,8 +878,8 @@ const CompactSearchBar = () => {
                 onChange={handleInputChange}
                 className="compact-search-select"
               >
-                <option value="">{isCoworking ? 'Any Capacity' : 'Any Area'}</option>
-                {(isCoworking ? seatRanges : areaRanges).map(range => (
+                <option value="">Any Area</option>
+                {areaRanges.map(range => (
                   <option key={range} value={range}>{range}</option>
                 ))}
               </select>

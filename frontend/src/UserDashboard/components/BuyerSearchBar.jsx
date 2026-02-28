@@ -30,7 +30,6 @@ const SearchBar = ({
     'Plot / Land / Industrial Property',
     'Commercial Office',
     'Commercial Shop',
-    'Co-working Space',
     'Warehouse / Godown',
     'PG / Hostel'
   ];
@@ -47,7 +46,6 @@ const SearchBar = ({
     'Plot / Land / Industrial Property',
     'Commercial Office',
     'Commercial Shop',
-    'Co-working Space',
     'Warehouse / Godown'
   ];
 
@@ -123,7 +121,6 @@ const SearchBar = ({
         'Plot / Land / Industrial Property': commercialBudget,
         'Commercial Office': commercialBudget,
         'Commercial Shop': commercialBudget,
-        'Co-working Space': commercialBudget,
         'Warehouse / Godown': commercialBudget
       };
       return propertyBudgetMap[searchData.propertyType] || saleResidentialBudget;
@@ -141,7 +138,6 @@ const SearchBar = ({
         'Plot / Land / Industrial Property': commercialRentBudget,
         'Commercial Office': commercialRentBudget,
         'Commercial Shop': commercialRentBudget,
-        'Co-working Space': commercialRentBudget,
         'Warehouse / Godown': commercialRentBudget
       };
       return propertyBudgetMap[searchData.propertyType] || rentResidentialBudget;
@@ -159,7 +155,6 @@ const SearchBar = ({
         'Plot / Land / Industrial Property': commercialBudget,
         'Commercial Office': commercialBudget,
         'Commercial Shop': commercialBudget,
-        'Co-working Space': commercialRentBudget,
         'Warehouse / Godown': commercialRentBudget
       };
       return propertyBudgetMap[searchData.propertyType] || saleResidentialBudget;

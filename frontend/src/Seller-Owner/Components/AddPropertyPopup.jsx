@@ -41,7 +41,6 @@ const PROPERTY_TYPES = [
   { value: "Plot / Land / Indusrtial Property", icon: "📐", category: "land", subCategory: "plot" },
   { value: "Commercial Office", icon: "🏢", category: "commercial", subCategory: "office" },
   { value: "Commercial Shop", icon: "🏪", category: "commercial", subCategory: "shop" },
-  { value: "Co-working Space", icon: "🏢", category: "commercial", subCategory: "coworking" },
   { value: "PG / Hostel", icon: "🛏️", category: "pg", subCategory: "accommodation" },
   { value: "Warehouse / Godown", icon: "🏪", category: "commercial", subCategory: "shop" }
 ];
@@ -134,22 +133,6 @@ const PROPERTY_TYPE_FIELDS = {
     showCarpetArea: true,
     bedroomsRequired: false,
     bathroomsRequired: true // Required by backend API
-  },
-  // Co-working Space
-  commercial_coworking: {
-    showBedrooms: false,
-    showBathrooms: true,
-    showBalconies: false,
-    showFloor: true,
-    showTotalFloors: true,
-    showFacing: true,
-    showFurnishing: true,
-    showAge: true,
-    showCarpetArea: true,
-    showSeats: true,
-    showPricePerSeat: true,
-    bedroomsRequired: false,
-    bathroomsRequired: false
   },
   // Plot/Land
   land_plot: {
@@ -279,14 +262,6 @@ const PROPERTY_TYPE_AMENITIES = {
     "wheelchair_accessible", "escalator_access", "display_window", "shutter_door",
     "washrooms", "mezzanine_floor", "high_speed_internet",
     "parking", "security", "cctv", "fire_safety", "wifi"
-  ],
-  // Co-working Space
-  commercial_coworking: [
-    "high_speed_internet", "dedicated_desk", "private_cabins", "meeting_rooms",
-    "conference_room", "coffee_tea", "pantry", "power_backup_ups",
-    "office_supplies", "housekeeping", "access_control", "quiet_zones",
-    "parking", "mobile_app_access", "event_space", "lounge",
-    "cctv", "fire_safety", "wifi"
   ],
   // Plot/Land - minimal amenities including electricity
   land_plot: [
@@ -2814,7 +2789,7 @@ export default function AddPropertyPopup({ onClose, editIndex = null, initialDat
 
       <div className="seller-popup-form-group" data-field="price">
         <label>
-          {formData.propertyType === 'Co-working Space' ? 'Total Monthly Rent' : (formData.status === 'sale' ? 'Expected Price' : 'Monthly Rent')}
+          {formData.status === 'sale' ? 'Expected Price' : 'Monthly Rent'}
           <span className="required">*</span>
         </label>
         <div className="price-input-wrapper">

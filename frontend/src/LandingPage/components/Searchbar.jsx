@@ -24,7 +24,6 @@ const SearchBar = ({ heroImage = null }) => {
     'Plot / Land / Industrial Property',
     'Commercial Office',
     'Commercial Shop',
-    'Co-working Space',
     'Warehouse / Godown',
     'PG / Hostel'
   ];
@@ -44,7 +43,6 @@ const SearchBar = ({ heroImage = null }) => {
     'Plot / Land / Industrial Property',
     'Commercial Office',
     'Commercial Shop',
-    'Co-working Space',
     'Warehouse / Godown'
   ];
 
@@ -58,14 +56,6 @@ const SearchBar = ({ heroImage = null }) => {
     '2000-5000 sq ft',
     '5000-10000 sq ft',
     '10000+ sq ft'
-  ];
-
-  // Seat capacity ranges for co-working
-  const seatRanges = [
-    '1 seat',
-    '2–5 seats',
-    '6–10 seats',
-    '10+ seats'
   ];
 
   // Budget ranges for Rent (Residential)
@@ -123,10 +113,6 @@ const SearchBar = ({ heroImage = null }) => {
     return areaBasedTypes.includes(searchData.propertyType);
   }, [searchData.propertyType]);
 
-  const isCoworking = useMemo(() => {
-    return searchData.propertyType === 'Co-working Space';
-  }, [searchData.propertyType]);
-
   // Get appropriate budget ranges based on property type
   const getBudgetRanges = () => {
     if (!searchData.propertyType) {
@@ -151,7 +137,6 @@ const SearchBar = ({ heroImage = null }) => {
       'Commercial Shop': commercialBudget,
 
       // Commercial Rent ranges
-      'Co-working Space': commercialRentBudget,
       'Warehouse / Godown': commercialRentBudget,
     };
 
@@ -190,11 +175,7 @@ const SearchBar = ({ heroImage = null }) => {
     if (searchData.propertyType) params.set('property_type', searchData.propertyType);
     if (searchData.budget) params.set('budget', searchData.budget);
     if (searchData.bedrooms) params.set('bedrooms', searchData.bedrooms);
-    if (searchData.propertyType === 'Co-working Space') {
-      if (searchData.area) params.set('seats', searchData.area);
-    } else {
-      if (searchData.area) params.set('area', searchData.area);
-    }
+    if (searchData.area) params.set('area', searchData.area);
 
     // Navigate to search results with query parameters
     navigate(`/searchresults?${params.toString()}`);
@@ -328,7 +309,7 @@ const SearchBar = ({ heroImage = null }) => {
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
                         </svg>
-                        {isCoworking ? 'Seat Capacity' : 'Area'}
+                        Area
                       </label>
                       <select
                         id="area"
@@ -337,8 +318,8 @@ const SearchBar = ({ heroImage = null }) => {
                         onChange={handleInputChange}
                         className="search-select"
                       >
-                        <option value="">{isCoworking ? 'Any Capacity' : 'Any Area'}</option>
-                        {(isCoworking ? seatRanges : areaRanges).map(range => (
+                        <option value="">Any Area</option>
+                        {areaRanges.map(range => (
                           <option key={range} value={range}>{range}</option>
                         ))}
                       </select>
