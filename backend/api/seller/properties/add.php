@@ -433,23 +433,14 @@ try {
                         $finalImageUrls[] = $converted['url'];
                         $convertedCount++;
                         
-                        // Insert into property_images table with metadata
+                        // Insert into property_images table (minimal columns for base schema compatibility)
                         if ($hasImagesTable) {
                             try {
-                                $imgStmt = $db->prepare("
-                                    INSERT INTO property_images 
-                                    (property_id, image_url, file_name, file_path, original_filename, 
-                                     file_size, mime_type, moderation_status, moderation_reason, image_order, created_at) 
-                                    VALUES (?, ?, ?, ?, ?, ?, ?, 'SAFE', 'Converted from base64', ?, NOW())
-                                ");
+                                // Base schema has only: property_id, image_url, image_order. Use that so it works everywhere.
+                                $imgStmt = $db->prepare("INSERT INTO property_images (property_id, image_url, image_order) VALUES (?, ?, ?)");
                                 $imgStmt->execute([
                                     $propertyId,
                                     $converted['url'],
-                                    $converted['filename'],
-                                    $converted['file_path'],
-                                    $converted['filename'],
-                                    $converted['file_size'],
-                                    $converted['mime_type'],
                                     $base64Img['index']
                                 ]);
                                 error_log("Add Property: Successfully converted and saved base64 image: {$converted['url']}");
