@@ -94,7 +94,7 @@ const BuyerAboutUs = () => {
   return (
     <div className="about-us-page">
       {/* Hero Section */}
-      <section className="about-hero" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/AboutUs.jpg)` }}>
+      <section className="about-hero" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/AboutUss.png)` }}>
         <div className="about-hero-overlay"></div>
         <div className="about-hero-content">
           <h1 className="about-hero-title">About 360Coordinates</h1>

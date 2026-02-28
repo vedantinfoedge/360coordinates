@@ -111,7 +111,7 @@ const CityFilteredBuy = () => {
         status="For Sale"
         title="Discover Properties Ready to Buy"
         subtitle="Search from thousands of verified properties across India"
-        backgroundImage="/buyeee.jpeg"
+        backgroundImage="/buyeee.png"
       />
 
       <div className="buyer-filtered-header">

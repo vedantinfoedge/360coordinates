@@ -80,7 +80,7 @@ export default function BuyerTenantLandingPage() {
       <div 
         className="buy-hero-sections"
         style={{
-          backgroundImage: `url(${process.env.PUBLIC_URL}/LoginBuy.jpg)`
+          backgroundImage: `url(${process.env.PUBLIC_URL}/buyeee.png)`
         }}
       >
         <h1 className="buy-hero-title">Your Next Home Is Just a Click Away</h1>
