@@ -79,7 +79,7 @@ if ($isLocalhost) {
     define('ENVIRONMENT', 'production');
     // Error reporting: Log errors but don't display them (prevents HTML breaking JSON responses)
     error_reporting(E_ALL);
-    ini_set('display_errors', 0);  // Don't display errors (prevents HTML in JSON responses)
+    ini_set('display_errors', 1);  // TEMPORARY: enabled for debugging 500 on add property — revert to 0 after debugging
     ini_set('log_errors', 1);
     // Log errors to a file in the backend directory
     $errorLogPath = __DIR__ . '/../logs/php_errors.log';
