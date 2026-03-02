@@ -87,7 +87,7 @@ function validateRequired($data, $requiredFields) {
     $errors = [];
     
     // Numeric fields that can be 0 (not considered empty)
-    $numericFields = ['area', 'price', 'bedrooms', 'bathrooms', 'total_floors', 'carpet_area', 'maintenance_charges', 'deposit_amount'];
+    $numericFields = ['area', 'price', 'total_floors', 'carpet_area', 'maintenance_charges', 'deposit_amount'];
     
     foreach ($requiredFields as $field) {
         if (!isset($data[$field])) {
