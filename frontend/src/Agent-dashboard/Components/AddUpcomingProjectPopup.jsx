@@ -325,6 +325,7 @@ export default function AddUpcomingProjectPopup({ onClose, editData = null }) {
   const [errors, setErrors] = useState({});
   const [isPublished, setIsPublished] = useState(false); // Track if publishing is completed
   const [showCloseWarning, setShowCloseWarning] = useState(false); // Show warning modal when trying to close on final step
+  const [hasAttemptedPublish, setHasAttemptedPublish] = useState(false);
   const [isDiscarded, setIsDiscarded] = useState(false); // Track if user discarded the form
   const [showLocationPicker, setShowLocationPicker] = useState(false);
   const [imageFiles, setImageFiles] = useState([]);
@@ -595,6 +596,7 @@ export default function AddUpcomingProjectPopup({ onClose, editData = null }) {
     setIsSubmitting(false);
     setUploadingImages(false);
     setIsPublished(false);
+    setHasAttemptedPublish(false);
   }, []);
 
   // Handle discard and close - HARD DISCARD
@@ -605,17 +607,15 @@ export default function AddUpcomingProjectPopup({ onClose, editData = null }) {
     onClose();
   }, [resetFormState, onClose]);
 
-  // Handle close attempt - check if on final step and not published
+  // Handle close attempt - warn on final step or after publish attempt
   const handleCloseAttempt = useCallback(() => {
     const isFinalStep = currentStep === STEPS.length;
-    if (isFinalStep && !isPublished) {
-      // Show warning modal instead of closing
+    if ((isFinalStep || hasAttemptedPublish) && !isPublished) {
       setShowCloseWarning(true);
       return;
     }
-    // Allow closing if not on final step or already published
     onClose();
-  }, [currentStep, isPublished, onClose]);
+  }, [currentStep, hasAttemptedPublish, isPublished, onClose]);
 
   // Close on escape
   useEffect(() => {
@@ -1282,6 +1282,8 @@ export default function AddUpcomingProjectPopup({ onClose, editData = null }) {
       console.log('Publishing blocked: Form was discarded');
       return;
     }
+
+    setHasAttemptedPublish(true);
 
     // Always validate step 5 (images and contact) before submission
     if (!validateStep(5)) {
@@ -2711,7 +2713,16 @@ export default function AddUpcomingProjectPopup({ onClose, editData = null }) {
               >
                 Continue Editing
               </button>
-
+              {!hasAttemptedPublish && (
+                <button
+                  type="button"
+                  className="cancel-btn"
+                  style={{ background: '#ef4444', color: '#fff', border: 'none' }}
+                  onClick={handleDiscardAndClose}
+                >
+                  Discard & Close
+                </button>
+              )}
             </div>
           </div>
         </div>

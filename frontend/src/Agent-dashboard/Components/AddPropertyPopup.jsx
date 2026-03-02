@@ -276,6 +276,7 @@ export default function AddPropertyPopup({ onClose, editIndex = null, initialDat
   const [showEditNoticeModal, setShowEditNoticeModal] = useState(false);
   const [isPublished, setIsPublished] = useState(false); // Track if publishing is completed
   const [showCloseWarning, setShowCloseWarning] = useState(false); // Show warning modal when trying to close on final step
+  const [hasAttemptedPublish, setHasAttemptedPublish] = useState(false);
   const [isDiscarded, setIsDiscarded] = useState(false); // Track if user discarded the form
   const [errors, setErrors] = useState({});
   const [stepError, setStepError] = useState(null); // Step-level error message
@@ -397,6 +398,7 @@ export default function AddPropertyPopup({ onClose, editIndex = null, initialDat
     setIsSubmitting(false);
     setUploadingImages(false);
     setIsPublished(false);
+    setHasAttemptedPublish(false);
   }, [initialData]);
 
   // Handle discard and close - HARD DISCARD
@@ -407,17 +409,15 @@ export default function AddPropertyPopup({ onClose, editIndex = null, initialDat
     onClose();
   }, [resetFormState, onClose]);
 
-  // Handle close attempt - check if on final step and not published
+  // Handle close attempt - warn on final step or after publish attempt
   const handleCloseAttempt = useCallback(() => {
     const isFinalStep = currentStep === STEPS.length;
-    if (isFinalStep && !isPublished) {
-      // Show warning modal instead of closing
+    if ((isFinalStep || hasAttemptedPublish) && !isPublished) {
       setShowCloseWarning(true);
       return;
     }
-    // Allow closing if not on final step or already published
     onClose();
-  }, [currentStep, isPublished, onClose]);
+  }, [currentStep, hasAttemptedPublish, isPublished, onClose]);
 
   // Close on escape (only when success modal is not open)
   useEffect(() => {
@@ -682,17 +682,22 @@ export default function AddPropertyPopup({ onClose, editIndex = null, initialDat
     }
   };
 
-  // Handle location selection from LocationPicker - only update coordinates, preserve user's address
+  // Handle location selection from LocationPicker (map pin)
   const handleLocationSelect = (locationData) => {
-    if (isRestrictedEdit) return; // Prevent location changes after 24 hours
+    if (isRestrictedEdit) return;
+
+    const stateFromMap = locationData.state || '';
+    const wasStateAutoFilled = !!stateFromMap;
 
     setFormData(prev => ({
       ...prev,
       latitude: locationData.latitude.toString(),
-      longitude: locationData.longitude.toString()
-      // Do NOT overwrite location or state - keep user's typed address as-is
+      longitude: locationData.longitude.toString(),
+      location: locationData.fullAddress || prev.location,
+      state: stateFromMap
     }));
 
+    setStateAutoFilled(wasStateAutoFilled);
     setShowLocationPicker(false);
     if (errors.location || errors.state || errors.mapLocation) {
       setErrors(prev => ({ ...prev, location: null, state: null, mapLocation: null }));
@@ -1496,6 +1501,8 @@ export default function AddPropertyPopup({ onClose, editIndex = null, initialDat
       console.log('Publishing blocked: Form was discarded');
       return;
     }
+
+    setHasAttemptedPublish(true);
 
     if (!validateStep(currentStep)) return;
 
@@ -2878,7 +2885,16 @@ export default function AddPropertyPopup({ onClose, editIndex = null, initialDat
               >
                 Continue Editing
               </button>
-
+              {!hasAttemptedPublish && (
+                <button
+                  type="button"
+                  className="cancel-btn"
+                  style={{ background: '#ef4444', color: '#fff', border: 'none' }}
+                  onClick={handleDiscardAndClose}
+                >
+                  Discard & Close
+                </button>
+              )}
             </div>
           </div>
         </div>
