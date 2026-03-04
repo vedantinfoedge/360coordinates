@@ -26,6 +26,7 @@ require_once __DIR__ . '/../../../config/config.php';
 require_once __DIR__ . '/../../../config/database.php';
 require_once __DIR__ . '/../../../config/admin-config.php';
 require_once __DIR__ . '/../../../utils/response.php';
+require_once __DIR__ . '/../../../utils/validation.php';
 
 // Set proper CORS headers using the utility function
 setCorsHeaders();
@@ -43,20 +44,24 @@ try {
     
     $requestId = trim($data['request_id']);
     
-    // Use hardcoded admin mobile number from config
-    if (!defined('ADMIN_MOBILE')) {
-        sendError('Server configuration error', null, 500);
+    // Mobile is required - must be whitelisted admin number
+    if (!isset($data['mobile']) || empty(trim($data['mobile']))) {
+        sendError('Mobile number is required', null, 400);
     }
-    
-    $mobile = ADMIN_MOBILE;
+    $mobile = trim($data['mobile']);
+    $validatedMobile = validateMobileFormat($mobile);
+    if (!$validatedMobile) {
+        sendError('Invalid mobile number format', null, 400);
+    }
+    if (!isWhitelistedMobile($validatedMobile)) {
+        sendError('Unauthorized. Only registered admin mobile number is allowed.', null, 403);
+    }
     
     $db = getDB();
     
-    // Check if request_id exists and is still pending
-    // Use last 4 digits for matching (security)
-    $mobileLast4 = substr($mobile, -4);
-    $stmt = $db->prepare("SELECT id, created_at FROM admin_otp_logs WHERE request_id = ? AND mobile = ? AND status = 'pending' ORDER BY created_at DESC LIMIT 1");
-    $stmt->execute([$requestId, $mobileLast4]);
+    // Check if request_id exists for this mobile and is still pending (admin_otp_logs stores full mobile)
+    $stmt = $db->prepare("SELECT id, created_at, mobile FROM admin_otp_logs WHERE request_id = ? AND (mobile = ? OR mobile = ?) AND status = 'pending' ORDER BY created_at DESC LIMIT 1");
+    $stmt->execute([$requestId, $validatedMobile, preg_replace('/[^0-9]/', '', $validatedMobile)]);
     $otpLog = $stmt->fetch();
     
     if (!$otpLog) {
@@ -84,7 +89,7 @@ try {
             'authkey: ' . MSG91_AUTH_KEY
         ],
         CURLOPT_POSTFIELDS => json_encode([
-            'mobile' => $mobile,
+            'mobile' => $validatedMobile,
             'retrytype' => 'text'
         ])
     ]);
@@ -111,7 +116,7 @@ try {
         
         sendSuccess('OTP resent successfully', [
             'request_id' => $newRequestId,
-            'mobile' => substr($mobile, 0, 2) . '****' . substr($mobile, -2) // Masked mobile
+            'mobile' => substr($validatedMobile, 0, 2) . '****' . substr($validatedMobile, -2) // Masked mobile
         ]);
     } else {
         $errorMsg = isset($msg91Response['message']) ? $msg91Response['message'] : 'Failed to resend OTP';

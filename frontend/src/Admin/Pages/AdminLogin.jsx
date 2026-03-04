@@ -8,8 +8,7 @@ import '../style/AdminLogin.css';
 const MSG91_WIDGET_ID = '356c786a314c303532313736';
 const MSG91_AUTH_TOKEN = '481618TheXzNLL2u694bc65aP1';
 
-// HARDCODED ADMIN MOBILE NUMBER - Only this number can login
-const ADMIN_MOBILE_NUMBER = '+917888076881';
+// Admin mobile is validated by backend (validate-mobile API) - no hardcoded list on frontend
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -121,8 +120,8 @@ const AdminLogin = () => {
     checkAuth();
   }, [navigate]);
 
-  // Step 1: Validate mobile number against hardcoded admin number (frontend-only validation)
-  const handleValidateMobile = (e) => {
+  // Step 1: Validate mobile number via backend (whitelist from database / config)
+  const handleValidateMobile = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
@@ -133,37 +132,48 @@ const AdminLogin = () => {
       return;
     }
 
-    // Normalize both mobile numbers for comparison
-    const enteredMobile = normalizeMobile(mobile.trim());
-    const adminMobile = normalizeMobile(ADMIN_MOBILE_NUMBER);
-
-    // Compare the normalized mobile numbers
-    if (enteredMobile !== adminMobile) {
-      // Mobile number doesn't match - show error popup
-      setError('Invalid mobile number. Access denied.');
-      setLoading(false);
-      return;
-    }
-
-    // Mobile number matches - proceed to OTP widget
-    // Generate a simple local validation token (not used by backend, just for local state)
-    const localToken = 'local_' + Date.now();
-    setValidationToken(localToken);
-    
-    // Store the validated mobile (keep it for internal use but don't display it)
     const mobileToStore = mobile.trim();
-    setValidatedMobile(mobileToStore);
-    
-    // Create masked version for display only
-    setMaskedMobile(maskMobileNumber(mobileToStore));
-    
-    // Clear the actual mobile number from the input field
-    setMobile('');
-    setMobileLocked(true); // Lock mobile number
-    setStep('otp');
-    setLoading(false);
-    
-    // Widget will be initialized by useEffect when step changes to 'otp'
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/admin/auth/validate-mobile.php`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ mobile: mobileToStore }),
+      });
+
+      const contentType = response.headers.get('content-type');
+      const isJson = contentType && contentType.includes('application/json');
+      const data = isJson ? await response.json() : null;
+
+      if (!response.ok) {
+        const message = (data && data.message) || (response.status === 403 ? 'Unauthorized access. Only registered admin mobile number is allowed.' : 'Invalid mobile number. Access denied.');
+        setError(message);
+        setLoading(false);
+        return;
+      }
+
+      if (!data || !data.success) {
+        setError('Invalid mobile number. Access denied.');
+        setLoading(false);
+        return;
+      }
+
+      // Store backend validation token for verify-otp step
+      const token = (data.data && data.data.validationToken) || 'local_' + Date.now();
+      setValidationToken(token);
+
+      setValidatedMobile(mobileToStore);
+      setMaskedMobile(maskMobileNumber(mobileToStore));
+      setMobile('');
+      setMobileLocked(true);
+      setStep('otp');
+    } catch (err) {
+      console.error('Validate mobile error:', err);
+      setError('Unable to validate. Please check your connection and try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   // Helper function to wait for MSG91 script to load
@@ -328,19 +338,7 @@ const AdminLogin = () => {
       return;
     }
 
-    // Re-validate mobile number against hardcoded admin number before sending to backend
-    const enteredMobile = normalizeMobile(validatedMobile);
-    const adminMobile = normalizeMobile(ADMIN_MOBILE_NUMBER);
-    
-    if (enteredMobile !== adminMobile) {
-      setError('Invalid mobile number. Access denied.');
-      setStep('mobile');
-      setValidationToken(null);
-      setMobileLocked(false);
-      setLoading(false);
-      return;
-    }
-
+    // Mobile was already validated by backend in step 1; backend will verify again in verify-otp
     try {
       // Send to backend for session creation (backend will still verify mobile against whitelist)
       const response = await fetch(`${API_BASE_URL}/admin/auth/verify-otp.php`, {

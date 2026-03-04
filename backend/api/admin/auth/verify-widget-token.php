@@ -79,51 +79,25 @@ try {
     // CRITICAL SECURITY: Mobile number is MANDATORY - reject if not provided
     if (!isset($data['mobile']) || empty(trim($data['mobile']))) {
         error_log("SECURITY ALERT - Mobile number not provided in request. Data: " . json_encode($data));
-        sendJsonResponse(false, 'Mobile number is required for verification. Only registered admin number (7888076881) is allowed.', null, 403);
+        sendJsonResponse(false, 'Mobile number is required for verification. Only registered admin numbers are allowed.', null, 403);
     }
     
     $mobileFromWidget = trim($data['mobile']);
     error_log("Mobile from widget: " . $mobileFromWidget);
     
-    // Validate admin mobile is defined
-    if (!defined('ADMIN_MOBILE')) {
-        error_log("ADMIN_MOBILE not defined");
-        sendJsonResponse(false, 'Server configuration error', null, 500);
+    // SECURITY: Validate mobile against whitelist (database admin_whitelist + config fallback)
+    if (!isWhitelistedMobile($mobileFromWidget)) {
+        error_log("SECURITY ALERT - Invalid mobile attempt: " . substr($mobileFromWidget, 0, 4) . "**** (not in whitelist)");
+        sendJsonResponse(false, 'Invalid number. Only registered admin numbers are allowed.', null, 403);
     }
     
-    $adminMobile = ADMIN_MOBILE;
-    
-    // Normalize mobile numbers (remove +, spaces, etc.)
-    $normalizedAdminMobile = preg_replace('/[^0-9]/', '', $adminMobile);
+    // Use the validated mobile (prefer +country format for DB consistency)
     $normalizedWidgetMobile = preg_replace('/[^0-9]/', '', $mobileFromWidget);
-    
-    // SECURITY: STRICT validation - only 7888076881 is valid, reject ALL others
-    // This is the CRITICAL security check - must be exact match
-    $shortFormat = '7888076881';
-    $fullFormat = '917888076881';
-    
-    // CRITICAL: Mobile number MUST be provided and MUST match exactly
-    // REJECT if mobile is empty or doesn't match
-    if (empty($normalizedWidgetMobile)) {
-        error_log("SECURITY ALERT - Empty mobile number provided");
-        sendJsonResponse(false, 'Invalid number. Only registered admin number (7888076881) is allowed.', null, 403);
-    }
-    
-    // ONLY accept exact matches: 7888076881 or 917888076881
-    // REJECT all other numbers immediately - NO EXCEPTIONS
-    if ($normalizedWidgetMobile !== $shortFormat && $normalizedWidgetMobile !== $fullFormat) {
-        error_log("SECURITY ALERT - Invalid mobile attempt: " . $normalizedWidgetMobile . " (Expected ONLY: 7888076881 or 917888076881)");
-        error_log("Request blocked - mobile does not match admin mobile");
-        sendJsonResponse(false, 'Invalid number. Only registered admin number (7888076881) is allowed.', null, 403);
-        exit(); // Explicit exit to prevent any further execution
-    }
-    
-    // FINAL STRICT CHECK: Double validation before proceeding
-    if ($normalizedWidgetMobile !== $shortFormat && $normalizedWidgetMobile !== $fullFormat) {
-        error_log("SECURITY ALERT - Final validation failed: " . $normalizedWidgetMobile . " (Expected ONLY: 7888076881 or 917888076881)");
-        error_log("Request blocked - mobile does not match admin mobile");
-        sendJsonResponse(false, 'Invalid number. Only registered admin number (7888076881) is allowed.', null, 403);
-        exit(); // Explicit exit to prevent any further execution
+    $adminMobile = $mobileFromWidget;
+    if (strpos($adminMobile, '+') !== 0 && strlen($normalizedWidgetMobile) === 10) {
+        $adminMobile = '+91' . $normalizedWidgetMobile;
+    } elseif (strpos($adminMobile, '+') !== 0 && strlen($normalizedWidgetMobile) === 12 && substr($normalizedWidgetMobile, 0, 2) === '91') {
+        $adminMobile = '+' . $normalizedWidgetMobile;
     }
     
     // Log the validated mobile for audit
