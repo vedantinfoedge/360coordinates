@@ -7,9 +7,8 @@ import DeletePropertyModal from "../../components/DeletePropertyModal/DeleteProp
 import { API_BASE_URL } from "../../config/api.config";
 import "../styles/SellerProperties.css";
 
-const MAX_PROPERTIES = 3;
-
 const SellerProperties = () => {
+  const MAX_PROPERTIES = 3;
   const navigate = useNavigate();
   const { properties, deleteProperty } = useProperty();
   const [showForm, setShowForm] = useState(false);
