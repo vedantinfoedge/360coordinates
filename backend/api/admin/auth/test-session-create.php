@@ -48,7 +48,7 @@ try {
 try {
     $testSessionId = 'test_' . time();
     $adminId = 1;
-    $adminMobile = '+917888076881';
+    $adminMobile = '+917057714677';
     $adminRole = 'super_admin';
     $adminEmail = 'admin@demo1.360coordinates.com';
     $ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';

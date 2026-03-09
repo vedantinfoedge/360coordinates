@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `admin_whitelist` (
 
 -- Insert default admin phone (if not exists)
 INSERT INTO `admin_whitelist` (`phone`, `is_active`) 
-VALUES ('+917888076881', 1)
+VALUES ('+917057714677', 1)
 ON DUPLICATE KEY UPDATE `is_active` = 1;
 
 -- ============================================

@@ -32,7 +32,7 @@ try {
         sendError('Invalid phone number. Please enter a valid Indian mobile number.', null, 400);
     }
 
-    // MSG91 expects mobile without + (e.g. 917888076881)
+    // MSG91 expects mobile without + (e.g. 917057714677)
     $mobileDigits = preg_replace('/\D/', '', $validatedPhone);
 
     // Prepare MSG91 payload

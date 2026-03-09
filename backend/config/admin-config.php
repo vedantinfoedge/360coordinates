@@ -49,8 +49,8 @@ define('MSG91_EMAIL_DOMAIN', getenv('MSG91_EMAIL_DOMAIN') ?: 'demo1.360coordinat
 // ADMIN WHITELIST - ONLY these numbers can access admin panel
 // NEVER expose these to frontend
 // SECURITY: Use environment variables for admin mobile numbers
-// Format: +917888076881 (with + and country code)
-$adminMobile1 = getenv('ADMIN_MOBILE_1') ?: '+917888076881';
+// Format: +917057714677 (with + and country code)
+$adminMobile1 = getenv('ADMIN_MOBILE_1') ?: '+917057714677';
 $adminMobile2 = getenv('ADMIN_MOBILE_2') ?: '';
 define('ADMIN_MOBILE_1', $adminMobile1);
 define('ADMIN_MOBILE_2', $adminMobile2);
@@ -89,17 +89,17 @@ function isWhitelistedMobile($mobile) {
         }
         
         $db = getDB();
-        $normalized = normalizeMobile($mobile); // Gets digits only: 917888076881
+        $normalized = normalizeMobile($mobile); // Gets digits only: 917057714677
         
         if (empty($normalized)) {
             error_log("isWhitelistedMobile: Could not normalize mobile: " . $mobile);
             return false;
         }
         
-        // Database stores phone as +917888076881 (with +), try both formats
+        // Database stores phone as +917057714677 (with +), try both formats
         $phoneFormats = [
-            '+' . $normalized,  // +917888076881 (preferred format)
-            $normalized,        // 917888076881 (digits only)
+            '+' . $normalized,  // +917057714677 (preferred format)
+            $normalized,        // 917057714677 (digits only)
         ];
         
         error_log("Checking whitelist for mobile: " . $mobile . " (normalized: " . $normalized . ")");

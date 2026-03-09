@@ -84,7 +84,7 @@ error_log("All files loaded successfully");
 
 /**
  * Normalize phone number to consistent format for database queries
- * Handles: 10-digit (7888076881), 12-digit (917888076881), or + format (+917888076881)
+ * Handles: 10-digit (7057714677), 12-digit (917057714677), or + format (+917057714677)
  */
 function normalizePhone($phone) {
     if (empty($phone)) {
@@ -195,8 +195,8 @@ try {
     error_log("Validated mobile format: " . $validatedMobile);
     
     // For database queries, we'll use both formats
-    $mobileForDB = $validatedMobile; // +917888076881
-    $mobileDigitsOnly = normalizeMobile($validatedMobile); // 917888076881 (no +)
+    $mobileForDB = $validatedMobile; // +917057714677
+    $mobileDigitsOnly = normalizeMobile($validatedMobile); // 917057714677 (no +)
     error_log("Mobile for DB (with +): " . $mobileForDB);
     error_log("Mobile for DB (digits only): " . $mobileDigitsOnly);
     
@@ -292,7 +292,7 @@ try {
     error_log("Updating OTP log status to 'verified'");
     try {
         // Normalize mobile for OTP log (digits only, max 15 chars)
-        $otpLogMobile = normalizeMobile($validatedMobile); // Gets digits only: 917888076881
+        $otpLogMobile = normalizeMobile($validatedMobile); // Gets digits only: 917057714677
         if (strlen($otpLogMobile) > 15) {
             $otpLogMobile = substr($otpLogMobile, -15); // Take last 15 digits
         }
@@ -327,9 +327,9 @@ try {
     
     // Try multiple phone formats to match database
     $phoneFormats = [
-        $mobileForDB,        // +917888076881
-        $mobileDigitsOnly,   // 917888076881 (digits only)
-        substr($mobileDigitsOnly, -10), // 7888076881 (last 10 digits)
+        $mobileForDB,        // +917057714677
+        $mobileDigitsOnly,   // 917057714677 (digits only)
+        substr($mobileDigitsOnly, -10), // 7057714677 (last 10 digits)
     ];
     
     $admin = null;
