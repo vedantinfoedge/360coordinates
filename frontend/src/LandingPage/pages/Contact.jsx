@@ -1,5 +1,6 @@
 // Contact.jsx
 import React, { useState, useRef, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
 import { MapPin, Mail, MessageSquare, ChevronDown } from "lucide-react";
 import { API_BASE_URL, API_ENDPOINTS } from "../../config/api.config";
 import '../styles/Contact.css';
@@ -264,6 +265,19 @@ export default function Contact() {
               <button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? "Sending..." : "Send Message"}
               </button>
+
+              <div className="form-legal-links">
+                <span>By submitting, you agree to our</span>
+                <div className="form-legal-links-row">
+                  <Link to="/terms-conditions" className="form-legal-link">
+                    Terms &amp; Conditions
+                  </Link>
+                  <span className="form-legal-separator">/</span>
+                  <Link to="/privacy-policy" className="form-legal-link">
+                    Privacy Policy
+                  </Link>
+                </div>
+              </div>
 
             </form>
           </div>

@@ -1,5 +1,6 @@
 // SellerContactPage.jsx – contact form uses same backend sendmail as Contact.jsx
 import React, { useState, useRef, useCallback } from "react";
+import { Link } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 import { API_BASE_URL, API_ENDPOINTS } from "../../config/api.config";
 import "../styles/SellerContactPage.css";
@@ -200,6 +201,19 @@ export default function SellerContactPage() {
               <button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? "Sending..." : "Send Message"}
               </button>
+
+              <div className="seller-form-legal-links">
+                <span>By submitting, you agree to our</span>
+                <div className="seller-form-legal-links-row">
+                  <Link to="/terms-conditions" className="seller-form-legal-link">
+                    Terms &amp; Conditions
+                  </Link>
+                  <span className="seller-form-legal-separator">/</span>
+                  <Link to="/privacy-policy" className="seller-form-legal-link">
+                    Privacy Policy
+                  </Link>
+                </div>
+              </div>
 
             </form>
           </div>

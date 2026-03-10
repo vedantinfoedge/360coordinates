@@ -582,6 +582,34 @@
   -webkit-transform: translateZ(0);
 }
 
+.buyer-form-legal-links {
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+.buyer-form-legal-links-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.25rem;
+}
+
+.buyer-form-legal-link {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.buyer-form-legal-link:hover {
+  text-decoration: underline;
+}
+
+.buyer-form-legal-separator {
+  color: var(--color-text-secondary);
+}
+
 /* Animations */
 @keyframes buyer-fadeInUp {
   from { opacity: 0; transform: translate3d(0, 40px, 0); }

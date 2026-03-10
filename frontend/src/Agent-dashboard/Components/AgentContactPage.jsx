@@ -1,5 +1,6 @@
 // AgentContactPage.jsx – contact form uses same backend sendmail as Contact.jsx
 import React, { useState, useRef, useCallback } from "react";
+import { Link } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 import { API_BASE_URL, API_ENDPOINTS } from "../../config/api.config";
 import "../styles/AgentContactPage.css";
@@ -200,6 +201,19 @@ export default function AgentContactPage() {
               <button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? "Sending..." : "Send Message"}
               </button>
+
+              <div className="agent-form-legal-links">
+                <span>By submitting, you agree to our</span>
+                <div className="agent-form-legal-links-row">
+                  <Link to="/terms-conditions" className="agent-form-legal-link">
+                    Terms &amp; Conditions
+                  </Link>
+                  <span className="agent-form-legal-separator">/</span>
+                  <Link to="/privacy-policy" className="agent-form-legal-link">
+                    Privacy Policy
+                  </Link>
+                </div>
+              </div>
 
             </form>
           </div>
